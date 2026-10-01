@@ -130,7 +130,10 @@ class ChapterFile(Base):
 
 class Page(Base):
     __tablename__ = "pages"
-    __table_args__ = (UniqueConstraint("attempt_id", "page_number"),)
+    __table_args__ = (
+        UniqueConstraint("attempt_id", "page_number"),
+        UniqueConstraint("id", "chapter_id", name="uq_page_id_chapter"),
+    )
 
     id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
     chapter_id: Mapped[UUID] = mapped_column(
@@ -178,6 +181,7 @@ class AnalysisJob(Base):
 
 class Panel(Base):
     __tablename__ = "panels"
+    __table_args__ = (UniqueConstraint("id", "page_id", name="uq_panel_id_page"),)
     id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
     page_id: Mapped[UUID] = mapped_column(ForeignKey("pages.id", ondelete="CASCADE"), index=True)
     panel_index: Mapped[int] = mapped_column(Integer)
@@ -205,6 +209,7 @@ class Panel(Base):
 
 class OCRResult(Base):
     __tablename__ = "ocr_results"
+    __table_args__ = (UniqueConstraint("id", "panel_id", name="uq_ocr_id_panel"),)
     id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
     panel_id: Mapped[UUID] = mapped_column(ForeignKey("panels.id", ondelete="CASCADE"), index=True)
     text: Mapped[str] = mapped_column(String(10000), default="")
@@ -265,6 +270,7 @@ class StoryVersion(Base):
     __tablename__ = "story_versions"
     __table_args__ = (
         UniqueConstraint("chapter_id", "fingerprint", name="uq_story_version_source"),
+        UniqueConstraint("id", "chapter_id", name="uq_story_version_id_chapter"),
     )
     id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
     chapter_id: Mapped[UUID] = mapped_column(
@@ -306,6 +312,175 @@ class StoryAudit(Base):
     )
     data: Mapped[dict] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ScriptGenerationJob(Base):
+    __tablename__ = "script_generation_jobs"
+    __table_args__ = (
+        UniqueConstraint(
+            "story_version_id", "profile_fingerprint", "attempt", name="uq_script_job_attempt"
+        ),
+        ForeignKeyConstraint(
+            ["story_version_id", "chapter_id"],
+            ["story_versions.id", "story_versions.chapter_id"],
+            ondelete="CASCADE",
+        ),
+        CheckConstraint(
+            "status IN ('queued','running','completed','failed','cancelled')",
+            name="ck_script_job_status",
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
+    chapter_id: Mapped[UUID] = mapped_column(ForeignKey("chapters.id", ondelete="CASCADE"))
+    story_version_id: Mapped[UUID] = mapped_column(UUIDType)
+    script_version_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("script_versions.id", ondelete="SET NULL"), nullable=True
+    )
+    actor_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
+    profile_fingerprint: Mapped[str] = mapped_column(String(64))
+    profile: Mapped[dict] = mapped_column(JSON)
+    provider: Mapped[str] = mapped_column(String(40))
+    model: Mapped[str] = mapped_column(String(120))
+    attempt: Mapped[int] = mapped_column(Integer, default=1)
+    status: Mapped[str] = mapped_column(String(30), default="queued")
+    error: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class ScriptVersion(Base):
+    __tablename__ = "script_versions"
+    __table_args__ = (
+        UniqueConstraint("id", "chapter_id", name="uq_script_version_id_chapter"),
+        UniqueConstraint(
+            "story_version_id", "profile_fingerprint", name="uq_script_version_profile"
+        ),
+        ForeignKeyConstraint(
+            ["story_version_id", "chapter_id"],
+            ["story_versions.id", "story_versions.chapter_id"],
+            ondelete="CASCADE",
+            name="fk_script_version_story_snapshot",
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
+    chapter_id: Mapped[UUID] = mapped_column(
+        ForeignKey("chapters.id", ondelete="CASCADE"), index=True
+    )
+    story_version_id: Mapped[UUID] = mapped_column(index=True)
+    profile_fingerprint: Mapped[str] = mapped_column(String(64))
+    profile: Mapped[dict] = mapped_column(JSON)
+    fingerprint: Mapped[str] = mapped_column(String(64), unique=True)
+    title: Mapped[str] = mapped_column(String(300))
+    data: Mapped[dict] = mapped_column(JSON)
+    status: Mapped[ReviewState] = mapped_column(
+        SAEnum(
+            ReviewState,
+            values_callable=lambda e: [s.value for s in e],
+            native_enum=False,
+            length=30,
+            name="story_review_state",
+            create_constraint=True,
+        ),
+        default=ReviewState.NEEDS_REVIEW,
+        server_default=ReviewState.NEEDS_REVIEW.value,
+        nullable=False,
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
+
+
+class ScriptSegment(Base):
+    __tablename__ = "script_segments"
+    __table_args__ = (
+        UniqueConstraint("id", "script_version_id", name="uq_script_segment_id_version"),
+        CheckConstraint(
+            "status IN ('needs_review', 'confirmed', 'rejected')", name="ck_script_segment_review"
+        ),
+        UniqueConstraint("script_version_id", "sequence", name="uq_script_segment_sequence"),
+        ForeignKeyConstraint(
+            ["script_version_id", "chapter_id"],
+            ["script_versions.id", "script_versions.chapter_id"],
+            ondelete="CASCADE",
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
+    script_version_id: Mapped[UUID] = mapped_column(index=True)
+    chapter_id: Mapped[UUID] = mapped_column(index=True)
+    sequence: Mapped[int] = mapped_column(Integer)
+    segment_type: Mapped[str] = mapped_column(String(30))
+    narration_text: Mapped[str] = mapped_column(String(5000))
+    dialogue_text: Mapped[str | None] = mapped_column(String(1000), nullable=True)
+    scene_ref: Mapped[str] = mapped_column(String(100))
+    event_refs: Mapped[list] = mapped_column(JSON)
+    start_page: Mapped[int] = mapped_column(Integer)
+    end_page: Mapped[int] = mapped_column(Integer)
+    estimated_duration: Mapped[float] = mapped_column(Float)
+    confidence: Mapped[float] = mapped_column(Float)
+    status: Mapped[ReviewState] = mapped_column(
+        String(30),
+        default=ReviewState.NEEDS_REVIEW.value,
+        server_default=ReviewState.NEEDS_REVIEW.value,
+    )
+
+
+class ScriptEvidence(Base):
+    __tablename__ = "script_evidence"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["page_id", "chapter_id"],
+            ["pages.id", "pages.chapter_id"],
+            name="fk_evidence_page_chapter",
+        ),
+        ForeignKeyConstraint(
+            ["panel_id", "page_id"], ["panels.id", "panels.page_id"], name="fk_evidence_panel_page"
+        ),
+        ForeignKeyConstraint(
+            ["ocr_result_id", "panel_id"],
+            ["ocr_results.id", "ocr_results.panel_id"],
+            name="fk_evidence_ocr_panel",
+        ),
+        CheckConstraint(
+            "page_id IS NOT NULL AND (ocr_result_id IS NULL OR panel_id IS NOT NULL)",
+            name="ck_script_evidence_source",
+        ),
+        ForeignKeyConstraint(
+            ["script_version_id", "chapter_id"],
+            ["script_versions.id", "script_versions.chapter_id"],
+            ondelete="CASCADE",
+        ),
+        ForeignKeyConstraint(
+            ["segment_id", "script_version_id"],
+            ["script_segments.id", "script_segments.script_version_id"],
+            ondelete="CASCADE",
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
+    script_version_id: Mapped[UUID] = mapped_column(index=True)
+    segment_id: Mapped[UUID] = mapped_column(index=True)
+    chapter_id: Mapped[UUID] = mapped_column(index=True)
+    scene_ref: Mapped[str] = mapped_column(String(100))
+    event_ref: Mapped[str] = mapped_column(String(100))
+    character_ref: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    page_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("pages.id", ondelete="SET NULL"), nullable=True
+    )
+    page_number: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    panel_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("panels.id", ondelete="SET NULL"), nullable=True
+    )
+    ocr_result_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("ocr_results.id", ondelete="SET NULL"), nullable=True
+    )
+    quote: Mapped[str | None] = mapped_column(String(1000), nullable=True)
+    reason: Mapped[str] = mapped_column(String(500))
 
 
 class SceneCharacter(Base):

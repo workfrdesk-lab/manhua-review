@@ -13,6 +13,10 @@ type Character = { id: string; name: string; display_name: string; description?:
 type Scene = { id: string; scene_index: number; title: string; summary: string; start_page: number; end_page: number; importance: number };
 type Event = { id: string; event_index: number; description: string; event_type: string; importance: number };
 type Summary = { logline?: string; summary?: string; main_characters?: string[]; major_events?: string[]; conflicts?: string[]; ending_state?: string };
+type ScriptEvidence = { page_number?: number; panel_id?: string; ocr_result_id?: string; scene_ref: string; event_ref: string; quote?: string; reason: string };
+type ScriptSegment = { id: string; sequence: number; narration_text: string; dialogue_text?: string; speaker_ref?: string; scene_ref: string; event_refs: string[]; confidence: number; evidence?: ScriptEvidence[] };
+type Script = { id: string; status: string; title: string; data: { hook?: string; intro?: string; outro?: string }; segments: ScriptSegment[]; evidence: ScriptEvidence[] };
+type ScriptJob = { id: string; status: string; script_version_id?: string; error?: string };
 
 function Thumbnail({ page }: { page: Page }) {
   const [url, setUrl] = useState<string>();
@@ -46,6 +50,10 @@ export default function ChapterPage() {
   const [events, setEvents] = useState<Record<string, Event[]>>({});
   const [summary, setSummary] = useState<Summary | null>(null);
   const [storyTab, setStoryTab] = useState("Overview");
+  const [script, setScript] = useState<Script | null>(null);
+  const [scriptJob, setScriptJob] = useState<ScriptJob | null>(null);
+  const [scriptError, setScriptError] = useState<string | null>(null);
+  const [scriptBusy, setScriptBusy] = useState(false);
   async function reorder(from: string, to: string) {
     const ordered = pages.filter(page => page.id !== from);
     const moving = pages.find(page => page.id === from);
@@ -132,6 +140,47 @@ export default function ChapterPage() {
     finally { setBusy(false); }
   }
   useEffect(() => { refreshStory(); }, [id]);
+  async function refreshScript() {
+    try {
+      if (scriptJob && ["queued", "running"].includes(scriptJob.status)) {
+        setScriptJob(await api<ScriptJob>(`script-jobs/${scriptJob.id}/status`));
+      }
+      const scripts = await api<Script[]>(`chapters/${id}/scripts`);
+      const latest = scripts[0];
+      if (!latest) return;
+      const detail = await api<Script>(`scripts/${latest.id}`);
+      setScript(detail);
+      const status = await api<{ job?: ScriptJob }>(`scripts/${latest.id}/status`);
+      setScriptJob(status.job ?? null);
+    } catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل تحميل النص"); }
+  }
+  async function generateScript() {
+    setScriptBusy(true); setScriptError(null);
+    try {
+      const versions = await api<{ id: string }[]>(`chapters/${id}/story/versions`);
+      if (!versions[0]) throw new Error("حلّل القصة أولاً");
+      const response = await api<{ job: ScriptJob }>(`chapters/${id}/scripts`, { method: "POST", body: JSON.stringify({ story_version_id: versions[0].id }) });
+      setScriptJob(response.job);
+      if (response.job.script_version_id) setScript(await api<Script>(`scripts/${response.job.script_version_id}`));
+    } catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل إنشاء النص"); }
+    finally { setScriptBusy(false); }
+  }
+  async function editSegment(segment: ScriptSegment) {
+    const narration = window.prompt("Narration", segment.narration_text);
+    if (narration === null || narration === segment.narration_text) return;
+    try { await api(`script-segments/${segment.id}`, { method: "PATCH", body: JSON.stringify({ narration_text: narration }) }); await refreshScript(); }
+    catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل حفظ المقطع"); }
+  }
+  async function reviewScript(status: "confirmed" | "rejected") {
+    if (!script) return;
+    try { await api(`scripts/${script.id}/review`, { method: "PATCH", body: JSON.stringify({ status }) }); await refreshScript(); }
+    catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل تحديث المراجعة"); }
+  }
+  useEffect(() => { refreshScript(); }, [id]);
+  useEffect(() => {
+    if (!scriptJob || !["queued", "running"].includes(scriptJob.status)) return;
+    const timer = window.setInterval(refreshScript, 1500); return () => window.clearInterval(timer);
+  }, [scriptJob?.status, scriptJob?.id, id]);
   useEffect(() => {
     if (!storyStatus || !["pending", "analyzing"].includes(storyStatus.status)) return;
     const timer = window.setInterval(refreshStory, 1500); return () => window.clearInterval(timer);
@@ -195,6 +244,12 @@ export default function ChapterPage() {
       {storyTab === "Overview" && <div className="space-y-2"><h3 className="font-bold">{summary?.logline || "لا يوجد ملخص بعد"}</h3><p>{summary?.summary}</p><p>الشخصيات الرئيسية: {summary?.main_characters?.join("، ") || "—"}</p><p>الأحداث الكبرى: {summary?.major_events?.join(" — ") || "—"}</p><p>الصراعات: {summary?.conflicts?.join(" — ") || "—"}</p><p>حالة النهاية: {summary?.ending_state || "—"}</p></div>}
       {storyTab === "Characters" && <div className="grid gap-3 md:grid-cols-2">{characters.map(character => <article key={character.id} className="rounded border border-slate-700 p-3"><h3 className="font-bold">{character.display_name}</h3><p>{character.description || "لا يوجد وصف"}</p><small>الأهمية {character.importance.toFixed(2)} · الثقة {character.confidence.toFixed(2)}</small></article>)}</div>}
       {(storyTab === "Scenes" || storyTab === "Events" || storyTab === "Timeline") && <div className="space-y-3">{scenes.map(scene => <article key={scene.id} className="rounded border border-slate-700 p-3"><h3 className="font-bold">Scene {scene.scene_index}: {scene.title} <span className="text-sm">(Pages {scene.start_page}–{scene.end_page})</span></h3><p>{scene.summary}</p>{storyTab !== "Scenes" && <ol className="list-decimal pr-6">{(events[scene.id] ?? []).map(event => <li key={event.id}>{event.description} <small>({event.event_type}, {event.importance.toFixed(2)})</small></li>)}</ol>}</article>)}</div>}
+    </section>
+    <section className="space-y-4 rounded border border-teal-800 p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="text-xl font-bold">Script Review</h2><span>Generation: {scriptJob?.status ?? "not_started"} · Review: {script?.status ?? "—"}</span></div>
+      <div className="flex gap-2"><button onClick={generateScript} disabled={scriptBusy} className="rounded bg-teal-700 px-3 py-2">Generate script</button>{script?.status === "needs_review" && <><button onClick={() => reviewScript("confirmed")} className="rounded bg-emerald-700 px-3 py-2">Confirm</button><button onClick={() => reviewScript("rejected")} className="rounded bg-rose-700 px-3 py-2">Reject</button></>}{scriptJob?.status === "failed" && <button onClick={() => api(`script-jobs/${scriptJob.id}/retry`, { method: "POST" }).then(refreshScript).catch(reason => setScriptError(reason.message))} className="rounded border border-amber-500 px-3 py-2">Retry</button>}</div>
+      {scriptError && <p className="text-rose-300">{scriptError}</p>}
+      {script && <><h3 className="text-lg font-bold">{script.title}</h3><p>{script.data.hook}</p><p>{script.data.intro}</p><ol className="space-y-3 list-decimal pr-6">{script.segments.map(segment => <li key={segment.id} className="rounded border border-slate-700 p-3"><div className="flex justify-between"><button onClick={() => editSegment(segment)} className="text-cyan-300">Edit</button><span>Confidence {segment.confidence.toFixed(2)}</span></div><p>{segment.narration_text}</p>{segment.dialogue_text && <p>Dialogue: {segment.dialogue_text} {segment.speaker_ref ? `(${segment.speaker_ref})` : ""}</p>}<p className="text-sm">Scene: {segment.scene_ref} · Events: {segment.event_refs.join(", ")}</p><div className="mt-2 text-xs text-slate-300">{(segment.evidence ?? []).map((evidence, index) => <p key={index}>Page {evidence.page_number ?? "—"} · Panel {evidence.panel_id ?? "—"} · OCR {evidence.ocr_result_id ?? "—"} · {evidence.reason}</p>)}</div></li>)}</ol></>}
     </section>
   </main>;
 }

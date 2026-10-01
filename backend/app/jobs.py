@@ -16,6 +16,11 @@ def job_engine():
 
 
 def process_job(job_id: str, attempt_id: str | None = None) -> None:
+    if job_id.startswith("script:"):
+        from app.script_service import process_script
+
+        process_script(job_id.removeprefix("script:"))
+        return
     if job_id.startswith("analysis:"):
         from app.analysis_service import process_analysis
 
@@ -44,6 +49,10 @@ class LocalJobQueue:
         process_job(job_id, attempt_id)
 
     def get_status(self, job_id: str) -> str:
+        if job_id.startswith("script:"):
+            from app.script_service import script_queue_status
+
+            return script_queue_status(job_id.removeprefix("script:"))
         if job_id.startswith("story:"):
             from app.story_service import story_queue_status
 
@@ -63,6 +72,10 @@ class LocalJobQueue:
             engine.dispose()
 
     def cancel(self, job_id: str) -> bool:
+        if job_id.startswith("script:"):
+            from app.script_service import cancel_script
+
+            return cancel_script(job_id.removeprefix("script:"))
         if job_id.startswith("story:"):
             from app.story_service import cancel_story
 
@@ -81,7 +94,8 @@ class CeleryJobQueue(LocalJobQueue):
         from app.worker import celery_app
 
         args = [job_id, attempt_id] if attempt_id else [job_id]
-        celery_app.send_task("ingestion.process", args=args, task_id=attempt_id or job_id)
+        task = "script.process" if job_id.startswith("script:") else "ingestion.process"
+        celery_app.send_task(task, args=args, task_id=attempt_id or job_id)
 
 
 def get_job_queue() -> JobQueue:

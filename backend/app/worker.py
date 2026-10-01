@@ -30,3 +30,10 @@ def ingestion_process(job_id: str, attempt_id: str | None = None) -> None:
     from app.jobs import process_job
 
     process_job(job_id, attempt_id)
+
+
+@celery_app.task(name="script.process")
+def script_process(job_id: str) -> None:
+    from app.jobs import process_job
+
+    process_job(job_id)
