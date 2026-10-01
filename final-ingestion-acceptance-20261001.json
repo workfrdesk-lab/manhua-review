@@ -1,0 +1,23 @@
+﻿{
+  "integrated_recovery": "not_completed_invalid_harness",
+  "restart_matrix": {
+    "worker_active": "not_completed",
+    "backend_active": "not_completed",
+    "redis_active": "not_completed",
+    "worker_stale": "not_completed",
+    "backend_stale": "not_completed",
+    "redis_stale": "not_completed",
+    "post_completion": "not_completed"
+  },
+  "concurrency": "pass_focused_tests_only",
+  "broker_duplicate": "not_reproduced",
+  "db_storage_consistency": "not_completed_real_infrastructure",
+  "legacy_migration": "pass",
+  "regression": "pass_511_tests_11_warnings_ruff_typecheck_build_pass",
+  "final_gate": "OPEN",
+  "limitations": [
+    "Disposable real-infrastructure harness runs stopped before a valid complete matrix.",
+    "Raw PASS labels in partial harness logs are invalid and must not be used as acceptance evidence.",
+    "No affected historical chapter, row, object, credential, migration, or production recovery semantics were modified."
+  ]
+}

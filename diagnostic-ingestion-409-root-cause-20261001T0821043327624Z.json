@@ -1,0 +1,39 @@
+{
+    "timestamp_utc":  "20261001T0821043327624Z",
+    "reproduced":  false,
+    "exact_branch":  "E",
+    "branch_description":  "409 could not be reproduced",
+    "classification":  "UNRESOLVED",
+    "acceptance_harness_can_now_be_hardened":  false,
+    "ingestion_recovery":  "OPEN",
+    "environment_created":  false,
+    "protected_artifacts_modified":  false,
+    "existing_stack_restarted":  false,
+    "affected_historical_chapter_touched":  false,
+    "credentials_rotated":  false,
+    "reason":  "The exact prior disposable sequence is not permitted under the requested constraints.",
+    "prior_sequence":  {
+                           "retry_endpoint":  "/api/v1/chapters/{chapter_id}/processing-retry",
+                           "lease_state":  "Harness directly set attempt.lease_expires_at to utcnow minus one second and committed it",
+                           "worker_configuration":  "--concurrency=1 --queues=system",
+                           "evidence":  "final-ingestion-gate-20261001-review.log states the harness artificially expired leases and changed concurrency to 1",
+                           "prior_response_body":  "not captured",
+                           "prior_branch":  "not established"
+                       },
+    "required_sequence_constraints":  {
+                                          "manual_db_state_mutation":  "forbidden",
+                                          "artificial_lease_expiry":  "forbidden",
+                                          "altered_recovery_semantics":  "forbidden",
+                                          "normal_worker_concurrency":  "required",
+                                          "synthetic_fixture_only":  "required"
+                                      },
+    "sanitized_evidence":  {
+                               "http":  null,
+                               "db":  null,
+                               "celery":  null,
+                               "storage":  null,
+                               "reason":  "No runtime request was issued and no disposable environment was launched."
+                           },
+    "race_or_state_transition_ordering":  "Not available; no reproduction occurred",
+    "stop_condition":  "Exact previous sequence cannot be reproduced without forbidden manual lease mutation and altered worker configuration. No replacement scenario was attempted."
+}

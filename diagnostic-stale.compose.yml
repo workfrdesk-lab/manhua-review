@@ -1,0 +1,63 @@
+name: diagnostic-stale
+
+x-env: &env
+  APP_ENV: development
+  STORAGE_BACKEND: minio
+  PROCESSING_MODE: celery
+  DATABASE_URL: postgresql://diag:diag-password@postgres:5432/diagnostic
+  REDIS_URL: redis://redis:6379/0
+  S3_ENDPOINT_URL: http://storage:9000
+  S3_ACCESS_KEY: diagnostic-minio
+  S3_SECRET_KEY: diagnostic-minio-password
+  S3_BUCKET: diagnostic-private
+  S3_REGION: us-east-1
+  LOG_LEVEL: INFO
+
+services:
+  postgres:
+    image: postgres:17.6-bookworm
+    environment: {POSTGRES_USER: diag, POSTGRES_PASSWORD: diag-password, POSTGRES_DB: diagnostic}
+    healthcheck: {test: ["CMD-SHELL", "pg_isready -U diag -d diagnostic"], interval: 2s, timeout: 3s, retries: 20}
+  redis:
+    image: redis:7.4.5-bookworm
+    command: redis-server
+    healthcheck: {test: ["CMD", "redis-cli", "ping"], interval: 2s, timeout: 3s, retries: 20}
+  storage:
+    image: quay.io/minio/aistor/minio:RELEASE.2026-09-19T17-05-25Z@sha256:107cf2014a9583c74c11e3cdbd6903d89c2244355886b89ce532f4ecae9c23f3
+    command: server /mnt/data --console-address ':9001' --license /run/secrets/minio.license
+    environment: {MINIO_ROOT_USER: diagnostic-minio, MINIO_ROOT_PASSWORD: diagnostic-minio-password}
+    secrets: [minio.license]
+    healthcheck: {test: ["CMD", "curl", "--fail", "--silent", "http://localhost:9000/minio/health/ready"], interval: 2s, timeout: 3s, retries: 30}
+  storage-init:
+    image: recap-studio-backend:latest
+    depends_on: {storage: {condition: service_healthy}}
+    environment: {MINIO_ROOT_USER: diagnostic-minio, MINIO_ROOT_PASSWORD: diagnostic-minio-password, S3_BUCKET: diagnostic-private}
+    command: >-
+      python -c "import os,boto3; c=boto3.client('s3',endpoint_url='http://storage:9000',aws_access_key_id=os.environ['MINIO_ROOT_USER'],aws_secret_access_key=os.environ['MINIO_ROOT_PASSWORD'],region_name='us-east-1'); c.create_bucket(Bucket=os.environ['S3_BUCKET']); print('diagnostic bucket ready')"
+  migrate:
+    image: recap-studio-backend:latest
+    environment: *env
+    depends_on: {postgres: {condition: service_healthy}}
+    command: alembic upgrade head
+  backend:
+    image: recap-studio-backend:latest
+    environment: *env
+    depends_on: {migrate: {condition: service_completed_successfully}, storage-init: {condition: service_completed_successfully}, redis: {condition: service_healthy}}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+  worker:
+    image: recap-studio-worker:latest
+    environment: *env
+    depends_on: {migrate: {condition: service_completed_successfully}, storage-init: {condition: service_completed_successfully}, redis: {condition: service_healthy}}
+    command: celery -A app.worker:celery_app worker --loglevel=INFO --concurrency=2 --queues=system
+  probe:
+    image: recap-studio-backend:latest
+    environment: {<<: *env, DIAGNOSTIC_ISOLATED: yes}
+    depends_on: {backend: {condition: service_started}, worker: {condition: service_started}}
+    volumes:
+      - ./diagnostic_stale_probe.py:/probe.py:ro
+      - ${DIAGNOSTIC_EVIDENCE_DIR:?Set isolated evidence directory}:/evidence
+    command: python /probe.py
+
+secrets:
+  minio.license:
+    file: C:/Users/MSC/Downloads/minio.license

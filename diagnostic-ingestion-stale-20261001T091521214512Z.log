@@ -1,0 +1,127 @@
+Single natural stale recovery diagnostic; INGESTION RECOVERY = OPEN
+Classification: unresolved
+STARTUP
+ Network diagstale-20261001t091521214512z_default Creating 
+ Network diagstale-20261001t091521214512z_default Creating 
+ Network diagstale-20261001t091521214512z_default Created 
+ Network diagstale-20261001t091521214512z_default Created 
+ Container diagstale-20261001t091521214512z-postgres-1 Creating 
+ Container diagstale-20261001t091521214512z-storage-1 Creating 
+ Container diagstale-20261001t091521214512z-redis-1 Creating 
+ Container diagstale-20261001t091521214512z-storage-1 Created 
+ Container diagstale-20261001t091521214512z-storage-init-1 Creating 
+ Container diagstale-20261001t091521214512z-redis-1 Created 
+ Container diagstale-20261001t091521214512z-postgres-1 Created 
+ Container diagstale-20261001t091521214512z-migrate-1 Creating 
+ Container diagstale-20261001t091521214512z-storage-init-1 Created 
+ Container diagstale-20261001t091521214512z-migrate-1 Created 
+ Container diagstale-20261001t091521214512z-backend-1 Creating 
+ Container diagstale-20261001t091521214512z-worker-1 Creating 
+ Container diagstale-20261001t091521214512z-worker-1 Created 
+ Container diagstale-20261001t091521214512z-backend-1 Created 
+ Container diagstale-20261001t091521214512z-storage-1 Starting 
+ Container diagstale-20261001t091521214512z-postgres-1 Starting 
+ Container diagstale-20261001t091521214512z-redis-1 Starting 
+ Container diagstale-20261001t091521214512z-storage-1 Started 
+ Container diagstale-20261001t091521214512z-storage-1 Waiting 
+ Container diagstale-20261001t091521214512z-postgres-1 Started 
+ Container diagstale-20261001t091521214512z-postgres-1 Waiting 
+ Container diagstale-20261001t091521214512z-redis-1 Started 
+ Container diagstale-20261001t091521214512z-storage-1 Healthy 
+ Container diagstale-20261001t091521214512z-storage-init-1 Starting 
+ Container diagstale-20261001t091521214512z-storage-init-1 Started 
+ Container diagstale-20261001t091521214512z-postgres-1 Healthy 
+ Container diagstale-20261001t091521214512z-migrate-1 Starting 
+ Container diagstale-20261001t091521214512z-migrate-1 Started 
+ Container diagstale-20261001t091521214512z-redis-1 Waiting 
+ Container diagstale-20261001t091521214512z-migrate-1 Waiting 
+ Container diagstale-20261001t091521214512z-redis-1 Waiting 
+ Container diagstale-20261001t091521214512z-storage-init-1 Waiting 
+ Container diagstale-20261001t091521214512z-migrate-1 Waiting 
+ Container diagstale-20261001t091521214512z-storage-init-1 Waiting 
+ Container diagstale-20261001t091521214512z-redis-1 Healthy 
+ Container diagstale-20261001t091521214512z-redis-1 Healthy 
+ Container diagstale-20261001t091521214512z-storage-init-1 Exited 
+ Container diagstale-20261001t091521214512z-storage-init-1 Exited 
+ Container diagstale-20261001t091521214512z-migrate-1 Exited 
+ Container diagstale-20261001t091521214512z-migrate-1 Exited 
+ Container diagstale-20261001t091521214512z-worker-1 Starting 
+ Container diagstale-20261001t091521214512z-backend-1 Starting 
+ Container diagstale-20261001t091521214512z-worker-1 Started 
+ Container diagstale-20261001t091521214512z-backend-1 Started 
+
+KILL
+ Container diagstale-20261001t091521214512z-worker-1 Killing 
+ Container diagstale-20261001t091521214512z-worker-1 Killed 
+
+START
+ Container diagstale-20261001t091521214512z-redis-1 Running 
+ Container diagstale-20261001t091521214512z-postgres-1 Running 
+ Container diagstale-20261001t091521214512z-storage-1 Running 
+ Container diagstale-20261001t091521214512z-postgres-1 Waiting 
+ Container diagstale-20261001t091521214512z-storage-1 Waiting 
+ Container diagstale-20261001t091521214512z-storage-1 Healthy 
+ Container diagstale-20261001t091521214512z-postgres-1 Healthy 
+ Container diagstale-20261001t091521214512z-storage-init-1 Starting 
+ Container diagstale-20261001t091521214512z-migrate-1 Starting 
+ Container diagstale-20261001t091521214512z-storage-init-1 Started 
+ Container diagstale-20261001t091521214512z-migrate-1 Started 
+ Container diagstale-20261001t091521214512z-migrate-1 Waiting 
+ Container diagstale-20261001t091521214512z-storage-init-1 Waiting 
+ Container diagstale-20261001t091521214512z-redis-1 Waiting 
+ Container diagstale-20261001t091521214512z-redis-1 Healthy 
+ Container diagstale-20261001t091521214512z-storage-init-1 Error service "storage-init" didn't complete successfully: exit 1
+service "storage-init" didn't complete successfully: exit 1
+
+PROBE
+ Container diagstale-20261001t091521214512z-probe Creating 
+ Container diagstale-20261001t091521214512z-probe Created 
+{"timestamp": "2026-10-01T09:15:28.248093+00:00", "level": "INFO", "logger": "httpx", "event": "HTTP Request: GET http://backend:8000/health/live \"HTTP/1.1 200 OK\"", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+{"timestamp": "2026-10-01T09:15:35.475744+00:00", "level": "INFO", "logger": "httpx", "event": "HTTP Request: POST http://backend:8000/api/v1/auth/register \"HTTP/1.1 201 Created\"", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+{"timestamp": "2026-10-01T09:15:35.491541+00:00", "level": "INFO", "logger": "httpx", "event": "HTTP Request: POST http://backend:8000/api/v1/projects \"HTTP/1.1 201 Created\"", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+{"timestamp": "2026-10-01T09:15:35.504802+00:00", "level": "INFO", "logger": "httpx", "event": "HTTP Request: POST http://backend:8000/api/v1/projects/eee163fc-1a4f-4c9b-97d8-e48f44cd00f4/chapters \"HTTP/1.1 201 Created\"", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+{"timestamp": "2026-10-01T09:15:35.792464+00:00", "level": "INFO", "logger": "httpx", "event": "HTTP Request: POST http://backend:8000/api/v1/chapters/c135938f-cc20-47d0-8b12-46abcfff9a38/upload \"HTTP/1.1 200 OK\"", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+{"timestamp": "2026-10-01T09:25:37.535402+00:00", "level": "INFO", "logger": "httpx", "event": "HTTP Request: POST http://backend:8000/api/v1/chapters/c135938f-cc20-47d0-8b12-46abcfff9a38/processing-retry \"HTTP/1.1 200 OK\"", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+
+BACKEND AND WORKER LIFECYCLE
+backend-1  | 2026-10-01T09:15:28.082644301Z INFO:     Started server process [1]
+backend-1  | 2026-10-01T09:15:28.082684455Z INFO:     Waiting for application startup.
+backend-1  | 2026-10-01T09:15:28.088477899Z INFO:     Application startup complete.
+worker-1   | 2026-10-01T09:15:27.253224127Z  
+worker-1   | 2026-10-01T09:15:27.253257610Z  -------------- celery@ca7440edfaf6 v5.6.3 (recovery)
+worker-1   | 2026-10-01T09:15:27.253259432Z --- ***** ----- 
+worker-1   | 2026-10-01T09:15:27.253260462Z -- ******* ---- Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.36 2026-10-01 09:15:27
+backend-1  | 2026-10-01T09:15:28.088659449Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+worker-1   | 2026-10-01T09:15:27.253261373Z - *** --- * --- 
+worker-1   | 2026-10-01T09:15:27.253262147Z - ** ---------- [config]
+worker-1   | 2026-10-01T09:15:27.253262978Z - ** ---------- .> app:         recap:0x7a412f1c2e40
+backend-1  | 2026-10-01T09:15:28.247431548Z {"timestamp": "2026-10-01T09:15:28.247254+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "8036837a-f4ae-4141-9c31-30d290a4ecc7", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 28}
+backend-1  | 2026-10-01T09:15:28.247466822Z INFO:     172.19.0.7:53048 - "GET /health/live HTTP/1.1" 200 OK
+worker-1   | 2026-10-01T09:15:27.253264215Z - ** ---------- .> transport:   redis://redis:6379/0
+backend-1  | 2026-10-01T09:15:35.475202530Z {"timestamp": "2026-10-01T09:15:35.475000+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "b6fee61b-4ead-4284-8145-5bfe1433a8a9", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 96}
+worker-1   | 2026-10-01T09:15:27.253265051Z - ** ---------- .> results:     disabled://
+worker-1   | 2026-10-01T09:15:27.253265893Z - *** --- * --- .> concurrency: 2 (prefork)
+worker-1   | 2026-10-01T09:15:27.253266735Z -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+worker-1   | 2026-10-01T09:15:27.253267652Z --- ***** ----- 
+worker-1   | 2026-10-01T09:15:27.253268447Z  -------------- [queues]
+backend-1  | 2026-10-01T09:15:35.475226021Z INFO:     172.19.0.7:53050 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+worker-1   | 2026-10-01T09:15:27.253269251Z                 .> system           exchange=system(direct) key=system
+backend-1  | 2026-10-01T09:15:35.491231427Z {"timestamp": "2026-10-01T09:15:35.491031+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "718ade31-76a5-42af-bc61-f16d480c167a", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 11}
+worker-1   | 2026-10-01T09:15:27.253270147Z                 
+backend-1  | 2026-10-01T09:15:35.491265259Z INFO:     172.19.0.7:53050 - "POST /api/v1/projects HTTP/1.1" 201 Created
+backend-1  | 2026-10-01T09:15:35.504486645Z {"timestamp": "2026-10-01T09:15:35.504293+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "d28eae2b-33e3-4395-843b-4c35e6390f80", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 8}
+backend-1  | 2026-10-01T09:15:35.504516519Z INFO:     172.19.0.7:53050 - "POST /api/v1/projects/eee163fc-1a4f-4c9b-97d8-e48f44cd00f4/chapters HTTP/1.1" 201 Created
+worker-1   | 2026-10-01T09:15:27.253270932Z 
+backend-1  | 2026-10-01T09:15:35.792113148Z {"timestamp": "2026-10-01T09:15:35.791914+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "2c68ca2a-b2d1-4b82-8d62-33e2f013207e", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 225}
+worker-1   | 2026-10-01T09:15:27.253271775Z [tasks]
+worker-1   | 2026-10-01T09:15:27.253272582Z   . ingestion.process
+worker-1   | 2026-10-01T09:15:27.253273412Z   . system.heartbeat
+worker-1   | 2026-10-01T09:15:27.253274212Z 
+backend-1  | 2026-10-01T09:15:35.792147207Z INFO:     172.19.0.7:53050 - "POST /api/v1/chapters/c135938f-cc20-47d0-8b12-46abcfff9a38/upload HTTP/1.1" 200 OK
+worker-1   | 2026-10-01T09:15:27.323009360Z {"timestamp": "2026-10-01T09:15:27.322771+00:00", "level": "INFO", "logger": "celery.worker.consumer.connection", "event": "Connected to redis://redis:6379/0", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T09:15:27.324570818Z {"timestamp": "2026-10-01T09:15:27.324426+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: searching for neighbors", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+backend-1  | 2026-10-01T09:25:37.534979478Z {"timestamp": "2026-10-01T09:25:37.534778+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "05fdeffc-8e1e-4bbb-9c3d-44283bc1117e", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 68}
+worker-1   | 2026-10-01T09:15:28.332597456Z {"timestamp": "2026-10-01T09:15:28.332309+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: all alone", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+backend-1  | 2026-10-01T09:25:37.535059125Z INFO:     172.19.0.7:52888 - "POST /api/v1/chapters/c135938f-cc20-47d0-8b12-46abcfff9a38/processing-retry HTTP/1.1" 200 OK
+worker-1   | 2026-10-01T09:15:28.343846190Z {"timestamp": "2026-10-01T09:15:28.343696+00:00", "level": "INFO", "logger": "celery.apps.worker", "event": "celery@ca7440edfaf6 ready.", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T09:15:35.790107163Z {"timestamp": "2026-10-01T09:15:35.789933+00:00", "level": "INFO", "logger": "celery.worker.strategy", "event": "Task ingestion.process[0f22576a-b83b-4bbb-8401-0af3f7807a68] received", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}

@@ -1,0 +1,2465 @@
+{
+  "decision": "ROTATION BLOCKED",
+  "gate": "CREDENTIAL REMEDIATION = OPEN",
+  "generated_at": "2026-10-01T16:59:05.804556+00:00",
+  "procedure": {
+    "raw_secret_inspection": "NOT_APPLICABLE",
+    "broad_searches": "NOT_APPLICABLE",
+    "docker_environment_dump": "NOT_APPLICABLE",
+    "image_filesystem_or_layer_extraction": "NOT_APPLICABLE",
+    "new_connectivity_probes": "NOT_APPLICABLE",
+    "license_contents_read_hashed_copied_decoded_or_modified": "NOT_APPLICABLE"
+  },
+  "storage_init_image": {
+    "referenced_image_available": false,
+    "availability_status": "UNVERIFIED",
+    "evidence_basis": "Prior metadata checks reported ImageNotFound; not repeated in this pass.",
+    "historical_layer_provenance": "UNVERIFIED",
+    "metadata_history_layers": "UNVERIFIED",
+    "filesystem_recovery_attempted": false,
+    "substitution_attempted": false
+  },
+  "build_copy_analysis": [
+    {
+      "service": "backend",
+      "context_path": "D:\\projects\\manhua review\\backend",
+      "dockerfile_hash_status": "UNVERIFIED",
+      "dockerignore_hash_status": "UNVERIFIED",
+      "exclusion_rules_status": "UNVERIFIED",
+      "source_destination_mapping_status": "UNVERIFIED",
+      "reason": "Prior inventory does not prove source/destination mapping or effective exclusions; no fresh source inspection performed.",
+      "content_level_secret_classification": "UNVERIFIED",
+      "effective_inclusion_status": "UNVERIFIED",
+      "recursive_context_copy_possible": false
+    },
+    {
+      "service": "worker",
+      "context_path": "D:\\projects\\manhua review\\backend",
+      "dockerfile_hash_status": "UNVERIFIED",
+      "dockerignore_hash_status": "UNVERIFIED",
+      "exclusion_rules_status": "UNVERIFIED",
+      "source_destination_mapping_status": "UNVERIFIED",
+      "reason": "Prior inventory does not prove source/destination mapping or effective exclusions; no fresh source inspection performed.",
+      "content_level_secret_classification": "UNVERIFIED",
+      "effective_inclusion_status": "UNVERIFIED",
+      "recursive_context_copy_possible": false
+    },
+    {
+      "service": "migrate",
+      "context_path": "D:\\projects\\manhua review\\backend",
+      "dockerfile_hash_status": "UNVERIFIED",
+      "dockerignore_hash_status": "UNVERIFIED",
+      "exclusion_rules_status": "UNVERIFIED",
+      "source_destination_mapping_status": "UNVERIFIED",
+      "reason": "Prior inventory does not prove source/destination mapping or effective exclusions; no fresh source inspection performed.",
+      "content_level_secret_classification": "UNVERIFIED",
+      "effective_inclusion_status": "UNVERIFIED",
+      "recursive_context_copy_possible": false
+    },
+    {
+      "service": "storage-init",
+      "context_path": "D:\\projects\\manhua review\\backend",
+      "dockerfile_hash_status": "UNVERIFIED",
+      "dockerignore_hash_status": "UNVERIFIED",
+      "exclusion_rules_status": "UNVERIFIED",
+      "source_destination_mapping_status": "UNVERIFIED",
+      "reason": "Prior inventory does not prove source/destination mapping or effective exclusions; no fresh source inspection performed.",
+      "content_level_secret_classification": "UNVERIFIED",
+      "effective_inclusion_status": "UNVERIFIED",
+      "recursive_context_copy_possible": false
+    },
+    {
+      "service": "frontend",
+      "context_path": "D:\\projects\\manhua review\\frontend",
+      "dockerfile_hash_status": "UNVERIFIED",
+      "dockerignore_hash_status": "UNVERIFIED",
+      "exclusion_rules_status": "UNVERIFIED",
+      "source_destination_mapping_status": "UNVERIFIED",
+      "reason": "Prior inventory does not prove source/destination mapping or effective exclusions; no fresh source inspection performed.",
+      "content_level_secret_classification": "UNVERIFIED",
+      "effective_inclusion_status": "UNVERIFIED",
+      "recursive_context_copy_possible": true
+    }
+  ],
+  "generic_findings": [
+    {
+      "path": "D:\\projects\\manhua review\\.venv\\Lib\\site-packages\\PIL\\ImageFont.py",
+      "path_type_context_status": "UNVERIFIED",
+      "classification": "UNVERIFIED",
+      "matched_literal_emitted": false,
+      "reason": "Prior contextual evidence insufficient; no new content inspection performed."
+    },
+    {
+      "path": "D:\\projects\\manhua review\\.venv\\Lib\\site-packages\\PIL\\__pycache__\\ImageFont.cpython-313.pyc",
+      "path_type_context_status": "UNVERIFIED",
+      "classification": "UNVERIFIED",
+      "matched_literal_emitted": false,
+      "reason": "Prior contextual evidence insufficient; no new content inspection performed."
+    },
+    {
+      "path": "D:\\projects\\manhua review\\.venv\\Lib\\site-packages\\boto3\\examples\\cloudfront.rst",
+      "path_type_context_status": "UNVERIFIED",
+      "classification": "UNVERIFIED",
+      "matched_literal_emitted": false,
+      "reason": "Prior contextual evidence insufficient; no new content inspection performed."
+    },
+    {
+      "path": "D:\\projects\\manhua review\\.venv\\Lib\\site-packages\\botocore\\data\\iam\\2010-05-08\\examples-1.json",
+      "path_type_context_status": "UNVERIFIED",
+      "classification": "UNVERIFIED",
+      "matched_literal_emitted": false,
+      "reason": "Prior contextual evidence insufficient; no new content inspection performed."
+    },
+    {
+      "path": "D:\\projects\\manhua review\\.venv\\Lib\\site-packages\\botocore\\data\\sts\\2011-06-15\\examples-1.json",
+      "path_type_context_status": "UNVERIFIED",
+      "classification": "UNVERIFIED",
+      "matched_literal_emitted": false,
+      "reason": "Prior contextual evidence insufficient; no new content inspection performed."
+    },
+    {
+      "path": "D:\\projects\\manhua review\\.venv\\Scripts\\ruff.exe",
+      "path_type_context_status": "UNVERIFIED",
+      "classification": "UNVERIFIED",
+      "matched_literal_emitted": false,
+      "reason": "Prior contextual evidence insufficient; no new content inspection performed."
+    },
+    {
+      "path": "D:\\projects\\manhua review\\frontend\\.next\\standalone\\node_modules\\next\\dist\\compiled\\amphtml-validator\\validator_wasm.js",
+      "path_type_context_status": "UNVERIFIED",
+      "classification": "UNVERIFIED",
+      "matched_literal_emitted": false,
+      "reason": "Prior contextual evidence insufficient; no new content inspection performed."
+    },
+    {
+      "path": "D:\\projects\\manhua review\\frontend\\node_modules\\next\\dist\\compiled\\amphtml-validator\\validator_wasm.js",
+      "path_type_context_status": "UNVERIFIED",
+      "classification": "UNVERIFIED",
+      "matched_literal_emitted": false,
+      "reason": "Prior contextual evidence insufficient; no new content inspection performed."
+    }
+  ],
+  "credential_precedence": {
+    "running_services": "UNVERIFIED",
+    "stopped_services": "UNVERIFIED",
+    "environment_variable_sources": "UNVERIFIED",
+    "file_reference_sources": "UNVERIFIED",
+    "postgresql_server_authentication_configuration": "UNVERIFIED",
+    "successful_prior_probes_repeated": false
+  },
+  "aistor_license": {
+    "mounted": true,
+    "nonempty": true,
+    "read_only": true,
+    "current_metadata_status": "UNVERIFIED",
+    "evidence_basis": "Historical boolean observations only; not rechecked this pass.",
+    "source_identity_path_relationship": "UNVERIFIED",
+    "validity": "UNVERIFIED",
+    "contents_accessed": false,
+    "validity_blocks_rotation": false
+  },
+  "security_incident": {
+    "raw_credential_literals_exposed_during_audit": true,
+    "values_reproduced_in_this_report": false,
+    "public_or_external_exposure_established": false
+  },
+  "safety_invariants": {
+    "credentials_rotated": false,
+    "redis_restarted": false,
+    "migrations_run": false,
+    "storage_init_mutated": false,
+    "affected_chapter_or_object_access": false,
+    "ingestion_or_recovery_code_changed": false,
+    "service_recreated_for_audit": false
+  },
+  "protected_evidence": {
+    "prior_artifact_count": 569,
+    "license_paths_excluded_from_hash_verification": 1,
+    "non_license_artifact_statuses": {
+      "D:\\projects\\manhua review\\.env": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.env.example": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.gitignore": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\.gitignore": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\agents\\data.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\SKILL.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\assets\\experiment-template.ipynb": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\assets\\tutorial-template.ipynb": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\references\\experiment-patterns.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\references\\manual-editing.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\references\\notebook-structure.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\references\\quality-checklist.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\references\\tutorial-patterns.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.kilo\\skills\\jupyter-notebook\\scripts\\new_notebook.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.ruff_cache\\.gitignore": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.ruff_cache\\0.16.9\\3627036811068636533": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\.ruff_cache\\0.16.9\\3696423049143347374": {
+        "status": "UNVERIFIED",
+        "hash_match": false
+      },
+      "D:\\projects\\manhua review\\.ruff_cache\\CACHEDIR.TAG": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\README.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\credential_preflight.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\diagnostic_409_capture.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\diagnostic_409_probe.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\diagnostic_stale_capture.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\diagnostic_stale_preserve_failure.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\diagnostic_stale_probe.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\final_acceptance_runner.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\final_restart_matrix_probe.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\final_restart_matrix_review.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\final_restart_matrix_runner.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\focused_worker_crash.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\recovery_acceptance.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\__pycache__\\secret_audit.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.dockerignore": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.env.local.example": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.pytest_cache\\.gitignore": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.pytest_cache\\CACHEDIR.TAG": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.pytest_cache\\README.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.pytest_cache\\v\\cache\\lastfailed": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.pytest_cache\\v\\cache\\nodeids": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.ruff_cache\\.gitignore": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.ruff_cache\\0.16.9\\13073322313239628849": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.ruff_cache\\0.16.9\\15926870360831092773": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.ruff_cache\\0.16.9\\2853186294076966776": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.ruff_cache\\0.16.9\\3919159211177915096": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.ruff_cache\\0.16.9\\495304757636564369": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.ruff_cache\\0.16.9\\9048129250628275790": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\.ruff_cache\\CACHEDIR.TAG": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\Dockerfile": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a10-micro-a10.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a10-micro-full.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a10-micro-migration.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a10-micro-story.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-acceptance-2.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-acceptance-3.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-acceptance-4.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-acceptance.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-full-final.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-full.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-migration-final.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-migration.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-migrations-all.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-phase4a-final.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-phase4a.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a11-ruff-format.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a9-final-focused.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a9-final-full.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a9-final-migration.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a9-micro-focused.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a9-micro-full.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\a9-micro-migration.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\alembic.ini": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__init__.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\__init__.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\analysis.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\analysis_providers.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\analysis_service.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\auth.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\config.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\db.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\errors.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\extraction.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\health.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\ingestion.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\ingestion_service.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\jobs.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\logging_config.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\main.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\models.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\projects.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\rate_limit.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\security.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\storage.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story_audit.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story_context.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story_providers.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story_resolution.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story_review.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story_schemas.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story_service.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\story_validation.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\__pycache__\\worker.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\analysis.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\analysis_providers.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\analysis_service.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\auth.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\config.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\db.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\errors.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\extraction.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\health.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\ingestion.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\ingestion_service.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\jobs.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\logging_config.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\main.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\models.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\projects.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\rate_limit.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\security.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\storage.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story_audit.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story_context.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story_providers.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story_resolution.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story_review.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story_schemas.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story_service.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\story_validation.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\app\\worker.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\baseline-pytest.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\final-all.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\final-pytest.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\final-validation.db": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\focused.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\full-local-pytest.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\full-local-results.xml": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\local-recovery-pytest.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\local-recovery-results.xml": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migration-check.db": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migration-validation.db": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\__pycache__\\env.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\env.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\script.py.mako": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0001_auth.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0002_projects.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0003_ingestion.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0004_analysis.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0005_story.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0006_story_review.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0007_story_integrity.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0008_story_constraints.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0009_relationship_chapter_fks.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0010_story_audit_context.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0011_canonical_review_states.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\0012_ingestion_attempt_recovery.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0001_auth.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0002_projects.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0003_ingestion.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0004_analysis.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0005_story.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0006_story_review.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0007_story_integrity.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0008_story_constraints.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0009_relationship_chapter_fks.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0010_story_audit_context.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0011_canonical_review_states.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\migrations\\versions\\__pycache__\\0012_ingestion_attempt_recovery.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\phase4a-migration-check.db": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\phase4a-pytest.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\postgres-recovery-acceptance.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\pyproject.toml": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recap_studio_backend.egg-info\\PKG-INFO": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recap_studio_backend.egg-info\\SOURCES.txt": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recap_studio_backend.egg-info\\dependency_links.txt": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recap_studio_backend.egg-info\\requires.txt": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recap_studio_backend.egg-info\\top_level.txt": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recovery-acceptance-test.db": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recovery-gap-focused.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recovery-gap-postgres-followup.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\recovery-tests.db": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\requirements.lock": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\conftest.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\conftest.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_analysis_api.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_analysis_api.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_analysis_providers.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_analysis_providers.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_auth.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_auth.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_errors.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_errors.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_extraction.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_extraction.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_health.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_health.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_ingestion_legacy_migration.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_ingestion_local.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_ingestion_local.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_ingestion_recovery_acceptance.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_ingestion_recovery_v1.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_ingestion_recovery_v1.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_acceptance.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_acceptance.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_api_acceptance.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_api_acceptance.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_audit.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_audit.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_audit_context.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_audit_context.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_concurrency.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_concurrency.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_final_acceptance.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_final_acceptance.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_merge_matrix.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_merge_matrix.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_reconciliation_edges.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_reconciliation_edges.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_review_states.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_review_states.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_route_boundaries.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_route_boundaries.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_route_inventory.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_phase4a_route_inventory.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_projects.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_projects.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_rate_limit.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_rate_limit.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story_closure.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story_closure.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story_integrity.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story_integrity.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story_resolution.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story_resolution.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story_validation.cpython-313-pytest-9.1.1.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\__pycache__\\test_story_validation.cpython-313.pyc": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\conftest.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_analysis_api.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_analysis_providers.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_auth.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_errors.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_extraction.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_health.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_ingestion_legacy_migration.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_ingestion_local.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_ingestion_recovery_acceptance.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_ingestion_recovery_v1.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_acceptance.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_api_acceptance.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_audit.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_audit_context.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_concurrency.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_final_acceptance.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_merge_matrix.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_reconciliation_edges.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_review_states.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_route_boundaries.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_route_inventory.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_projects.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_rate_limit.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_story.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_story_closure.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_story_integrity.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_story_resolution.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\tests\\test_story_validation.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\validation-tests.db": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\backend\\validation.db": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-20261001T120131225379Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-20261001T120131225379Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-20261001T120131225379Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-20261001T120131225379Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-20261001T120254273928Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-20261001T120254273928Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-20261001T120254273928Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-20261001T120254273928Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-evidence-20261001T161423634966Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-evidence-20261001T161423634966Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-evidence-20261001T161423634966Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-evidence-20261001T161423634966Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-evidence-20261001T161535802833Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-evidence-20261001T161535802833Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-evidence-20261001T161535802833Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential-remediation-preflight-evidence-20261001T161535802833Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\credential_preflight.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-409.compose.yml": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-20261001T0816530957577Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-20261001T0816530957577Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-root-cause-20261001T0821043327624Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-root-cause-20261001T0821043327624Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085441343141Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085441343141Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085441343141Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085441343141Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085700159692Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085700159692Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085700159692Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085700159692Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T090817045112Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T090817045112Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T090817045112Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T090817045112Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T091521214512Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T091521214512Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T091521214512Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T091521214512Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T095207951232Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T095207951232Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T095207951232Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T095207951232Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T095741405509Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T095741405509Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T095741405509Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T095741405509Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T101422152631Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T101422152631Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T101422152631Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-20261001T101422152631Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-launch.err": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-completion-launch.out": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T093945908749Z\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T093945908749Z\\kill.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T093945908749Z\\kill.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T093945908749Z\\start.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\kill.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\kill.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\probe-output.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\restart-backend.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\restart-backend.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\restart-redis.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\restart-redis.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\restart-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\restart-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\start.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T095741405509Z\\start.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\kill.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\kill.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\probe-output.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\restart-backend.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\restart-backend.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\restart-redis.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\restart-redis.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\restart-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\restart-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\start.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-evidence-20261001T101422152631Z\\start.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-preserved-20261001T091521214512Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale-preserved-20261001T091521214512Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic-stale.compose.yml": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic_409_capture.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic_409_probe.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic_stale_capture.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic_stale_preserve_failure.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\diagnostic_stale_probe.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\docker-access-preflight-20261001T163139304862Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\docker-access-preflight-20261001T163139304862Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\docker-access-preflight-20261001T163139304862Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\docker-access-preflight-20261001T163139304862Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\docker-compose.yml": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\docs\\aistor-validation.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\docs\\architecture.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\docs\\worker-crash-recovery-decision.md": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-acceptance-20261001-084002.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-acceptance-20261001-084209.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-acceptance-20261001-084404.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-acceptance-20261001.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-gate-20261001-review.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-recovery-reviewed-20261001T114404214996Z.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-recovery-reviewed-20261001T114404214996Z.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-recovery-reviewed-20261001T114404214996Z.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-ingestion-recovery-reviewed-20261001T114404214996Z.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\acceptance.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\acceptance.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\acceptance.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\acceptance.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\baseline.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\build.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\focused.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\full_backend.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\progress.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\ruff.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\checkpoint.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\done.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\lifecycle.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\lifecycle.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\probe.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\probe.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\restart-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\restart-worker.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\restart-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\restart-worker.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\scenario.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-1\\scenario.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\checkpoint.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\done.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\lifecycle.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\lifecycle.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\probe.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\probe.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\restart-backend.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\restart-backend.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\restart-backend.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\restart-backend.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\scenario.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-2\\scenario.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\checkpoint.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\done.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\lifecycle.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\lifecycle.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\probe.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\probe.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\restart-redis.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\restart-redis.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\restart-redis.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\restart-redis.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\scenario.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-3\\scenario.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\checkpoint.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\done.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\kill-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\kill-worker.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\kill-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\kill-worker.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\lifecycle.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\lifecycle.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\probe.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\probe.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\restart-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\restart-worker.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\restart-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\restart-worker.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\scenario.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-4\\scenario.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\checkpoint.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\done.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\kill-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\kill-worker.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\kill-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\kill-worker.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\lifecycle.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\lifecycle.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\probe.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\probe.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\restart-backend.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\restart-backend.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\restart-backend.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\restart-backend.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\scenario.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\scenario.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\start-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\start-worker.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\start-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-5\\start-worker.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\checkpoint.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\done.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\kill-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\kill-worker.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\kill-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\kill-worker.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\lifecycle.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\lifecycle.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\probe.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\probe.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\restart-redis.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\restart-redis.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\restart-redis.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\restart-redis.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\scenario.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\scenario.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\start-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\start-worker.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\start-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-6\\start-worker.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\checkpoint.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\checkpoint.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\done": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\done.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\lifecycle.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\lifecycle.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\probe.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\probe.log.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-backend.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-backend.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-backend.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-backend.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-redis.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-redis.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-redis.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-redis.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-worker.ack": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-worker.ack.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-worker.request": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\restart-worker.request.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\scenario.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\scenario-7\\scenario.json.sha256": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final-restart-matrix-20261001T104405189045Z\\typecheck.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final_acceptance_runner.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final_restart_matrix.compose.yml": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final_restart_matrix_probe.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final_restart_matrix_review.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\final_restart_matrix_runner.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\focused-worker-crash.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\focused_worker_crash.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\fresh-focused-output.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\fresh-legacy-pg-output.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\fresh-recovery-acceptance-output.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\fresh-secret-audit-output.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\.dockerignore": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\Dockerfile": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\next-env.d.ts": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\next.config.ts": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\package-lock.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\package.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\postcss.config.mjs": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\api\\system\\status\\route.ts": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\api\\v1\\[...path]\\route.ts": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\chapters\\[id]\\page.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\dashboard\\page.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\globals.css": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\layout.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\login\\page.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\page.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\projects\\[id]\\page.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\app\\register\\page.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\components\\auth-form.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\components\\resource-list.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\components\\system-status.tsx": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\src\\lib\\api.ts": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\tsconfig.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\frontend\\tsconfig.tsbuildinfo": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\matrix-launch-20261001T104404321Z.err": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\matrix-launch-20261001T104404321Z.out": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\recovery-acceptance-evidence.json": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\recovery-acceptance-run.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\recovery_acceptance.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\secret-audit-current.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\secret-audit-followup.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\secret-audit-gap-current.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\secret-audit-path-findings.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\secret-audit.log": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\secret_audit.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale-launch-20261001T105740.err": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale-launch-20261001T105740.out": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale-launch-20261001T111234.err": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale-launch-20261001T111234.out": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale-launch-20261001T111325.err": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale-launch-20261001T111325.out": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale-launch-20261001T111421.err": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale-launch-20261001T111421.out": {
+        "status": "VERIFIED",
+        "hash_match": true
+      },
+      "D:\\projects\\manhua review\\stale_attempt_diagnostic.py": {
+        "status": "VERIFIED",
+        "hash_match": true
+      }
+    },
+    "all_non_license_hashes_unchanged": false,
+    "unchanged_during_this_pass": true,
+    "status": "UNVERIFIED"
+  },
+  "remaining_blockers": [
+    "Storage-init historical layers remain UNVERIFIED because the exact referenced image is absent.",
+    "Effective COPY/ADD inclusion and content-level secret classification remain UNVERIFIED.",
+    "Generic scanner findings remain individually UNVERIFIED without matched-value inspection.",
+    "Complete running/stopped environment, *_FILE, and PostgreSQL authentication precedence remains UNVERIFIED.",
+    "Protected evidence is missing or differs from the historical baseline; cause not established.",
+    "Expected license source/path relationship remains UNVERIFIED; validity itself is non-blocking."
+  ],
+  "no_values_or_license_contents_included": true
+}

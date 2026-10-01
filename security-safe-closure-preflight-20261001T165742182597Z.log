@@ -1,0 +1,8 @@
+ROTATION BLOCKED
+CREDENTIAL REMEDIATION = OPEN
+No credential values or license contents are included.
+Raw credential literals were exposed during the audit pass; public/external exposure was not established.
+BLOCKER: Storage-init historical layers remain UNVERIFIED because the exact referenced image is absent.
+BLOCKER: Effective COPY/ADD inclusion and content-level secret classification remain UNVERIFIED.
+BLOCKER: Generic scanner findings remain individually UNVERIFIED without matched-value inspection.
+BLOCKER: Complete running/stopped environment, *_FILE, and PostgreSQL authentication precedence remains UNVERIFIED.

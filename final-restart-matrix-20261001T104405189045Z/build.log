@@ -1,0 +1,37 @@
+
+> recap-studio-frontend@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.26
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1266ms
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7) 
+   Generating static pages (3/7) 
+   Generating static pages (5/7) 
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    1.92 kB         105 kB
+├ ○ /_not-found                            995 B         104 kB
+├ ƒ /api/system/status                     127 B         103 kB
+├ ƒ /api/v1/[...path]                      127 B         103 kB
+├ ƒ /chapters/[id]                       4.14 kB         107 kB
+├ ○ /dashboard                           3.13 kB         109 kB
+├ ○ /login                               1.53 kB         108 kB
+├ ƒ /projects/[id]                        1.4 kB         107 kB
+└ ○ /register                            1.53 kB         108 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/255-2dbbf79f36f0dfa2.js       46.4 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.99 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

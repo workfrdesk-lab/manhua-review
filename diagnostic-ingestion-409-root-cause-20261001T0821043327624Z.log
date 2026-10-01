@@ -1,0 +1,18 @@
+INGESTION 409 ROOT-CAUSE DIAGNOSTIC
+Timestamp UTC: 20261001T0821043327624Z
+Result: NOT REPRODUCED
+Exact branch: E — 409 could not be reproduced
+Classification: UNRESOLVED
+
+Reason: The retained prior harness directly expired the lease in the database and used worker concurrency 1.
+Those actions are forbidden by this run; the exact sequence cannot be reproduced without them.
+No disposable environment was launched. No HTTP request, DB mutation, credential change, stack restart, or protected-artifact modification occurred.
+HTTP evidence: not available; no request issued.
+DB evidence: not available; no disposable environment launched.
+Celery evidence: not available; no disposable environment launched.
+Storage evidence: not available; no disposable environment launched.
+Race/state ordering: not available.
+Acceptance harness hardening: NO; root cause remains unresolved.
+INGESTION RECOVERY = OPEN
+JSON SHA-256: 408B9FC954117180296C00511D68ABEFBDA99B748C69AF3BB17EECFF714962D3
+

@@ -1,0 +1,125 @@
+{
+  "command": [
+    "inspect",
+    "--format",
+    "{{json .State}}",
+    "diagstale-20261001t093945908749z-worker-1"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:39:50.983822123Z\",\"FinishedAt\":\"2026-10-01T09:40:04.410674127Z\"}\n",
+  "stderr": ""
+}
+{
+  "command": [
+    "logs",
+    "--timestamps",
+    "diagstale-20261001t093945908749z-worker-1"
+  ],
+  "exit_code": 0,
+  "stdout": "2026-10-01T09:39:51.906974024Z  \n2026-10-01T09:39:51.907003540Z  -------------- celery@d54a8b4ef4c9 v5.6.3 (recovery)\n2026-10-01T09:39:51.907005780Z --- ***** ----- \n2026-10-01T09:39:51.907006877Z -- ******* ---- Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.36 2026-10-01 09:39:51\n2026-10-01T09:39:51.907007892Z - *** --- * --- \n2026-10-01T09:39:51.907008715Z - ** ---------- [config]\n2026-10-01T09:39:51.907009587Z - ** ---------- .> app:         recap:0x7caab39a9b50\n2026-10-01T09:39:51.907010724Z - ** ---------- .> transport:   redis://redis:6379/0\n2026-10-01T09:39:51.907011570Z - ** ---------- .> results:     disabled://\n2026-10-01T09:39:51.907012408Z - *** --- * --- .> concurrency: 2 (prefork)\n2026-10-01T09:39:51.907013254Z -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)\n2026-10-01T09:39:51.907014114Z --- ***** ----- \n2026-10-01T09:39:51.907014877Z  -------------- [queues]\n2026-10-01T09:39:51.907015686Z                 .> system           exchange=system(direct) key=system\n2026-10-01T09:39:51.907016561Z                 \n2026-10-01T09:39:51.907017330Z \n2026-10-01T09:39:51.907018100Z [tasks]\n2026-10-01T09:39:51.907018950Z   . ingestion.process\n2026-10-01T09:39:51.907019793Z   . system.heartbeat\n2026-10-01T09:39:51.907020593Z \n",
+  "stderr": "2026-10-01T09:39:51.975346944Z {\"timestamp\": \"2026-10-01T09:39:51.975099+00:00\", \"level\": \"INFO\", \"logger\": \"celery.worker.consumer.connection\", \"event\": \"Connected to redis://redis:6379/0\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n2026-10-01T09:39:51.976861079Z {\"timestamp\": \"2026-10-01T09:39:51.976723+00:00\", \"level\": \"INFO\", \"logger\": \"celery.worker.consumer.mingle\", \"event\": \"mingle: searching for neighbors\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n2026-10-01T09:39:52.984797824Z {\"timestamp\": \"2026-10-01T09:39:52.984656+00:00\", \"level\": \"INFO\", \"logger\": \"celery.worker.consumer.mingle\", \"event\": \"mingle: all alone\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n2026-10-01T09:39:52.991763352Z {\"timestamp\": \"2026-10-01T09:39:52.991630+00:00\", \"level\": \"INFO\", \"logger\": \"celery.apps.worker\", \"event\": \"celery@d54a8b4ef4c9 ready.\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n2026-10-01T09:40:03.457208147Z {\"timestamp\": \"2026-10-01T09:40:03.457018+00:00\", \"level\": \"INFO\", \"logger\": \"celery.worker.strategy\", \"event\": \"Task ingestion.process[3801cb55-b149-405e-b649-219513f76273] received\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n"
+}
+{
+  "command": [
+    "inspect",
+    "--format",
+    "{{json .State}}",
+    "diagstale-20261001t093945908749z-backend-1"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"Status\":\"running\",\"Running\":true,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":90081,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:39:51.108403033Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\"}\n",
+  "stderr": ""
+}
+{
+  "command": [
+    "logs",
+    "--timestamps",
+    "diagstale-20261001t093945908749z-backend-1"
+  ],
+  "exit_code": 0,
+  "stdout": "2026-10-01T09:39:52.916695686Z INFO:     172.19.0.7:43770 - \"GET /health/live HTTP/1.1\" 200 OK\n2026-10-01T09:40:03.136911139Z INFO:     172.19.0.7:36920 - \"POST /api/v1/auth/register HTTP/1.1\" 201 Created\n2026-10-01T09:40:03.152589110Z INFO:     172.19.0.7:36920 - \"POST /api/v1/projects HTTP/1.1\" 201 Created\n2026-10-01T09:40:03.165759825Z INFO:     172.19.0.7:36920 - \"POST /api/v1/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters HTTP/1.1\" 201 Created\n2026-10-01T09:40:03.459255022Z INFO:     172.19.0.7:36920 - \"POST /api/v1/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/upload HTTP/1.1\" 200 OK\n2026-10-01T09:50:06.089760921Z INFO:     172.19.0.7:44452 - \"POST /api/v1/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/processing-retry HTTP/1.1\" 200 OK\n",
+  "stderr": "2026-10-01T09:39:52.693128838Z INFO:     Started server process [1]\n2026-10-01T09:39:52.693193563Z INFO:     Waiting for application startup.\n2026-10-01T09:39:52.699706004Z INFO:     Application startup complete.\n2026-10-01T09:39:52.700025993Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)\n2026-10-01T09:39:52.916663225Z {\"timestamp\": \"2026-10-01T09:39:52.916394+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"6bbad68d-7465-49b6-b932-9cf41417ad09\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 200, \"error\": null, \"duration_ms\": 25}\n2026-10-01T09:40:03.136854462Z {\"timestamp\": \"2026-10-01T09:40:03.136632+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"aafe69e8-d551-488f-8deb-6469bdaad253\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 201, \"error\": null, \"duration_ms\": 99}\n2026-10-01T09:40:03.152554656Z {\"timestamp\": \"2026-10-01T09:40:03.152377+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"b3784ed2-5fbc-41b1-835a-0648782b838f\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 201, \"error\": null, \"duration_ms\": 10}\n2026-10-01T09:40:03.165725607Z {\"timestamp\": \"2026-10-01T09:40:03.165534+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"3a7c487b-e8b4-495c-bcf2-5705efe5245f\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 201, \"error\": null, \"duration_ms\": 8}\n2026-10-01T09:40:03.459211450Z {\"timestamp\": \"2026-10-01T09:40:03.459031+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"f3912331-8271-4dd5-a7e6-501a7fb0c7ec\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 200, \"error\": null, \"duration_ms\": 231}\n2026-10-01T09:50:06.089696816Z {\"timestamp\": \"2026-10-01T09:50:06.089534+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"39e22083-0f9d-4560-a36b-fe735b46467f\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 200, \"error\": null, \"duration_ms\": 67}\n"
+}
+{
+  "command": [
+    "inspect",
+    "--format",
+    "{{json .State}}",
+    "diagstale-20261001t093945908749z-redis-1"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"Status\":\"running\",\"Running\":true,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":89517,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:39:46.647613618Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\",\"Health\":{\"Status\":\"healthy\",\"FailingStreak\":0,\"Log\":[{\"Start\":\"2026-10-01T09:51:58.788478793Z\",\"End\":\"2026-10-01T09:51:58.820497571Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"},{\"Start\":\"2026-10-01T09:52:00.821700743Z\",\"End\":\"2026-10-01T09:52:00.856019899Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"},{\"Start\":\"2026-10-01T09:52:02.857111795Z\",\"End\":\"2026-10-01T09:52:02.884933933Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"},{\"Start\":\"2026-10-01T09:52:04.885657405Z\",\"End\":\"2026-10-01T09:52:04.920050582Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"},{\"Start\":\"2026-10-01T09:52:06.920864469Z\",\"End\":\"2026-10-01T09:52:06.953564677Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"}]}}\n",
+  "stderr": ""
+}
+{
+  "command": [
+    "logs",
+    "--timestamps",
+    "diagstale-20261001t093945908749z-redis-1"
+  ],
+  "exit_code": 0,
+  "stdout": "2026-10-01T09:39:46.748893425Z 1:C 01 Oct 2026 09:39:46.748 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo\n2026-10-01T09:39:46.748950867Z 1:C 01 Oct 2026 09:39:46.748 * Redis version=7.4.5, bits=64, commit=00000000, modified=0, pid=1, just started\n2026-10-01T09:39:46.748955857Z 1:C 01 Oct 2026 09:39:46.748 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf\n2026-10-01T09:39:46.749230517Z 1:M 01 Oct 2026 09:39:46.749 * monotonic clock: POSIX clock_gettime\n2026-10-01T09:39:46.750030286Z 1:M 01 Oct 2026 09:39:46.749 * Running mode=standalone, port=6379.\n2026-10-01T09:39:46.750377650Z 1:M 01 Oct 2026 09:39:46.750 * Server initialized\n2026-10-01T09:39:46.750385587Z 1:M 01 Oct 2026 09:39:46.750 * Ready to accept connections tcp\n",
+  "stderr": ""
+}
+{
+  "command": [
+    "inspect",
+    "--format",
+    "{{json .State}}",
+    "diagstale-20261001t093945908749z-storage-init-1"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":1,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:50:06.943145045Z\",\"FinishedAt\":\"2026-10-01T09:50:07.597785402Z\"}\n",
+  "stderr": ""
+}
+{
+  "command": [
+    "logs",
+    "--timestamps",
+    "diagstale-20261001t093945908749z-storage-init-1"
+  ],
+  "exit_code": 0,
+  "stdout": "2026-10-01T09:39:49.786758655Z diagnostic bucket ready\n",
+  "stderr": "2026-10-01T09:50:07.550057916Z Traceback (most recent call last):\n2026-10-01T09:50:07.550100272Z   File \"<string>\", line 1, in <module>\n2026-10-01T09:50:07.550103541Z   File \"/usr/local/lib/python3.12/site-packages/botocore/client.py\", line 606, in _api_call\n2026-10-01T09:50:07.550164069Z     return self._make_api_call(operation_name, kwargs)\n2026-10-01T09:50:07.550275021Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n2026-10-01T09:50:07.550284880Z   File \"/usr/local/lib/python3.12/site-packages/botocore/context.py\", line 123, in wrapper\n2026-10-01T09:50:07.550440392Z     return func(*args, **kwargs)\n2026-10-01T09:50:07.550449947Z            ^^^^^^^^^^^^^^^^^^^^^\n2026-10-01T09:50:07.550458464Z   File \"/usr/local/lib/python3.12/site-packages/botocore/client.py\", line 1094, in _make_api_call\n2026-10-01T09:50:07.550843005Z     raise error_class(parsed_response, operation_name)\n2026-10-01T09:50:07.550853007Z botocore.errorfactory.BucketAlreadyOwnedByYou: An error occurred (BucketAlreadyOwnedByYou) when calling the CreateBucket operation: Your previous request to create the named bucket succeeded and you already own it.\n"
+}
+{
+  "command": [
+    "inspect",
+    "--format",
+    "{{json .State}}",
+    "diagstale-20261001t093945908749z-migrate-1"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:50:07.053601338Z\",\"FinishedAt\":\"2026-10-01T09:50:08.349031613Z\"}\n",
+  "stderr": ""
+}
+{
+  "command": [
+    "logs",
+    "--timestamps",
+    "diagstale-20261001t093945908749z-migrate-1"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}
+{
+  "command": [
+    "logs",
+    "diagstale-20261001t093945908749z-probe"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "{\"timestamp\": \"2026-10-01T09:39:52.917323+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: GET http://backend:8000/health/live \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:40:03.137378+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/auth/register \\\"HTTP/1.1 201 Created\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:40:03.152869+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/projects \\\"HTTP/1.1 201 Created\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:40:03.166026+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters \\\"HTTP/1.1 201 Created\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:40:03.459565+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/upload \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:50:06.090083+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/processing-retry \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n"
+}
+{
+  "command": [
+    "stop",
+    "--time",
+    "5",
+    "diagstale-20261001t093945908749z-probe"
+  ],
+  "exit_code": 0,
+  "stdout": "Flag --time has been deprecated, use --timeout instead\ndiagstale-20261001t093945908749z-probe\n",
+  "stderr": ""
+}

@@ -1,0 +1,1343 @@
+{
+  "classification": "partial-evidence-not-pass",
+  "ingestion_recovery": "OPEN",
+  "project": "diagstale-20261001t093945908749z",
+  "probe": {
+    "ingestion_recovery": "OPEN",
+    "classification": "unresolved",
+    "http": [
+      {
+        "path": "/auth/register",
+        "started_at": "2026-10-01T09:40:03.036779+00:00",
+        "received_at": "2026-10-01T09:40:03.137654+00:00",
+        "status": 201,
+        "request_id": "aafe69e8-d551-488f-8deb-6469bdaad253",
+        "body": {
+          "id": "78e22fb0-f695-4ebe-9213-b055e2bb3530"
+        }
+      },
+      {
+        "path": "/projects",
+        "started_at": "2026-10-01T09:40:03.141224+00:00",
+        "received_at": "2026-10-01T09:40:03.153133+00:00",
+        "status": 201,
+        "request_id": "b3784ed2-5fbc-41b1-835a-0648782b838f",
+        "body": {
+          "id": "c31997df-6354-446d-9acc-de2231b83bcc",
+          "status": "draft"
+        }
+      },
+      {
+        "path": "/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters",
+        "started_at": "2026-10-01T09:40:03.156510+00:00",
+        "received_at": "2026-10-01T09:40:03.166286+00:00",
+        "status": 201,
+        "request_id": "3a7c487b-e8b4-495c-bcf2-5705efe5245f",
+        "body": {
+          "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "status": "draft"
+        }
+      },
+      {
+        "path": "/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/upload",
+        "started_at": "2026-10-01T09:40:03.226520+00:00",
+        "received_at": "2026-10-01T09:40:03.459801+00:00",
+        "status": 200,
+        "request_id": "f3912331-8271-4dd5-a7e6-501a7fb0c7ec",
+        "body": {
+          "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "status": "queued"
+        }
+      },
+      {
+        "path": "/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/processing-retry",
+        "started_at": "2026-10-01T09:50:06.020370+00:00",
+        "received_at": "2026-10-01T09:50:06.090314+00:00",
+        "status": 200,
+        "request_id": "39e22083-0f9d-4560-a36b-fe735b46467f",
+        "body": {
+          "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "attempt_id": "c0683fea-88d0-4931-97cc-bbe1ffac2cea"
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "started_at": "2026-10-01T09:40:04.215585+00:00",
+        "database_time": "2026-10-01 09:40:04.216557+00:00",
+        "chapters": [
+          {
+            "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "project_id": "c31997df-6354-446d-9acc-de2231b83bcc",
+            "name": "Synthetic 100 page archive",
+            "status": "processing_pages",
+            "created_at": "2026-10-01 09:40:03.158265+00:00",
+            "updated_at": "2026-10-01 09:40:04.095245+00:00"
+          }
+        ],
+        "jobs": [
+          {
+            "id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "file_id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+            "status": "processing_pages",
+            "error": null,
+            "created_at": "2026-10-01 09:40:03.236426+00:00",
+            "current_attempt_id": "3801cb55-b149-405e-b649-219513f76273"
+          }
+        ],
+        "ingestion_attempts": [
+          {
+            "id": "3801cb55-b149-405e-b649-219513f76273",
+            "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "generation": 1,
+            "cleanup_status": "none",
+            "status": "processing_pages",
+            "lease_expires_at": "2026-10-01 09:50:04.186823+00:00",
+            "last_heartbeat_at": "2026-10-01 09:40:04.186813+00:00",
+            "started_at": "2026-10-01 09:40:04.079767+00:00",
+            "finished_at": null,
+            "error": null,
+            "created_at": "2026-10-01 09:40:03.236426+00:00",
+            "updated_at": "2026-10-01 09:40:04.184854+00:00"
+          }
+        ],
+        "chapter_files": [
+          {
+            "id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "original_name": "synthetic.zip",
+            "media_type": "application/zip",
+            "size_bytes": 1701622,
+            "storage_key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+            "created_at": "2026-10-01 09:40:03.236426+00:00"
+          }
+        ],
+        "pages": [],
+        "db_snapshot_finished_at": "2026-10-01T09:40:04.218980+00:00",
+        "label": "before_real_worker_kill",
+        "lease_owner": {
+          "value": null,
+          "reason": "not_present_in_schema"
+        },
+        "heartbeat_at_mapping": "ingestion_attempts.last_heartbeat_at",
+        "objects": [
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.166000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.180000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+            "Size": 1701622,
+            "ETag": "\"287f3e39cd437bb7ed353b20234a579b\"",
+            "LastModified": "2026-10-01 09:40:03.331000+00:00"
+          }
+        ],
+        "inventory_finished_at": "2026-10-01T09:40:04.228512+00:00"
+      },
+      {
+        "started_at": "2026-10-01T09:40:05.440718+00:00",
+        "database_time": "2026-10-01 09:40:05.441486+00:00",
+        "chapters": [
+          {
+            "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "project_id": "c31997df-6354-446d-9acc-de2231b83bcc",
+            "name": "Synthetic 100 page archive",
+            "status": "processing_pages",
+            "created_at": "2026-10-01 09:40:03.158265+00:00",
+            "updated_at": "2026-10-01 09:40:04.095245+00:00"
+          }
+        ],
+        "jobs": [
+          {
+            "id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "file_id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+            "status": "processing_pages",
+            "error": null,
+            "created_at": "2026-10-01 09:40:03.236426+00:00",
+            "current_attempt_id": "3801cb55-b149-405e-b649-219513f76273"
+          }
+        ],
+        "ingestion_attempts": [
+          {
+            "id": "3801cb55-b149-405e-b649-219513f76273",
+            "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "generation": 1,
+            "cleanup_status": "none",
+            "status": "processing_pages",
+            "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+            "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+            "started_at": "2026-10-01 09:40:04.079767+00:00",
+            "finished_at": null,
+            "error": null,
+            "created_at": "2026-10-01 09:40:03.236426+00:00",
+            "updated_at": "2026-10-01 09:40:04.401774+00:00"
+          }
+        ],
+        "chapter_files": [
+          {
+            "id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "original_name": "synthetic.zip",
+            "media_type": "application/zip",
+            "size_bytes": 1701622,
+            "storage_key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+            "created_at": "2026-10-01 09:40:03.236426+00:00"
+          }
+        ],
+        "pages": [],
+        "db_snapshot_finished_at": "2026-10-01T09:40:05.443011+00:00",
+        "label": "after_real_worker_kill",
+        "lease_owner": {
+          "value": null,
+          "reason": "not_present_in_schema"
+        },
+        "heartbeat_at_mapping": "ingestion_attempts.last_heartbeat_at",
+        "objects": [
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/7155d3f5-2c34-4de7-899d-ca63fa8c3811.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.379000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/78c38c85-2f33-4f66-9d9b-54c57422e2b4.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.238000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.166000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/e867766d-c393-45d8-9a0f-be884985e330.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.307000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/7155d3f5-2c34-4de7-899d-ca63fa8c3811.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.396000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/78c38c85-2f33-4f66-9d9b-54c57422e2b4.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.253000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.180000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/e867766d-c393-45d8-9a0f-be884985e330.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.322000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+            "Size": 1701622,
+            "ETag": "\"287f3e39cd437bb7ed353b20234a579b\"",
+            "LastModified": "2026-10-01 09:40:03.331000+00:00"
+          }
+        ],
+        "inventory_finished_at": "2026-10-01T09:40:05.446779+00:00"
+      },
+      {
+        "started_at": "2026-10-01T09:50:06.008466+00:00",
+        "database_time": "2026-10-01 09:50:06.009398+00:00",
+        "chapters": [
+          {
+            "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "project_id": "c31997df-6354-446d-9acc-de2231b83bcc",
+            "name": "Synthetic 100 page archive",
+            "status": "processing_pages",
+            "created_at": "2026-10-01 09:40:03.158265+00:00",
+            "updated_at": "2026-10-01 09:40:04.095245+00:00"
+          }
+        ],
+        "jobs": [
+          {
+            "id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "file_id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+            "status": "processing_pages",
+            "error": null,
+            "created_at": "2026-10-01 09:40:03.236426+00:00",
+            "current_attempt_id": "3801cb55-b149-405e-b649-219513f76273"
+          }
+        ],
+        "ingestion_attempts": [
+          {
+            "id": "3801cb55-b149-405e-b649-219513f76273",
+            "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "generation": 1,
+            "cleanup_status": "none",
+            "status": "processing_pages",
+            "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+            "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+            "started_at": "2026-10-01 09:40:04.079767+00:00",
+            "finished_at": null,
+            "error": null,
+            "created_at": "2026-10-01 09:40:03.236426+00:00",
+            "updated_at": "2026-10-01 09:40:04.401774+00:00"
+          }
+        ],
+        "chapter_files": [
+          {
+            "id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "original_name": "synthetic.zip",
+            "media_type": "application/zip",
+            "size_bytes": 1701622,
+            "storage_key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+            "created_at": "2026-10-01 09:40:03.236426+00:00"
+          }
+        ],
+        "pages": [],
+        "db_snapshot_finished_at": "2026-10-01T09:50:06.010905+00:00",
+        "label": "naturally_expired_before_retry",
+        "lease_owner": {
+          "value": null,
+          "reason": "not_present_in_schema"
+        },
+        "heartbeat_at_mapping": "ingestion_attempts.last_heartbeat_at",
+        "objects": [
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/7155d3f5-2c34-4de7-899d-ca63fa8c3811.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.379000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/78c38c85-2f33-4f66-9d9b-54c57422e2b4.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.238000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.166000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/e867766d-c393-45d8-9a0f-be884985e330.jpg",
+            "Size": 66166,
+            "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+            "LastModified": "2026-10-01 09:40:04.307000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/7155d3f5-2c34-4de7-899d-ca63fa8c3811.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.396000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/78c38c85-2f33-4f66-9d9b-54c57422e2b4.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.253000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.180000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/e867766d-c393-45d8-9a0f-be884985e330.jpg",
+            "Size": 2229,
+            "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+            "LastModified": "2026-10-01 09:40:04.322000+00:00"
+          },
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+            "Size": 1701622,
+            "ETag": "\"287f3e39cd437bb7ed353b20234a579b\"",
+            "LastModified": "2026-10-01 09:40:03.331000+00:00"
+          }
+        ],
+        "inventory_finished_at": "2026-10-01T09:50:06.015900+00:00"
+      },
+      {
+        "started_at": "2026-10-01T09:50:06.095270+00:00",
+        "database_time": "2026-10-01 09:50:06.096108+00:00",
+        "chapters": [
+          {
+            "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "project_id": "c31997df-6354-446d-9acc-de2231b83bcc",
+            "name": "Synthetic 100 page archive",
+            "status": "uploaded",
+            "created_at": "2026-10-01 09:40:03.158265+00:00",
+            "updated_at": "2026-10-01 09:50:06.041629+00:00"
+          }
+        ],
+        "jobs": [
+          {
+            "id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "file_id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+            "status": "queued",
+            "error": null,
+            "created_at": "2026-10-01 09:40:03.236426+00:00",
+            "current_attempt_id": "c0683fea-88d0-4931-97cc-bbe1ffac2cea"
+          }
+        ],
+        "ingestion_attempts": [
+          {
+            "id": "3801cb55-b149-405e-b649-219513f76273",
+            "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "generation": 1,
+            "cleanup_status": "swept",
+            "status": "abandoned",
+            "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+            "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+            "started_at": "2026-10-01 09:40:04.079767+00:00",
+            "finished_at": "2026-10-01 09:50:06.044188+00:00",
+            "error": null,
+            "created_at": "2026-10-01 09:40:03.236426+00:00",
+            "updated_at": "2026-10-01 09:50:06.084219+00:00"
+          },
+          {
+            "id": "c0683fea-88d0-4931-97cc-bbe1ffac2cea",
+            "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "generation": 2,
+            "cleanup_status": "none",
+            "status": "queued",
+            "lease_expires_at": "2026-10-01 10:00:06.046368+00:00",
+            "last_heartbeat_at": "2026-10-01 09:50:06.046371+00:00",
+            "started_at": null,
+            "finished_at": null,
+            "error": null,
+            "created_at": "2026-10-01 09:50:06.041629+00:00",
+            "updated_at": "2026-10-01 09:50:06.041629+00:00"
+          }
+        ],
+        "chapter_files": [
+          {
+            "id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+            "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+            "original_name": "synthetic.zip",
+            "media_type": "application/zip",
+            "size_bytes": 1701622,
+            "storage_key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+            "created_at": "2026-10-01 09:40:03.236426+00:00"
+          }
+        ],
+        "pages": [],
+        "db_snapshot_finished_at": "2026-10-01T09:50:06.097727+00:00",
+        "label": "immediate_after_retry",
+        "lease_owner": {
+          "value": null,
+          "reason": "not_present_in_schema"
+        },
+        "heartbeat_at_mapping": "ingestion_attempts.last_heartbeat_at",
+        "objects": [
+          {
+            "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+            "Size": 1701622,
+            "ETag": "\"287f3e39cd437bb7ed353b20234a579b\"",
+            "LastModified": "2026-10-01 09:40:03.331000+00:00"
+          }
+        ],
+        "inventory_finished_at": "2026-10-01T09:50:06.100551+00:00"
+      }
+    ],
+    "signals": [
+      {
+        "name": "kill",
+        "requested_at": "2026-10-01T09:40:04.232794+00:00",
+        "acknowledged_at": "2026-10-01T09:40:05.440696+00:00"
+      },
+      {
+        "name": "start",
+        "requested_at": "2026-10-01T09:50:06.105070+00:00"
+      }
+    ],
+    "lease_samples": [
+      {
+        "observed_at": "2026-10-01T09:40:05.453053+00:00",
+        "database_time": "2026-10-01 09:40:05.451411+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:40:15.459755+00:00",
+        "database_time": "2026-10-01 09:40:15.457645+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:40:25.466253+00:00",
+        "database_time": "2026-10-01 09:40:25.464105+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:40:35.476177+00:00",
+        "database_time": "2026-10-01 09:40:35.472436+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:40:45.500883+00:00",
+        "database_time": "2026-10-01 09:40:45.496012+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:40:55.507486+00:00",
+        "database_time": "2026-10-01 09:40:55.505715+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:41:05.515430+00:00",
+        "database_time": "2026-10-01 09:41:05.513652+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:41:15.524579+00:00",
+        "database_time": "2026-10-01 09:41:15.521983+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:41:25.536271+00:00",
+        "database_time": "2026-10-01 09:41:25.531171+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:41:35.550623+00:00",
+        "database_time": "2026-10-01 09:41:35.543991+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:41:45.562244+00:00",
+        "database_time": "2026-10-01 09:41:45.557967+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:41:55.568655+00:00",
+        "database_time": "2026-10-01 09:41:55.566609+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:42:05.577163+00:00",
+        "database_time": "2026-10-01 09:42:05.574260+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:42:15.586117+00:00",
+        "database_time": "2026-10-01 09:42:15.583496+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:42:25.591793+00:00",
+        "database_time": "2026-10-01 09:42:25.589858+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:42:35.604641+00:00",
+        "database_time": "2026-10-01 09:42:35.601240+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:42:45.617217+00:00",
+        "database_time": "2026-10-01 09:42:45.611349+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:42:55.623507+00:00",
+        "database_time": "2026-10-01 09:42:55.621459+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:43:05.634467+00:00",
+        "database_time": "2026-10-01 09:43:05.631057+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:43:15.641828+00:00",
+        "database_time": "2026-10-01 09:43:15.639602+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:43:25.649137+00:00",
+        "database_time": "2026-10-01 09:43:25.647273+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:43:35.656619+00:00",
+        "database_time": "2026-10-01 09:43:35.654471+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:43:45.667177+00:00",
+        "database_time": "2026-10-01 09:43:45.661980+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:43:55.672511+00:00",
+        "database_time": "2026-10-01 09:43:55.670496+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:44:05.683562+00:00",
+        "database_time": "2026-10-01 09:44:05.678113+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:44:15.690717+00:00",
+        "database_time": "2026-10-01 09:44:15.688474+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:44:25.698944+00:00",
+        "database_time": "2026-10-01 09:44:25.695104+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:44:35.706045+00:00",
+        "database_time": "2026-10-01 09:44:35.704277+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:44:45.715121+00:00",
+        "database_time": "2026-10-01 09:44:45.712374+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:44:55.723268+00:00",
+        "database_time": "2026-10-01 09:44:55.719729+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:45:05.735563+00:00",
+        "database_time": "2026-10-01 09:45:05.733224+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:45:15.742996+00:00",
+        "database_time": "2026-10-01 09:45:15.740865+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:45:25.751566+00:00",
+        "database_time": "2026-10-01 09:45:25.748929+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:45:35.758746+00:00",
+        "database_time": "2026-10-01 09:45:35.756603+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:45:45.767608+00:00",
+        "database_time": "2026-10-01 09:45:45.764954+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:45:55.771959+00:00",
+        "database_time": "2026-10-01 09:45:55.769557+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:46:05.785137+00:00",
+        "database_time": "2026-10-01 09:46:05.781391+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:46:15.795098+00:00",
+        "database_time": "2026-10-01 09:46:15.791680+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:46:25.802575+00:00",
+        "database_time": "2026-10-01 09:46:25.800959+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:46:35.809602+00:00",
+        "database_time": "2026-10-01 09:46:35.807724+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:46:45.820514+00:00",
+        "database_time": "2026-10-01 09:46:45.817114+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:46:55.826386+00:00",
+        "database_time": "2026-10-01 09:46:55.824917+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:47:05.836625+00:00",
+        "database_time": "2026-10-01 09:47:05.834277+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:47:15.845851+00:00",
+        "database_time": "2026-10-01 09:47:15.844152+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:47:25.852469+00:00",
+        "database_time": "2026-10-01 09:47:25.850801+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:47:35.859930+00:00",
+        "database_time": "2026-10-01 09:47:35.858010+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:47:45.869534+00:00",
+        "database_time": "2026-10-01 09:47:45.867378+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:47:55.876491+00:00",
+        "database_time": "2026-10-01 09:47:55.873664+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:48:05.886321+00:00",
+        "database_time": "2026-10-01 09:48:05.884101+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:48:15.893461+00:00",
+        "database_time": "2026-10-01 09:48:15.891724+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:48:25.903272+00:00",
+        "database_time": "2026-10-01 09:48:25.900077+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:48:35.913175+00:00",
+        "database_time": "2026-10-01 09:48:35.910663+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:48:45.924079+00:00",
+        "database_time": "2026-10-01 09:48:45.920574+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:48:55.937717+00:00",
+        "database_time": "2026-10-01 09:48:55.930940+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:49:05.947443+00:00",
+        "database_time": "2026-10-01 09:49:05.945971+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:49:15.956909+00:00",
+        "database_time": "2026-10-01 09:49:15.954082+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:49:25.964254+00:00",
+        "database_time": "2026-10-01 09:49:25.961720+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:49:35.973790+00:00",
+        "database_time": "2026-10-01 09:49:35.971277+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:49:45.986150+00:00",
+        "database_time": "2026-10-01 09:49:45.981042+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:49:55.991998+00:00",
+        "database_time": "2026-10-01 09:49:55.990068+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      },
+      {
+        "observed_at": "2026-10-01T09:50:06.001877+00:00",
+        "database_time": "2026-10-01 09:50:05.998554+00:00",
+        "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+        "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+        "status": "processing_pages"
+      }
+    ],
+    "started_at": "2026-10-01T09:39:52.877644+00:00",
+    "lease_seconds": 600,
+    "readiness_observations": [
+      {
+        "at": "2026-10-01T09:40:03.032788+00:00",
+        "stats": {
+          "celery@d54a8b4ef4c9": {
+            "total": {},
+            "pid": 1,
+            "clock": "5",
+            "uptime": 5,
+            "pool": {
+              "implementation": "celery.concurrency.prefork:TaskPool",
+              "max-concurrency": 2,
+              "processes": [
+                8,
+                9
+              ],
+              "max-tasks-per-child": "N/A",
+              "put-guarded-by-semaphore": false,
+              "timeouts": [
+                0,
+                0
+              ],
+              "writes": {
+                "total": 0,
+                "avg": "0.00",
+                "all": "",
+                "raw": "",
+                "strategy": "fair",
+                "inqueues": {
+                  "total": 2,
+                  "active": 0
+                }
+              }
+            },
+            "broker": {
+              "hostname": "redis",
+              "userid": null,
+              "virtual_host": "0",
+              "port": 6379,
+              "insist": false,
+              "ssl": false,
+              "transport": "redis",
+              "connect_timeout": 3,
+              "transport_options": {},
+              "login_method": null,
+              "uri_prefix": null,
+              "heartbeat": 120.0,
+              "failover_strategy": "round-robin",
+              "alternates": [],
+              "credential_provider": null
+            },
+            "prefetch_count": 2,
+            "rusage": {
+              "utime": 0.859331,
+              "stime": 0.071944,
+              "maxrss": 61664,
+              "ixrss": 0,
+              "idrss": 0,
+              "isrss": 0,
+              "minflt": 23741,
+              "majflt": 0,
+              "nswap": 0,
+              "inblock": 0,
+              "oublock": 0,
+              "msgsnd": 0,
+              "msgrcv": 0,
+              "nsignals": 0,
+              "nvcsw": 247,
+              "nivcsw": 9
+            }
+          }
+        },
+        "registered": {
+          "celery@d54a8b4ef4c9": [
+            "ingestion.process",
+            "system.heartbeat"
+          ]
+        }
+      }
+    ],
+    "worker_before": {
+      "celery@d54a8b4ef4c9": {
+        "total": {},
+        "pid": 1,
+        "clock": "5",
+        "uptime": 5,
+        "pool": {
+          "implementation": "celery.concurrency.prefork:TaskPool",
+          "max-concurrency": 2,
+          "processes": [
+            8,
+            9
+          ],
+          "max-tasks-per-child": "N/A",
+          "put-guarded-by-semaphore": false,
+          "timeouts": [
+            0,
+            0
+          ],
+          "writes": {
+            "total": 0,
+            "avg": "0.00",
+            "all": "",
+            "raw": "",
+            "strategy": "fair",
+            "inqueues": {
+              "total": 2,
+              "active": 0
+            }
+          }
+        },
+        "broker": {
+          "hostname": "redis",
+          "userid": null,
+          "virtual_host": "0",
+          "port": 6379,
+          "insist": false,
+          "ssl": false,
+          "transport": "redis",
+          "connect_timeout": 3,
+          "transport_options": {},
+          "login_method": null,
+          "uri_prefix": null,
+          "heartbeat": 120.0,
+          "failover_strategy": "round-robin",
+          "alternates": [],
+          "credential_provider": null
+        },
+        "prefetch_count": 2,
+        "rusage": {
+          "utime": 0.859331,
+          "stime": 0.071944,
+          "maxrss": 61664,
+          "ixrss": 0,
+          "idrss": 0,
+          "isrss": 0,
+          "minflt": 23741,
+          "majflt": 0,
+          "nswap": 0,
+          "inblock": 0,
+          "oublock": 0,
+          "msgsnd": 0,
+          "msgrcv": 0,
+          "nsignals": 0,
+          "nvcsw": 247,
+          "nivcsw": 9
+        }
+      }
+    },
+    "worker_config": {
+      "acks_late": false,
+      "prefetch": 1,
+      "concurrency": 2
+    },
+    "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+    "source_sha256": "7f24636b853c3ca290f27008aaf3f982be22c1a9c15143eb24437a16a20941bd",
+    "real_interruption": true,
+    "natural_lease_expiry": true,
+    "recoverable_basis": "Current ACTIVE attempt with naturally expired lease; production expired() returned true; recover_attempt lines 270-285",
+    "http_409": false,
+    "stale_recovery_succeeded": true,
+    "replacement_attempt_id": "c0683fea-88d0-4931-97cc-bbe1ffac2cea"
+  },
+  "captures": [
+    {
+      "command": [
+        "inspect",
+        "--format",
+        "{{json .State}}",
+        "diagstale-20261001t093945908749z-worker-1"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:39:50.983822123Z\",\"FinishedAt\":\"2026-10-01T09:40:04.410674127Z\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "logs",
+        "--timestamps",
+        "diagstale-20261001t093945908749z-worker-1"
+      ],
+      "exit_code": 0,
+      "stdout": "2026-10-01T09:39:51.906974024Z  \n2026-10-01T09:39:51.907003540Z  -------------- celery@d54a8b4ef4c9 v5.6.3 (recovery)\n2026-10-01T09:39:51.907005780Z --- ***** ----- \n2026-10-01T09:39:51.907006877Z -- ******* ---- Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.36 2026-10-01 09:39:51\n2026-10-01T09:39:51.907007892Z - *** --- * --- \n2026-10-01T09:39:51.907008715Z - ** ---------- [config]\n2026-10-01T09:39:51.907009587Z - ** ---------- .> app:         recap:0x7caab39a9b50\n2026-10-01T09:39:51.907010724Z - ** ---------- .> transport:   redis://redis:6379/0\n2026-10-01T09:39:51.907011570Z - ** ---------- .> results:     disabled://\n2026-10-01T09:39:51.907012408Z - *** --- * --- .> concurrency: 2 (prefork)\n2026-10-01T09:39:51.907013254Z -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)\n2026-10-01T09:39:51.907014114Z --- ***** ----- \n2026-10-01T09:39:51.907014877Z  -------------- [queues]\n2026-10-01T09:39:51.907015686Z                 .> system           exchange=system(direct) key=system\n2026-10-01T09:39:51.907016561Z                 \n2026-10-01T09:39:51.907017330Z \n2026-10-01T09:39:51.907018100Z [tasks]\n2026-10-01T09:39:51.907018950Z   . ingestion.process\n2026-10-01T09:39:51.907019793Z   . system.heartbeat\n2026-10-01T09:39:51.907020593Z \n",
+      "stderr": "2026-10-01T09:39:51.975346944Z {\"timestamp\": \"2026-10-01T09:39:51.975099+00:00\", \"level\": \"INFO\", \"logger\": \"celery.worker.consumer.connection\", \"event\": \"Connected to redis://redis:6379/0\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n2026-10-01T09:39:51.976861079Z {\"timestamp\": \"2026-10-01T09:39:51.976723+00:00\", \"level\": \"INFO\", \"logger\": \"celery.worker.consumer.mingle\", \"event\": \"mingle: searching for neighbors\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n2026-10-01T09:39:52.984797824Z {\"timestamp\": \"2026-10-01T09:39:52.984656+00:00\", \"level\": \"INFO\", \"logger\": \"celery.worker.consumer.mingle\", \"event\": \"mingle: all alone\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n2026-10-01T09:39:52.991763352Z {\"timestamp\": \"2026-10-01T09:39:52.991630+00:00\", \"level\": \"INFO\", \"logger\": \"celery.apps.worker\", \"event\": \"celery@d54a8b4ef4c9 ready.\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n2026-10-01T09:40:03.457208147Z {\"timestamp\": \"2026-10-01T09:40:03.457018+00:00\", \"level\": \"INFO\", \"logger\": \"celery.worker.strategy\", \"event\": \"Task ingestion.process[3801cb55-b149-405e-b649-219513f76273] received\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "--format",
+        "{{json .State}}",
+        "diagstale-20261001t093945908749z-backend-1"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"Status\":\"running\",\"Running\":true,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":90081,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:39:51.108403033Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "logs",
+        "--timestamps",
+        "diagstale-20261001t093945908749z-backend-1"
+      ],
+      "exit_code": 0,
+      "stdout": "2026-10-01T09:39:52.916695686Z INFO:     172.19.0.7:43770 - \"GET /health/live HTTP/1.1\" 200 OK\n2026-10-01T09:40:03.136911139Z INFO:     172.19.0.7:36920 - \"POST /api/v1/auth/register HTTP/1.1\" 201 Created\n2026-10-01T09:40:03.152589110Z INFO:     172.19.0.7:36920 - \"POST /api/v1/projects HTTP/1.1\" 201 Created\n2026-10-01T09:40:03.165759825Z INFO:     172.19.0.7:36920 - \"POST /api/v1/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters HTTP/1.1\" 201 Created\n2026-10-01T09:40:03.459255022Z INFO:     172.19.0.7:36920 - \"POST /api/v1/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/upload HTTP/1.1\" 200 OK\n2026-10-01T09:50:06.089760921Z INFO:     172.19.0.7:44452 - \"POST /api/v1/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/processing-retry HTTP/1.1\" 200 OK\n",
+      "stderr": "2026-10-01T09:39:52.693128838Z INFO:     Started server process [1]\n2026-10-01T09:39:52.693193563Z INFO:     Waiting for application startup.\n2026-10-01T09:39:52.699706004Z INFO:     Application startup complete.\n2026-10-01T09:39:52.700025993Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)\n2026-10-01T09:39:52.916663225Z {\"timestamp\": \"2026-10-01T09:39:52.916394+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"6bbad68d-7465-49b6-b932-9cf41417ad09\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 200, \"error\": null, \"duration_ms\": 25}\n2026-10-01T09:40:03.136854462Z {\"timestamp\": \"2026-10-01T09:40:03.136632+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"aafe69e8-d551-488f-8deb-6469bdaad253\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 201, \"error\": null, \"duration_ms\": 99}\n2026-10-01T09:40:03.152554656Z {\"timestamp\": \"2026-10-01T09:40:03.152377+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"b3784ed2-5fbc-41b1-835a-0648782b838f\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 201, \"error\": null, \"duration_ms\": 10}\n2026-10-01T09:40:03.165725607Z {\"timestamp\": \"2026-10-01T09:40:03.165534+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"3a7c487b-e8b4-495c-bcf2-5705efe5245f\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 201, \"error\": null, \"duration_ms\": 8}\n2026-10-01T09:40:03.459211450Z {\"timestamp\": \"2026-10-01T09:40:03.459031+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"f3912331-8271-4dd5-a7e6-501a7fb0c7ec\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 200, \"error\": null, \"duration_ms\": 231}\n2026-10-01T09:50:06.089696816Z {\"timestamp\": \"2026-10-01T09:50:06.089534+00:00\", \"level\": \"INFO\", \"logger\": \"app.main\", \"event\": \"request_completed\", \"request_id\": \"39e22083-0f9d-4560-a36b-fe735b46467f\", \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": 200, \"error\": null, \"duration_ms\": 67}\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "--format",
+        "{{json .State}}",
+        "diagstale-20261001t093945908749z-redis-1"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"Status\":\"running\",\"Running\":true,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":89517,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:39:46.647613618Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\",\"Health\":{\"Status\":\"healthy\",\"FailingStreak\":0,\"Log\":[{\"Start\":\"2026-10-01T09:51:58.788478793Z\",\"End\":\"2026-10-01T09:51:58.820497571Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"},{\"Start\":\"2026-10-01T09:52:00.821700743Z\",\"End\":\"2026-10-01T09:52:00.856019899Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"},{\"Start\":\"2026-10-01T09:52:02.857111795Z\",\"End\":\"2026-10-01T09:52:02.884933933Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"},{\"Start\":\"2026-10-01T09:52:04.885657405Z\",\"End\":\"2026-10-01T09:52:04.920050582Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"},{\"Start\":\"2026-10-01T09:52:06.920864469Z\",\"End\":\"2026-10-01T09:52:06.953564677Z\",\"ExitCode\":0,\"Output\":\"PONG\\n\"}]}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "logs",
+        "--timestamps",
+        "diagstale-20261001t093945908749z-redis-1"
+      ],
+      "exit_code": 0,
+      "stdout": "2026-10-01T09:39:46.748893425Z 1:C 01 Oct 2026 09:39:46.748 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo\n2026-10-01T09:39:46.748950867Z 1:C 01 Oct 2026 09:39:46.748 * Redis version=7.4.5, bits=64, commit=00000000, modified=0, pid=1, just started\n2026-10-01T09:39:46.748955857Z 1:C 01 Oct 2026 09:39:46.748 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf\n2026-10-01T09:39:46.749230517Z 1:M 01 Oct 2026 09:39:46.749 * monotonic clock: POSIX clock_gettime\n2026-10-01T09:39:46.750030286Z 1:M 01 Oct 2026 09:39:46.749 * Running mode=standalone, port=6379.\n2026-10-01T09:39:46.750377650Z 1:M 01 Oct 2026 09:39:46.750 * Server initialized\n2026-10-01T09:39:46.750385587Z 1:M 01 Oct 2026 09:39:46.750 * Ready to accept connections tcp\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "inspect",
+        "--format",
+        "{{json .State}}",
+        "diagstale-20261001t093945908749z-storage-init-1"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":1,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:50:06.943145045Z\",\"FinishedAt\":\"2026-10-01T09:50:07.597785402Z\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "logs",
+        "--timestamps",
+        "diagstale-20261001t093945908749z-storage-init-1"
+      ],
+      "exit_code": 0,
+      "stdout": "2026-10-01T09:39:49.786758655Z diagnostic bucket ready\n",
+      "stderr": "2026-10-01T09:50:07.550057916Z Traceback (most recent call last):\n2026-10-01T09:50:07.550100272Z   File \"<string>\", line 1, in <module>\n2026-10-01T09:50:07.550103541Z   File \"/usr/local/lib/python3.12/site-packages/botocore/client.py\", line 606, in _api_call\n2026-10-01T09:50:07.550164069Z     return self._make_api_call(operation_name, kwargs)\n2026-10-01T09:50:07.550275021Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n2026-10-01T09:50:07.550284880Z   File \"/usr/local/lib/python3.12/site-packages/botocore/context.py\", line 123, in wrapper\n2026-10-01T09:50:07.550440392Z     return func(*args, **kwargs)\n2026-10-01T09:50:07.550449947Z            ^^^^^^^^^^^^^^^^^^^^^\n2026-10-01T09:50:07.550458464Z   File \"/usr/local/lib/python3.12/site-packages/botocore/client.py\", line 1094, in _make_api_call\n2026-10-01T09:50:07.550843005Z     raise error_class(parsed_response, operation_name)\n2026-10-01T09:50:07.550853007Z botocore.errorfactory.BucketAlreadyOwnedByYou: An error occurred (BucketAlreadyOwnedByYou) when calling the CreateBucket operation: Your previous request to create the named bucket succeeded and you already own it.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "--format",
+        "{{json .State}}",
+        "diagstale-20261001t093945908749z-migrate-1"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-10-01T09:50:07.053601338Z\",\"FinishedAt\":\"2026-10-01T09:50:08.349031613Z\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "logs",
+        "--timestamps",
+        "diagstale-20261001t093945908749z-migrate-1"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "logs",
+        "diagstale-20261001t093945908749z-probe"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "{\"timestamp\": \"2026-10-01T09:39:52.917323+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: GET http://backend:8000/health/live \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:40:03.137378+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/auth/register \\\"HTTP/1.1 201 Created\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:40:03.152869+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/projects \\\"HTTP/1.1 201 Created\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:40:03.166026+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters \\\"HTTP/1.1 201 Created\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:40:03.459565+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/upload \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n{\"timestamp\": \"2026-10-01T09:50:06.090083+00:00\", \"level\": \"INFO\", \"logger\": \"httpx\", \"event\": \"HTTP Request: POST http://backend:8000/api/v1/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/processing-retry \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": null, \"job_id\": null, \"user_id\": null, \"project_id\": null, \"stage\": null, \"status\": null, \"error\": null, \"duration_ms\": null}\n"
+    },
+    {
+      "command": [
+        "stop",
+        "--time",
+        "5",
+        "diagstale-20261001t093945908749z-probe"
+      ],
+      "exit_code": 0,
+      "stdout": "Flag --time has been deprecated, use --timeout instead\ndiagstale-20261001t093945908749z-probe\n",
+      "stderr": ""
+    }
+  ],
+  "checks": {
+    "worker_crash": true,
+    "natural_lease_expiry": true,
+    "stale_recovery": true,
+    "replacement_worker_receipt": false,
+    "replacement_completion": false,
+    "db_aistor_consistency": false,
+    "restart_persistence": false
+  },
+  "readiness_failure": "compose start worker restarted completed dependencies; storage-init exited 1; worker remained exited 137",
+  "capture_failure": "Traceback (most recent call last):\n  File \"D:\\projects\\manhua review\\diagnostic_stale_capture.py\", line 141, in <module>\n    main()\n    ~~~~^^\n  File \"D:\\projects\\manhua review\\diagnostic_stale_capture.py\", line 104, in main\n    probe.communicate(timeout=30)\n    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\subprocess.py\", line 1222, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\subprocess.py\", line 1665, in _communicate\n    raise TimeoutExpired(self.args, orig_timeout)\nsubprocess.TimeoutExpired: Command '['docker', 'compose', '--ansi', 'never', '-p', 'diagstale-20261001t093945908749z', '-f', 'D:\\\\projects\\\\manhua review\\\\diagnostic-stale.compose.yml', 'run', '--name', 'diagstale-20261001t093945908749z-probe', '--no-deps', 'probe']' timed out after 30 seconds\n",
+  "protected_hash_comparisons": {
+    "D:\\projects\\manhua review\\diagnostic-ingestion-409-20261001T0816530957577Z.json": true,
+    "D:\\projects\\manhua review\\diagnostic-ingestion-409-root-cause-20261001T0821043327624Z.json": true,
+    "D:\\projects\\manhua review\\diagnostic-ingestion-409-root-cause-20261001T0821043327624Z.log": true,
+    "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085441343141Z.json": true,
+    "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085441343141Z.log": true,
+    "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085700159692Z.json": true,
+    "D:\\projects\\manhua review\\diagnostic-ingestion-409-valid-20261001T085700159692Z.log": true,
+    "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T090817045112Z.json": true,
+    "D:\\projects\\manhua review\\diagnostic-ingestion-stale-20261001T090817045112Z.log": true,
+    "D:\\projects\\manhua review\\final-ingestion-acceptance-20261001-084002.log": true,
+    "D:\\projects\\manhua review\\final-ingestion-acceptance-20261001-084209.log": true,
+    "D:\\projects\\manhua review\\final-ingestion-acceptance-20261001-084404.log": true,
+    "D:\\projects\\manhua review\\final-ingestion-acceptance-20261001.json": true,
+    "D:\\projects\\manhua review\\final-ingestion-gate-20261001-review.log": true,
+    "D:\\projects\\manhua review\\final_acceptance_runner.py": true,
+    "D:\\projects\\manhua review\\focused-worker-crash.log": true,
+    "D:\\projects\\manhua review\\fresh-focused-output.log": true,
+    "D:\\projects\\manhua review\\fresh-legacy-pg-output.log": true,
+    "D:\\projects\\manhua review\\fresh-recovery-acceptance-output.log": true,
+    "D:\\projects\\manhua review\\fresh-secret-audit-output.log": true,
+    "D:\\projects\\manhua review\\recovery-acceptance-evidence.json": true,
+    "D:\\projects\\manhua review\\recovery-acceptance-run.log": true,
+    "D:\\projects\\manhua review\\secret-audit-current.log": true,
+    "D:\\projects\\manhua review\\secret-audit-followup.log": true,
+    "D:\\projects\\manhua review\\secret-audit-gap-current.log": true,
+    "D:\\projects\\manhua review\\secret-audit-path-findings.log": true,
+    "D:\\projects\\manhua review\\secret-audit.log": true,
+    "D:\\projects\\manhua review\\backend\\app\\analysis.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\analysis_providers.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\analysis_service.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\auth.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\config.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\db.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\errors.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\extraction.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\health.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\ingestion.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\ingestion_service.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\jobs.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\logging_config.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\main.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\models.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\projects.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\rate_limit.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\security.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\storage.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story_audit.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story_context.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story_providers.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story_resolution.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story_review.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story_schemas.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story_service.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\story_validation.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\worker.py": true,
+    "D:\\projects\\manhua review\\backend\\app\\__init__.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\env.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\conftest.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_analysis_api.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_analysis_providers.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_auth.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_errors.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_extraction.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_health.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_ingestion_legacy_migration.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_ingestion_local.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_ingestion_recovery_acceptance.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_ingestion_recovery_v1.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_acceptance.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_api_acceptance.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_audit.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_audit_context.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_concurrency.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_final_acceptance.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_merge_matrix.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_reconciliation_edges.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_review_states.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_route_boundaries.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_phase4a_route_inventory.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_projects.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_rate_limit.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_story.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_story_closure.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_story_integrity.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_story_resolution.py": true,
+    "D:\\projects\\manhua review\\backend\\tests\\test_story_validation.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0001_auth.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0002_projects.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0003_ingestion.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0004_analysis.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0005_story.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0006_story_review.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0007_story_integrity.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0008_story_constraints.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0009_relationship_chapter_fks.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0010_story_audit_context.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0011_canonical_review_states.py": true,
+    "D:\\projects\\manhua review\\backend\\migrations\\versions\\0012_ingestion_attempt_recovery.py": true
+  },
+  "no_retry_after_readiness_failure": true,
+  "cleanup": {
+    "command": [
+      "rm",
+      "-f",
+      "-v",
+      "58d384bfb6d0",
+      "d54a8b4ef4c9",
+      "184cc8ccba77",
+      "ea94a41bd88c",
+      "9104d335244e",
+      "ac60886935ed",
+      "71513190307a",
+      "2ada51845c06"
+    ],
+    "exit_code": 0,
+    "stdout": "58d384bfb6d0\nd54a8b4ef4c9\n184cc8ccba77\nea94a41bd88c\n9104d335244e\nac60886935ed\n71513190307a\n2ada51845c06\n",
+    "stderr": ""
+  },
+  "network_cleanup": {
+    "command": [
+      "network",
+      "rm",
+      "diagstale-20261001t093945908749z_default"
+    ],
+    "exit_code": 0,
+    "stdout": "diagstale-20261001t093945908749z_default\n",
+    "stderr": ""
+  }
+}

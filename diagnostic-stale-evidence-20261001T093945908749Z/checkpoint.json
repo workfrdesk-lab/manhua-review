@@ -1,0 +1,1070 @@
+{
+  "ingestion_recovery": "OPEN",
+  "classification": "unresolved",
+  "http": [
+    {
+      "path": "/auth/register",
+      "started_at": "2026-10-01T09:40:03.036779+00:00",
+      "received_at": "2026-10-01T09:40:03.137654+00:00",
+      "status": 201,
+      "request_id": "aafe69e8-d551-488f-8deb-6469bdaad253",
+      "body": {
+        "id": "78e22fb0-f695-4ebe-9213-b055e2bb3530"
+      }
+    },
+    {
+      "path": "/projects",
+      "started_at": "2026-10-01T09:40:03.141224+00:00",
+      "received_at": "2026-10-01T09:40:03.153133+00:00",
+      "status": 201,
+      "request_id": "b3784ed2-5fbc-41b1-835a-0648782b838f",
+      "body": {
+        "id": "c31997df-6354-446d-9acc-de2231b83bcc",
+        "status": "draft"
+      }
+    },
+    {
+      "path": "/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters",
+      "started_at": "2026-10-01T09:40:03.156510+00:00",
+      "received_at": "2026-10-01T09:40:03.166286+00:00",
+      "status": 201,
+      "request_id": "3a7c487b-e8b4-495c-bcf2-5705efe5245f",
+      "body": {
+        "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+        "status": "draft"
+      }
+    },
+    {
+      "path": "/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/upload",
+      "started_at": "2026-10-01T09:40:03.226520+00:00",
+      "received_at": "2026-10-01T09:40:03.459801+00:00",
+      "status": 200,
+      "request_id": "f3912331-8271-4dd5-a7e6-501a7fb0c7ec",
+      "body": {
+        "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+        "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+        "status": "queued"
+      }
+    },
+    {
+      "path": "/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/processing-retry",
+      "started_at": "2026-10-01T09:50:06.020370+00:00",
+      "received_at": "2026-10-01T09:50:06.090314+00:00",
+      "status": 200,
+      "request_id": "39e22083-0f9d-4560-a36b-fe735b46467f",
+      "body": {
+        "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+        "attempt_id": "c0683fea-88d0-4931-97cc-bbe1ffac2cea"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "started_at": "2026-10-01T09:40:04.215585+00:00",
+      "database_time": "2026-10-01 09:40:04.216557+00:00",
+      "chapters": [
+        {
+          "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "project_id": "c31997df-6354-446d-9acc-de2231b83bcc",
+          "name": "Synthetic 100 page archive",
+          "status": "processing_pages",
+          "created_at": "2026-10-01 09:40:03.158265+00:00",
+          "updated_at": "2026-10-01 09:40:04.095245+00:00"
+        }
+      ],
+      "jobs": [
+        {
+          "id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "file_id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+          "status": "processing_pages",
+          "error": null,
+          "created_at": "2026-10-01 09:40:03.236426+00:00",
+          "current_attempt_id": "3801cb55-b149-405e-b649-219513f76273"
+        }
+      ],
+      "ingestion_attempts": [
+        {
+          "id": "3801cb55-b149-405e-b649-219513f76273",
+          "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "generation": 1,
+          "cleanup_status": "none",
+          "status": "processing_pages",
+          "lease_expires_at": "2026-10-01 09:50:04.186823+00:00",
+          "last_heartbeat_at": "2026-10-01 09:40:04.186813+00:00",
+          "started_at": "2026-10-01 09:40:04.079767+00:00",
+          "finished_at": null,
+          "error": null,
+          "created_at": "2026-10-01 09:40:03.236426+00:00",
+          "updated_at": "2026-10-01 09:40:04.184854+00:00"
+        }
+      ],
+      "chapter_files": [
+        {
+          "id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "original_name": "synthetic.zip",
+          "media_type": "application/zip",
+          "size_bytes": 1701622,
+          "storage_key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+          "created_at": "2026-10-01 09:40:03.236426+00:00"
+        }
+      ],
+      "pages": [],
+      "db_snapshot_finished_at": "2026-10-01T09:40:04.218980+00:00",
+      "label": "before_real_worker_kill",
+      "lease_owner": {
+        "value": null,
+        "reason": "not_present_in_schema"
+      },
+      "heartbeat_at_mapping": "ingestion_attempts.last_heartbeat_at",
+      "objects": [
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.166000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.180000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+          "Size": 1701622,
+          "ETag": "\"287f3e39cd437bb7ed353b20234a579b\"",
+          "LastModified": "2026-10-01 09:40:03.331000+00:00"
+        }
+      ],
+      "inventory_finished_at": "2026-10-01T09:40:04.228512+00:00"
+    },
+    {
+      "started_at": "2026-10-01T09:40:05.440718+00:00",
+      "database_time": "2026-10-01 09:40:05.441486+00:00",
+      "chapters": [
+        {
+          "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "project_id": "c31997df-6354-446d-9acc-de2231b83bcc",
+          "name": "Synthetic 100 page archive",
+          "status": "processing_pages",
+          "created_at": "2026-10-01 09:40:03.158265+00:00",
+          "updated_at": "2026-10-01 09:40:04.095245+00:00"
+        }
+      ],
+      "jobs": [
+        {
+          "id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "file_id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+          "status": "processing_pages",
+          "error": null,
+          "created_at": "2026-10-01 09:40:03.236426+00:00",
+          "current_attempt_id": "3801cb55-b149-405e-b649-219513f76273"
+        }
+      ],
+      "ingestion_attempts": [
+        {
+          "id": "3801cb55-b149-405e-b649-219513f76273",
+          "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "generation": 1,
+          "cleanup_status": "none",
+          "status": "processing_pages",
+          "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+          "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+          "started_at": "2026-10-01 09:40:04.079767+00:00",
+          "finished_at": null,
+          "error": null,
+          "created_at": "2026-10-01 09:40:03.236426+00:00",
+          "updated_at": "2026-10-01 09:40:04.401774+00:00"
+        }
+      ],
+      "chapter_files": [
+        {
+          "id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "original_name": "synthetic.zip",
+          "media_type": "application/zip",
+          "size_bytes": 1701622,
+          "storage_key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+          "created_at": "2026-10-01 09:40:03.236426+00:00"
+        }
+      ],
+      "pages": [],
+      "db_snapshot_finished_at": "2026-10-01T09:40:05.443011+00:00",
+      "label": "after_real_worker_kill",
+      "lease_owner": {
+        "value": null,
+        "reason": "not_present_in_schema"
+      },
+      "heartbeat_at_mapping": "ingestion_attempts.last_heartbeat_at",
+      "objects": [
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/7155d3f5-2c34-4de7-899d-ca63fa8c3811.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.379000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/78c38c85-2f33-4f66-9d9b-54c57422e2b4.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.238000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.166000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/e867766d-c393-45d8-9a0f-be884985e330.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.307000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/7155d3f5-2c34-4de7-899d-ca63fa8c3811.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.396000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/78c38c85-2f33-4f66-9d9b-54c57422e2b4.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.253000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.180000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/e867766d-c393-45d8-9a0f-be884985e330.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.322000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+          "Size": 1701622,
+          "ETag": "\"287f3e39cd437bb7ed353b20234a579b\"",
+          "LastModified": "2026-10-01 09:40:03.331000+00:00"
+        }
+      ],
+      "inventory_finished_at": "2026-10-01T09:40:05.446779+00:00"
+    },
+    {
+      "started_at": "2026-10-01T09:50:06.008466+00:00",
+      "database_time": "2026-10-01 09:50:06.009398+00:00",
+      "chapters": [
+        {
+          "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "project_id": "c31997df-6354-446d-9acc-de2231b83bcc",
+          "name": "Synthetic 100 page archive",
+          "status": "processing_pages",
+          "created_at": "2026-10-01 09:40:03.158265+00:00",
+          "updated_at": "2026-10-01 09:40:04.095245+00:00"
+        }
+      ],
+      "jobs": [
+        {
+          "id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "file_id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+          "status": "processing_pages",
+          "error": null,
+          "created_at": "2026-10-01 09:40:03.236426+00:00",
+          "current_attempt_id": "3801cb55-b149-405e-b649-219513f76273"
+        }
+      ],
+      "ingestion_attempts": [
+        {
+          "id": "3801cb55-b149-405e-b649-219513f76273",
+          "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "generation": 1,
+          "cleanup_status": "none",
+          "status": "processing_pages",
+          "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+          "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+          "started_at": "2026-10-01 09:40:04.079767+00:00",
+          "finished_at": null,
+          "error": null,
+          "created_at": "2026-10-01 09:40:03.236426+00:00",
+          "updated_at": "2026-10-01 09:40:04.401774+00:00"
+        }
+      ],
+      "chapter_files": [
+        {
+          "id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "original_name": "synthetic.zip",
+          "media_type": "application/zip",
+          "size_bytes": 1701622,
+          "storage_key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+          "created_at": "2026-10-01 09:40:03.236426+00:00"
+        }
+      ],
+      "pages": [],
+      "db_snapshot_finished_at": "2026-10-01T09:50:06.010905+00:00",
+      "label": "naturally_expired_before_retry",
+      "lease_owner": {
+        "value": null,
+        "reason": "not_present_in_schema"
+      },
+      "heartbeat_at_mapping": "ingestion_attempts.last_heartbeat_at",
+      "objects": [
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/7155d3f5-2c34-4de7-899d-ca63fa8c3811.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.379000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/78c38c85-2f33-4f66-9d9b-54c57422e2b4.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.238000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.166000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/pages/e867766d-c393-45d8-9a0f-be884985e330.jpg",
+          "Size": 66166,
+          "ETag": "\"a00d63590c4aae7db7e12f90ebc8e600\"",
+          "LastModified": "2026-10-01 09:40:04.307000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/7155d3f5-2c34-4de7-899d-ca63fa8c3811.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.396000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/78c38c85-2f33-4f66-9d9b-54c57422e2b4.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.253000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/820e2656-e87f-4dac-87dd-fca1c0844cf7.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.180000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/attempts/3801cb55-b149-405e-b649-219513f76273/thumbnails/e867766d-c393-45d8-9a0f-be884985e330.jpg",
+          "Size": 2229,
+          "ETag": "\"9af62492f47deee299cd2d1c6222355d\"",
+          "LastModified": "2026-10-01 09:40:04.322000+00:00"
+        },
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+          "Size": 1701622,
+          "ETag": "\"287f3e39cd437bb7ed353b20234a579b\"",
+          "LastModified": "2026-10-01 09:40:03.331000+00:00"
+        }
+      ],
+      "inventory_finished_at": "2026-10-01T09:50:06.015900+00:00"
+    },
+    {
+      "started_at": "2026-10-01T09:50:06.095270+00:00",
+      "database_time": "2026-10-01 09:50:06.096108+00:00",
+      "chapters": [
+        {
+          "id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "project_id": "c31997df-6354-446d-9acc-de2231b83bcc",
+          "name": "Synthetic 100 page archive",
+          "status": "uploaded",
+          "created_at": "2026-10-01 09:40:03.158265+00:00",
+          "updated_at": "2026-10-01 09:50:06.041629+00:00"
+        }
+      ],
+      "jobs": [
+        {
+          "id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "file_id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+          "status": "queued",
+          "error": null,
+          "created_at": "2026-10-01 09:40:03.236426+00:00",
+          "current_attempt_id": "c0683fea-88d0-4931-97cc-bbe1ffac2cea"
+        }
+      ],
+      "ingestion_attempts": [
+        {
+          "id": "3801cb55-b149-405e-b649-219513f76273",
+          "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "generation": 1,
+          "cleanup_status": "swept",
+          "status": "abandoned",
+          "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+          "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+          "started_at": "2026-10-01 09:40:04.079767+00:00",
+          "finished_at": "2026-10-01 09:50:06.044188+00:00",
+          "error": null,
+          "created_at": "2026-10-01 09:40:03.236426+00:00",
+          "updated_at": "2026-10-01 09:50:06.084219+00:00"
+        },
+        {
+          "id": "c0683fea-88d0-4931-97cc-bbe1ffac2cea",
+          "job_id": "8c54cc0d-89e9-4cd1-9ed8-18afb9ac93aa",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "generation": 2,
+          "cleanup_status": "none",
+          "status": "queued",
+          "lease_expires_at": "2026-10-01 10:00:06.046368+00:00",
+          "last_heartbeat_at": "2026-10-01 09:50:06.046371+00:00",
+          "started_at": null,
+          "finished_at": null,
+          "error": null,
+          "created_at": "2026-10-01 09:50:06.041629+00:00",
+          "updated_at": "2026-10-01 09:50:06.041629+00:00"
+        }
+      ],
+      "chapter_files": [
+        {
+          "id": "6fc00de8-8c8d-48bd-a00a-f619a66a6572",
+          "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+          "original_name": "synthetic.zip",
+          "media_type": "application/zip",
+          "size_bytes": 1701622,
+          "storage_key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+          "created_at": "2026-10-01 09:40:03.236426+00:00"
+        }
+      ],
+      "pages": [],
+      "db_snapshot_finished_at": "2026-10-01T09:50:06.097727+00:00",
+      "label": "immediate_after_retry",
+      "lease_owner": {
+        "value": null,
+        "reason": "not_present_in_schema"
+      },
+      "heartbeat_at_mapping": "ingestion_attempts.last_heartbeat_at",
+      "objects": [
+        {
+          "Key": "users/78e22fb0-f695-4ebe-9213-b055e2bb3530/projects/c31997df-6354-446d-9acc-de2231b83bcc/chapters/89824dc1-801f-4d6b-b038-ede891fc3980/original/508d38cb-b84b-4008-a5ff-b54f65426733.zip",
+          "Size": 1701622,
+          "ETag": "\"287f3e39cd437bb7ed353b20234a579b\"",
+          "LastModified": "2026-10-01 09:40:03.331000+00:00"
+        }
+      ],
+      "inventory_finished_at": "2026-10-01T09:50:06.100551+00:00"
+    }
+  ],
+  "signals": [
+    {
+      "name": "kill",
+      "requested_at": "2026-10-01T09:40:04.232794+00:00",
+      "acknowledged_at": "2026-10-01T09:40:05.440696+00:00"
+    },
+    {
+      "name": "start",
+      "requested_at": "2026-10-01T09:50:06.105070+00:00"
+    }
+  ],
+  "lease_samples": [
+    {
+      "observed_at": "2026-10-01T09:40:05.453053+00:00",
+      "database_time": "2026-10-01 09:40:05.451411+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:40:15.459755+00:00",
+      "database_time": "2026-10-01 09:40:15.457645+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:40:25.466253+00:00",
+      "database_time": "2026-10-01 09:40:25.464105+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:40:35.476177+00:00",
+      "database_time": "2026-10-01 09:40:35.472436+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:40:45.500883+00:00",
+      "database_time": "2026-10-01 09:40:45.496012+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:40:55.507486+00:00",
+      "database_time": "2026-10-01 09:40:55.505715+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:41:05.515430+00:00",
+      "database_time": "2026-10-01 09:41:05.513652+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:41:15.524579+00:00",
+      "database_time": "2026-10-01 09:41:15.521983+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:41:25.536271+00:00",
+      "database_time": "2026-10-01 09:41:25.531171+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:41:35.550623+00:00",
+      "database_time": "2026-10-01 09:41:35.543991+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:41:45.562244+00:00",
+      "database_time": "2026-10-01 09:41:45.557967+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:41:55.568655+00:00",
+      "database_time": "2026-10-01 09:41:55.566609+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:42:05.577163+00:00",
+      "database_time": "2026-10-01 09:42:05.574260+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:42:15.586117+00:00",
+      "database_time": "2026-10-01 09:42:15.583496+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:42:25.591793+00:00",
+      "database_time": "2026-10-01 09:42:25.589858+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:42:35.604641+00:00",
+      "database_time": "2026-10-01 09:42:35.601240+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:42:45.617217+00:00",
+      "database_time": "2026-10-01 09:42:45.611349+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:42:55.623507+00:00",
+      "database_time": "2026-10-01 09:42:55.621459+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:43:05.634467+00:00",
+      "database_time": "2026-10-01 09:43:05.631057+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:43:15.641828+00:00",
+      "database_time": "2026-10-01 09:43:15.639602+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:43:25.649137+00:00",
+      "database_time": "2026-10-01 09:43:25.647273+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:43:35.656619+00:00",
+      "database_time": "2026-10-01 09:43:35.654471+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:43:45.667177+00:00",
+      "database_time": "2026-10-01 09:43:45.661980+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:43:55.672511+00:00",
+      "database_time": "2026-10-01 09:43:55.670496+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:44:05.683562+00:00",
+      "database_time": "2026-10-01 09:44:05.678113+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:44:15.690717+00:00",
+      "database_time": "2026-10-01 09:44:15.688474+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:44:25.698944+00:00",
+      "database_time": "2026-10-01 09:44:25.695104+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:44:35.706045+00:00",
+      "database_time": "2026-10-01 09:44:35.704277+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:44:45.715121+00:00",
+      "database_time": "2026-10-01 09:44:45.712374+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:44:55.723268+00:00",
+      "database_time": "2026-10-01 09:44:55.719729+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:45:05.735563+00:00",
+      "database_time": "2026-10-01 09:45:05.733224+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:45:15.742996+00:00",
+      "database_time": "2026-10-01 09:45:15.740865+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:45:25.751566+00:00",
+      "database_time": "2026-10-01 09:45:25.748929+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:45:35.758746+00:00",
+      "database_time": "2026-10-01 09:45:35.756603+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:45:45.767608+00:00",
+      "database_time": "2026-10-01 09:45:45.764954+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:45:55.771959+00:00",
+      "database_time": "2026-10-01 09:45:55.769557+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:46:05.785137+00:00",
+      "database_time": "2026-10-01 09:46:05.781391+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:46:15.795098+00:00",
+      "database_time": "2026-10-01 09:46:15.791680+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:46:25.802575+00:00",
+      "database_time": "2026-10-01 09:46:25.800959+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:46:35.809602+00:00",
+      "database_time": "2026-10-01 09:46:35.807724+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:46:45.820514+00:00",
+      "database_time": "2026-10-01 09:46:45.817114+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:46:55.826386+00:00",
+      "database_time": "2026-10-01 09:46:55.824917+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:47:05.836625+00:00",
+      "database_time": "2026-10-01 09:47:05.834277+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:47:15.845851+00:00",
+      "database_time": "2026-10-01 09:47:15.844152+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:47:25.852469+00:00",
+      "database_time": "2026-10-01 09:47:25.850801+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:47:35.859930+00:00",
+      "database_time": "2026-10-01 09:47:35.858010+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:47:45.869534+00:00",
+      "database_time": "2026-10-01 09:47:45.867378+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:47:55.876491+00:00",
+      "database_time": "2026-10-01 09:47:55.873664+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:48:05.886321+00:00",
+      "database_time": "2026-10-01 09:48:05.884101+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:48:15.893461+00:00",
+      "database_time": "2026-10-01 09:48:15.891724+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:48:25.903272+00:00",
+      "database_time": "2026-10-01 09:48:25.900077+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:48:35.913175+00:00",
+      "database_time": "2026-10-01 09:48:35.910663+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:48:45.924079+00:00",
+      "database_time": "2026-10-01 09:48:45.920574+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:48:55.937717+00:00",
+      "database_time": "2026-10-01 09:48:55.930940+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:49:05.947443+00:00",
+      "database_time": "2026-10-01 09:49:05.945971+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:49:15.956909+00:00",
+      "database_time": "2026-10-01 09:49:15.954082+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:49:25.964254+00:00",
+      "database_time": "2026-10-01 09:49:25.961720+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:49:35.973790+00:00",
+      "database_time": "2026-10-01 09:49:35.971277+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:49:45.986150+00:00",
+      "database_time": "2026-10-01 09:49:45.981042+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:49:55.991998+00:00",
+      "database_time": "2026-10-01 09:49:55.990068+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    },
+    {
+      "observed_at": "2026-10-01T09:50:06.001877+00:00",
+      "database_time": "2026-10-01 09:50:05.998554+00:00",
+      "lease_expires_at": "2026-10-01 09:50:04.403773+00:00",
+      "last_heartbeat_at": "2026-10-01 09:40:04.403758+00:00",
+      "status": "processing_pages"
+    }
+  ],
+  "started_at": "2026-10-01T09:39:52.877644+00:00",
+  "lease_seconds": 600,
+  "readiness_observations": [
+    {
+      "at": "2026-10-01T09:40:03.032788+00:00",
+      "stats": {
+        "celery@d54a8b4ef4c9": {
+          "total": {},
+          "pid": 1,
+          "clock": "5",
+          "uptime": 5,
+          "pool": {
+            "implementation": "celery.concurrency.prefork:TaskPool",
+            "max-concurrency": 2,
+            "processes": [
+              8,
+              9
+            ],
+            "max-tasks-per-child": "N/A",
+            "put-guarded-by-semaphore": false,
+            "timeouts": [
+              0,
+              0
+            ],
+            "writes": {
+              "total": 0,
+              "avg": "0.00",
+              "all": "",
+              "raw": "",
+              "strategy": "fair",
+              "inqueues": {
+                "total": 2,
+                "active": 0
+              }
+            }
+          },
+          "broker": {
+            "hostname": "redis",
+            "userid": null,
+            "virtual_host": "0",
+            "port": 6379,
+            "insist": false,
+            "ssl": false,
+            "transport": "redis",
+            "connect_timeout": 3,
+            "transport_options": {},
+            "login_method": null,
+            "uri_prefix": null,
+            "heartbeat": 120.0,
+            "failover_strategy": "round-robin",
+            "alternates": [],
+            "credential_provider": null
+          },
+          "prefetch_count": 2,
+          "rusage": {
+            "utime": 0.859331,
+            "stime": 0.071944,
+            "maxrss": 61664,
+            "ixrss": 0,
+            "idrss": 0,
+            "isrss": 0,
+            "minflt": 23741,
+            "majflt": 0,
+            "nswap": 0,
+            "inblock": 0,
+            "oublock": 0,
+            "msgsnd": 0,
+            "msgrcv": 0,
+            "nsignals": 0,
+            "nvcsw": 247,
+            "nivcsw": 9
+          }
+        }
+      },
+      "registered": {
+        "celery@d54a8b4ef4c9": [
+          "ingestion.process",
+          "system.heartbeat"
+        ]
+      }
+    }
+  ],
+  "worker_before": {
+    "celery@d54a8b4ef4c9": {
+      "total": {},
+      "pid": 1,
+      "clock": "5",
+      "uptime": 5,
+      "pool": {
+        "implementation": "celery.concurrency.prefork:TaskPool",
+        "max-concurrency": 2,
+        "processes": [
+          8,
+          9
+        ],
+        "max-tasks-per-child": "N/A",
+        "put-guarded-by-semaphore": false,
+        "timeouts": [
+          0,
+          0
+        ],
+        "writes": {
+          "total": 0,
+          "avg": "0.00",
+          "all": "",
+          "raw": "",
+          "strategy": "fair",
+          "inqueues": {
+            "total": 2,
+            "active": 0
+          }
+        }
+      },
+      "broker": {
+        "hostname": "redis",
+        "userid": null,
+        "virtual_host": "0",
+        "port": 6379,
+        "insist": false,
+        "ssl": false,
+        "transport": "redis",
+        "connect_timeout": 3,
+        "transport_options": {},
+        "login_method": null,
+        "uri_prefix": null,
+        "heartbeat": 120.0,
+        "failover_strategy": "round-robin",
+        "alternates": [],
+        "credential_provider": null
+      },
+      "prefetch_count": 2,
+      "rusage": {
+        "utime": 0.859331,
+        "stime": 0.071944,
+        "maxrss": 61664,
+        "ixrss": 0,
+        "idrss": 0,
+        "isrss": 0,
+        "minflt": 23741,
+        "majflt": 0,
+        "nswap": 0,
+        "inblock": 0,
+        "oublock": 0,
+        "msgsnd": 0,
+        "msgrcv": 0,
+        "nsignals": 0,
+        "nvcsw": 247,
+        "nivcsw": 9
+      }
+    }
+  },
+  "worker_config": {
+    "acks_late": false,
+    "prefetch": 1,
+    "concurrency": 2
+  },
+  "chapter_id": "89824dc1-801f-4d6b-b038-ede891fc3980",
+  "source_sha256": "7f24636b853c3ca290f27008aaf3f982be22c1a9c15143eb24437a16a20941bd",
+  "real_interruption": true,
+  "natural_lease_expiry": true,
+  "recoverable_basis": "Current ACTIVE attempt with naturally expired lease; production expired() returned true; recover_attempt lines 270-285",
+  "http_409": false,
+  "stale_recovery_succeeded": true,
+  "replacement_attempt_id": "c0683fea-88d0-4931-97cc-bbe1ffac2cea"
+}

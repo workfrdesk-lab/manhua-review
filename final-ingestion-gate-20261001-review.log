@@ -1,0 +1,18 @@
+FINAL ACCEPTANCE REVIEW — OPEN
+The requested integrated gate and seven-scenario matrix were not completed.
+Three disposable harness runs ended with HTTPStatusError: registration 422, then recovery API 409 twice.
+The 422 fixture used example.invalid. The exact causes of the 409 responses were not captured.
+Earlier commentary attributing the 409 to heartbeat renewal or an unexpired lease is retracted as unproven.
+Raw scenario PASS labels in the 084209 and 084404 logs are INVALID acceptance claims.
+The harness changed worker concurrency to 1, artificially expired leases, did not record real lease expiry/heartbeat evidence, did not prove partial objects before SIGKILL, did not independently complete the seven scenarios, and did not prove all fencing/final consistency assertions.
+The harness published localhost port 18081 despite the stated no-published-ports plan. Existing service ports were not modified.
+The disposable image/source equivalence was not verified. Existing local backend/worker images were used.
+No production code, migration 0012, recovery semantics, existing credentials, or historical chapter were intentionally modified. No existing evidence files were overwritten. AIStor license mount metadata was used, not license contents.
+The harness is retained but execution-disabled for audit. No more partial reruns are authorized by this report.
+Focused recovery/recovery-v1/legacy tests: 10 passed, 1 Starlette deprecation warning, 9.84 seconds, exit 0. Default fixtures used SQLite/local storage; this is not PostgreSQL race or AIStor coverage.
+Ruff backend: passed, exit 0. Frontend typecheck: passed, exit 0. Frontend next build: passed, exit 0.
+Full backend suite launched separately; final result recorded in the accompanying JSON once available.
+Docker inventory check: no containers, networks, or named volumes matching final-ingestion- remained. Anonymous PostgreSQL volume cleanup was not independently demonstrated.
+Broker duplicate delivery: NOT REPRODUCED / COVERAGE LIMITATION. No broker duplicate acceptance claim is made.
+Historical chapter remains F — insufficient evidence. Credential rotation and Phase 4B were not performed.
+Blocker: invalid/incomplete real-infrastructure acceptance harness and missing required independent scenario evidence, not a demonstrated application implementation defect.

@@ -1,0 +1,14 @@
+INGESTION RECOVERY = OPEN
+Scenario 1: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\scenario-1
+Scenario 2: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\scenario-2
+Scenario 3: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\scenario-3
+Scenario 4: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\scenario-4
+Scenario 5: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\scenario-5
+Scenario 6: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\scenario-6
+Scenario 7: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\scenario-7
+focused: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\focused.log
+full_backend: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\full_backend.log
+ruff: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\ruff.log
+typecheck: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\typecheck.log
+build: PASS; D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\build.log
+Protected unchanged: False

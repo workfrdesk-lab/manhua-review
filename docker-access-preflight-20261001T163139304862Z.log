@@ -1,0 +1,13 @@
+ROTATION BLOCKED
+Docker access restored; no service restart or recreation performed.
+No credentials rotated. No credential values or license contents included.
+Prior tool output exposed credential literals; incident recorded without reproduction.
+Unresolved items:
+- Remaining generic-pattern findings are unknown; complete historical scanner finding reconciliation has not been performed.
+- Build contexts and ignore files were identified, but complete effective inclusion/COPY exposure analysis remains unverified.
+- Effective server credential precedence, database host authentication method, and stopped-client execution settings remain incompletely verified; configuration mapping is not proof of all process settings.
+- storage-init image metadata/history/layer inspection is unavailable; its image remains UNVERIFIED.
+- AIStor license validity is UNVERIFIED; only mounted and nonempty state was checked without reading content.
+- No historical launch-environment record proves whether the runtime license path came from host environment, dotenv, or another invocation source.
+- Image inspection found no known active credential fingerprint/value in verified images, but storage-init cannot be bounded.
+- No credential rotation was performed, so active runtime credentials remain active by design.

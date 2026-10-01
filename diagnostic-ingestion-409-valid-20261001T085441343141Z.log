@@ -1,0 +1,90 @@
+409 diagnostic only; INGESTION RECOVERY = OPEN
+Classification: unresolved
+Historical cause remains unresolved. No production defect proven.
+STARTUP
+ Network diag409-20261001t085441343141z_default Creating 
+ Network diag409-20261001t085441343141z_default Creating 
+ Network diag409-20261001t085441343141z_default Created 
+ Network diag409-20261001t085441343141z_default Created 
+ Container diag409-20261001t085441343141z-storage-1 Creating 
+ Container diag409-20261001t085441343141z-postgres-1 Creating 
+ Container diag409-20261001t085441343141z-redis-1 Creating 
+ Container diag409-20261001t085441343141z-storage-1 Created 
+ Container diag409-20261001t085441343141z-storage-init-1 Creating 
+ Container diag409-20261001t085441343141z-redis-1 Created 
+ Container diag409-20261001t085441343141z-postgres-1 Created 
+ Container diag409-20261001t085441343141z-migrate-1 Creating 
+ Container diag409-20261001t085441343141z-storage-init-1 Created 
+ Container diag409-20261001t085441343141z-migrate-1 Created 
+ Container diag409-20261001t085441343141z-worker-1 Creating 
+ Container diag409-20261001t085441343141z-backend-1 Creating 
+ Container diag409-20261001t085441343141z-backend-1 Created 
+ Container diag409-20261001t085441343141z-worker-1 Created 
+ Container diag409-20261001t085441343141z-postgres-1 Starting 
+ Container diag409-20261001t085441343141z-storage-1 Starting 
+ Container diag409-20261001t085441343141z-redis-1 Starting 
+ Container diag409-20261001t085441343141z-postgres-1 Started 
+ Container diag409-20261001t085441343141z-postgres-1 Waiting 
+ Container diag409-20261001t085441343141z-storage-1 Started 
+ Container diag409-20261001t085441343141z-storage-1 Waiting 
+ Container diag409-20261001t085441343141z-redis-1 Started 
+ Container diag409-20261001t085441343141z-postgres-1 Healthy 
+ Container diag409-20261001t085441343141z-migrate-1 Starting 
+ Container diag409-20261001t085441343141z-migrate-1 Started 
+ Container diag409-20261001t085441343141z-storage-1 Healthy 
+ Container diag409-20261001t085441343141z-storage-init-1 Starting 
+ Container diag409-20261001t085441343141z-storage-init-1 Started 
+ Container diag409-20261001t085441343141z-redis-1 Waiting 
+ Container diag409-20261001t085441343141z-migrate-1 Waiting 
+ Container diag409-20261001t085441343141z-storage-init-1 Waiting 
+ Container diag409-20261001t085441343141z-storage-init-1 Waiting 
+ Container diag409-20261001t085441343141z-redis-1 Waiting 
+ Container diag409-20261001t085441343141z-migrate-1 Waiting 
+ Container diag409-20261001t085441343141z-redis-1 Healthy 
+ Container diag409-20261001t085441343141z-redis-1 Healthy 
+ Container diag409-20261001t085441343141z-storage-init-1 Exited 
+ Container diag409-20261001t085441343141z-storage-init-1 Exited 
+ Container diag409-20261001t085441343141z-migrate-1 Exited 
+ Container diag409-20261001t085441343141z-migrate-1 Exited 
+ Container diag409-20261001t085441343141z-worker-1 Starting 
+ Container diag409-20261001t085441343141z-backend-1 Starting 
+ Container diag409-20261001t085441343141z-worker-1 Started 
+ Container diag409-20261001t085441343141z-backend-1 Started 
+
+PROBE
+DIAGNOSTIC_RESULT={"http": [], "snapshots": [], "classification": "unresolved", "ingestion_recovery": "OPEN", "historical_cause": "not established", "worker_config": {"acks_late": false, "prefetch": 1, "queue": "system", "result_backend": null, "ignore_result": true, "stats_before": null, "queues": {"celery@88ed66b2f137": [{"name": "system", "exchange": {"name": "system", "type": "direct", "arguments": null, "durable": true, "passive": false, "auto_delete": false, "delivery_mode": null, "no_declare": false}, "routing_key": "system", "queue_arguments": null, "binding_arguments": null, "consumer_arguments": null, "durable": true, "exclusive": false, "auto_delete": false, "no_ack": false, "alias": null, "bindings": [], "no_declare": null, "expires": null, "message_ttl": null, "max_length": null, "max_length_bytes": null, "max_priority": null}]}}, "probe_error_type": "AssertionError"}
+ Container diag409-20261001t085441343141z-probe Creating 
+ Container diag409-20261001t085441343141z-probe Created 
+{"timestamp": "2026-10-01T08:54:48.266729+00:00", "level": "INFO", "logger": "httpx", "event": "HTTP Request: GET http://backend:8000/health/live \"HTTP/1.1 200 OK\"", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+
+BACKEND AND CELERY LIFECYCLE
+worker-1   | 2026-10-01T08:54:47.324421366Z  
+backend-1  | 2026-10-01T08:54:48.172695611Z INFO:     Started server process [1]
+worker-1   | 2026-10-01T08:54:47.324461642Z  -------------- celery@88ed66b2f137 v5.6.3 (recovery)
+worker-1   | 2026-10-01T08:54:47.324464604Z --- ***** ----- 
+backend-1  | 2026-10-01T08:54:48.172732309Z INFO:     Waiting for application startup.
+backend-1  | 2026-10-01T08:54:48.177197696Z INFO:     Application startup complete.
+backend-1  | 2026-10-01T08:54:48.177458142Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+worker-1   | 2026-10-01T08:54:47.324466136Z -- ******* ---- Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.36 2026-10-01 08:54:47
+worker-1   | 2026-10-01T08:54:47.324467536Z - *** --- * --- 
+worker-1   | 2026-10-01T08:54:47.324468980Z - ** ---------- [config]
+worker-1   | 2026-10-01T08:54:47.324470517Z - ** ---------- .> app:         recap:0x78acf92e59d0
+backend-1  | 2026-10-01T08:54:48.266075534Z {"timestamp": "2026-10-01T08:54:48.265893+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "378e597a-edd4-432e-bb7c-86cd9a25f706", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 27}
+worker-1   | 2026-10-01T08:54:47.324472242Z - ** ---------- .> transport:   redis://redis:6379/0
+worker-1   | 2026-10-01T08:54:47.324473599Z - ** ---------- .> results:     disabled://
+worker-1   | 2026-10-01T08:54:47.324474994Z - *** --- * --- .> concurrency: 2 (prefork)
+worker-1   | 2026-10-01T08:54:47.324476294Z -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+worker-1   | 2026-10-01T08:54:47.324477794Z --- ***** ----- 
+worker-1   | 2026-10-01T08:54:47.324479164Z  -------------- [queues]
+worker-1   | 2026-10-01T08:54:47.324480494Z                 .> system           exchange=system(direct) key=system
+worker-1   | 2026-10-01T08:54:47.324481639Z                 
+backend-1  | 2026-10-01T08:54:48.266112587Z INFO:     172.19.0.7:33548 - "GET /health/live HTTP/1.1" 200 OK
+worker-1   | 2026-10-01T08:54:47.324482900Z 
+worker-1   | 2026-10-01T08:54:47.324486009Z [tasks]
+worker-1   | 2026-10-01T08:54:47.324487552Z   . ingestion.process
+worker-1   | 2026-10-01T08:54:47.324489186Z   . system.heartbeat
+worker-1   | 2026-10-01T08:54:47.324490528Z 
+worker-1   | 2026-10-01T08:54:47.399512326Z {"timestamp": "2026-10-01T08:54:47.399232+00:00", "level": "INFO", "logger": "celery.worker.consumer.connection", "event": "Connected to redis://redis:6379/0", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T08:54:47.401155694Z {"timestamp": "2026-10-01T08:54:47.400988+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: searching for neighbors", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T08:54:48.409066492Z {"timestamp": "2026-10-01T08:54:48.408705+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: all alone", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T08:54:48.419330811Z {"timestamp": "2026-10-01T08:54:48.419197+00:00", "level": "INFO", "logger": "celery.apps.worker", "event": "celery@88ed66b2f137 ready.", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}

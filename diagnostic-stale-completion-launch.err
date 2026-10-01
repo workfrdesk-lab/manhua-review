@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "D:\projects\manhua review\diagnostic_stale_capture.py", line 141, in <module>
+    main()
+    ~~~~^^
+  File "D:\projects\manhua review\diagnostic_stale_capture.py", line 104, in main
+    probe.communicate(timeout=30)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 1665, in _communicate
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['docker', 'compose', '--ansi', 'never', '-p', 'diagstale-20261001t093945908749z', '-f', 'D:\\projects\\manhua review\\diagnostic-stale.compose.yml', 'run', '--name', 'diagstale-20261001t093945908749z-probe', '--no-deps', 'probe']' timed out after 30 seconds

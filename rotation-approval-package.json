@@ -1,0 +1,209 @@
+{
+  "status": "ROTATION APPROVAL PACKAGE READY — EXECUTION NOT PERFORMED",
+  "credential_remediation": "OPEN",
+  "rotation": "BLOCKED",
+  "rotation_authorized": false,
+  "execution_performed": false,
+  "package_type": "planning_only",
+  "credential_identities": {
+    "postgresql": {
+      "class": "PostgreSQL application/service authentication credential",
+      "fingerprint": "sha256:ed20191044553dac",
+      "source_identifier": "Compose-interpolated DATABASE_URL / approved secret-store source",
+      "values_included": false
+    },
+    "aistor_s3_server": {
+      "class": "AIStor server-side root/service access identity and secret credential",
+      "access_fingerprint": "sha256:a13e01842595489f",
+      "secret_fingerprint": "sha256:ad14927ac93ea513",
+      "source_identifier": "Compose-interpolated AIStor root credential source",
+      "values_included": false
+    }
+  },
+  "authoritative_sources": {
+    "postgresql": {
+      "server_side": "PostgreSQL role/admin channel; exact role identity requires approved execution-time confirmation",
+      "backend_client": "Compose-interpolated DATABASE_URL source",
+      "worker_client": "Compose-interpolated DATABASE_URL source",
+      "stopped_one_shot_clients": "Compose-interpolated DATABASE_URL source for approved one-shot clients",
+      "file_reference": "UNVERIFIED; no *_FILE source is authorized by this package"
+    },
+    "aistor_s3": {
+      "server_side": "AIStor administrative/root credential source",
+      "backend_client": "Compose-interpolated S3 access/secret client source",
+      "worker_client": "Compose-interpolated S3 access/secret client source",
+      "stopped_storage_init_client": "Compose-interpolated storage-init credential source; storage-init execution is prohibited",
+      "file_reference": "UNVERIFIED; no *_FILE source is authorized by this package"
+    }
+  },
+  "ownership": {
+    "maintenance_owner": "UNASSIGNED — approval required before execution",
+    "rollback_owner": "UNASSIGNED — approval required before execution",
+    "security_approver": "UNASSIGNED — approval required before execution",
+    "application_owner": "UNASSIGNED — approval required before execution",
+    "data_owner": "UNASSIGNED — approval required before execution"
+  },
+  "approval_gates": [
+    "Security owner approves the blocked-preflight exception path or confirms all security-relevant blockers are resolved.",
+    "Database owner approves PostgreSQL role cutover and server-side verification procedure.",
+    "AIStor owner approves supported server-side credential cutover without license rotation or data-volume change.",
+    "Application owner approves backend/worker quiescence and restart order.",
+    "Data owner confirms affected chapter/object namespace exclusion.",
+    "Maintenance and rollback owners are assigned and reachable.",
+    "Protected-artifact baseline discrepancy receives separate integrity reconciliation/approval; baseline remains unchanged.",
+    "A completed secret-store rollback version plan exists without recording old secret values."
+  ],
+  "maintenance_window_prerequisites": [
+    "Approved start/end time, owner, rollback owner, and communication channel.",
+    "No active operation may read, write, delete, list, validate, or repair the affected chapter/object namespace.",
+    "Ingress and new submissions can be blocked; workers can be safely drained without ingestion/recovery changes.",
+    "Authoritative secret-store version identifiers are available without exposing values.",
+    "Exact service/image/project identities and non-secret endpoint/bucket identities are confirmed from existing evidence.",
+    "No migrations, storage-init mutation, Redis restart, image upgrade, volume replacement, or license action is scheduled.",
+    "Old secret values are prohibited from logs, artifacts, command lines, chat, screenshots, and operator notes."
+  ],
+  "namespace_exclusion": {
+    "affected_chapter": "EXPLICITLY EXCLUDED",
+    "affected_objects": "EXPLICITLY EXCLUDED",
+    "all_aistor_objects": "No object contents or object mutations are part of this package",
+    "enforcement": "Pause or abort if exclusion cannot be guaranteed without changing ingestion/recovery behavior"
+  },
+  "service_order": {
+    "stop_or_quiesce": [
+      "Block ingress and new submissions",
+      "Drain and pause worker consumers",
+      "Stop backend credential consumers",
+      "Keep PostgreSQL and AIStor server services available unless their approved cutover requires a controlled restart",
+      "Do not restart Redis"
+    ],
+    "start_or_resume": [
+      "Verify PostgreSQL cutover booleans with application traffic blocked",
+      "Verify AIStor cutover booleans with application traffic blocked",
+      "Start backend and verify both credential systems",
+      "Start worker and verify both credential systems without consuming protected work",
+      "Resume scheduled producers and ingress only after all gates pass"
+    ],
+    "execution": "NOT PERFORMED"
+  },
+  "postgresql_cutover": {
+    "order": [
+      "Quiesce backend, worker, and stopped one-shot clients.",
+      "Change the existing PostgreSQL role credential through the approved database administrative channel.",
+      "Synchronize backend, worker, and one-shot authoritative client sources by opaque secret-store version identity.",
+      "Verify fresh backend authentication as boolean success/failure.",
+      "Verify fresh worker authentication as boolean success/failure.",
+      "Verify required stopped one-shot client authentication as boolean success/failure without running migrations.",
+      "Verify old-credential rejection through an approved isolated verifier without recording the old value.",
+      "Abort and roll back on any failure; do not resume traffic until all required booleans pass."
+    ],
+    "migration": false,
+    "execution": "NOT PERFORMED"
+  },
+  "aistor_cutover": {
+    "order": [
+      "Keep backend, worker, storage-init, and object-affecting clients stopped or quiesced.",
+      "Apply the supported AIStor server-side credential cutover through the approved administrative channel.",
+      "Synchronize backend and worker client sources by opaque secret-store version identity.",
+      "Do not run storage-init, create/delete buckets, mutate policies, or access object contents.",
+      "Verify AIStor server authentication as boolean success/failure.",
+      "Verify backend S3 authentication as boolean success/failure.",
+      "Verify worker S3 authentication as boolean success/failure without consuming protected work.",
+      "Verify old-credential rejection through an approved isolated verifier without recording the old value.",
+      "Abort and roll back on any failure; preserve image, data volume, endpoint, bucket, objects, and license mount."
+    ],
+    "license_rotation": false,
+    "storage_init": false,
+    "execution": "NOT PERFORMED"
+  },
+  "rollback": {
+    "trigger": "Any required authentication boolean fails, any unexpected service/data behavior occurs, namespace exclusion cannot be guaranteed, or an approval gate is withdrawn.",
+    "order": [
+      "Keep ingress, backend, worker, and producers quiesced.",
+      "Restore PostgreSQL server-side credential using approved opaque rollback version identity and restore matching client source versions.",
+      "Restore AIStor server-side credential using the supported rollback procedure and restore matching client source versions.",
+      "Restart only the affected authorized services; do not restart Redis unless separately proven necessary.",
+      "Verify rollback authentication booleans only.",
+      "Resume traffic only after rollback compatibility and namespace exclusion are confirmed."
+    ],
+    "old_values_logged": false,
+    "old_values_in_artifacts": false
+  },
+  "post_rotation_boolean_matrix": {
+    "postgresql": {
+      "backend_authenticated": "BOOLEAN_ONLY",
+      "worker_authenticated": "BOOLEAN_ONLY",
+      "stopped_one_shot_client_authenticated": "BOOLEAN_ONLY"
+    },
+    "aistor_s3": {
+      "server_authenticated": "BOOLEAN_ONLY",
+      "backend_authenticated": "BOOLEAN_ONLY",
+      "worker_authenticated": "BOOLEAN_ONLY"
+    },
+    "invariants": {
+      "affected_chapter_or_objects_accessed": false,
+      "object_mutation_performed": false,
+      "license_changed": false,
+      "redis_restarted": false,
+      "migrations_run": false,
+      "storage_init_run": false,
+      "ingestion_recovery_changed": false
+    },
+    "output_restriction": "Emit booleans, opaque identities, timestamps, and component names only."
+  },
+  "explicit_exclusions": {
+    "aistor_license_rotated": false,
+    "redis_restarted_unless_separate_dependency_proven": false,
+    "migrations_part_of_operation": false,
+    "storage_init_part_of_operation": false,
+    "ingestion_recovery_code_part_of_operation": false,
+    "credential_values_exposed": false
+  },
+  "protected_artifact_integrity": {
+    "baseline_discrepancy": "OPEN",
+    "baseline_overwritten": false,
+    "baseline_regenerated": false,
+    "required_action": "Separate integrity reconciliation and explicit approval; do not alter the historical baseline.",
+    "readiness_effect": "Remains a blocker."
+  },
+  "preservation": {
+    "existing_evidence_preserved": true,
+    "execution_authorized": false,
+    "rotation_authorized": false
+  },
+  "administrative_approval": {
+    "maintenance_owner": "Project Owner",
+    "rollback_owner": "Project Owner",
+    "security_approver": "Project Owner",
+    "database_owner": "Project Owner",
+    "aistor_owner": "Project Owner",
+    "application_owner": "Project Owner",
+    "data_owner": "Project Owner",
+    "maintenance_window": {
+      "start": "2026-10-02 02:00 UTC",
+      "end": "2026-10-02 03:00 UTC"
+    },
+    "communication_incident_channel": "Project maintenance log",
+    "postgresql_rollback_version_identifier": "NOT CONFIGURED",
+    "aistor_s3_rollback_version_identifier": "NOT CONFIGURED",
+    "postgresql_cutover_approval": "APPROVED BY PROJECT OWNER",
+    "aistor_s3_cutover_approval": "APPROVED BY PROJECT OWNER",
+    "protected_chapter_object_exclusion": "APPROVED BY PROJECT OWNER",
+    "protected_artifact_discrepancy_reconciliation": "PENDING",
+    "technical_identity_resolution": {
+      "postgresql_exact_role": "UNVERIFIED — no exact role identifier supplied or newly inspected",
+      "postgresql_fingerprint": "sha256:ed20191044553dac",
+      "postgresql_authoritative_source": "Compose-interpolated DATABASE_URL / approved secret-store source",
+      "aistor_exact_server_identity": "UNVERIFIED — no exact server-side identity identifier supplied or newly inspected",
+      "aistor_access_fingerprint": "sha256:a13e01842595489f",
+      "aistor_secret_fingerprint": "sha256:ad14927ac93ea513",
+      "aistor_authoritative_source": "AIStor administrative/root credential source",
+      "secret_values_included": false,
+      "new_inspection_performed": false
+    },
+    "execution_authorized": false,
+    "credential_remediation": "OPEN",
+    "rotation": "BLOCKED",
+    "protected_artifact_baseline_discrepancy": "OPEN",
+    "operational_actions_performed": false
+  }
+}

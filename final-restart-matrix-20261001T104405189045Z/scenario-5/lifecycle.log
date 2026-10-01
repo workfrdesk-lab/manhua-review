@@ -1,0 +1,353 @@
+2026-10-01T11:07:08.216037+00:00 up -d backend worker
+ Network matrix-scenario-5_default Creating 
+ Network matrix-scenario-5_default Creating 
+ Network matrix-scenario-5_default Created 
+ Network matrix-scenario-5_default Created 
+ Container matrix-scenario-5-postgres-1 Creating 
+ Container matrix-scenario-5-storage-1 Creating 
+ Container matrix-scenario-5-redis-1 Creating 
+ Container matrix-scenario-5-storage-1 Created 
+ Container matrix-scenario-5-storage-init-1 Creating 
+ Container matrix-scenario-5-redis-1 Created 
+ Container matrix-scenario-5-postgres-1 Created 
+ Container matrix-scenario-5-migrate-1 Creating 
+ Container matrix-scenario-5-storage-init-1 Created 
+ Container matrix-scenario-5-migrate-1 Created 
+ Container matrix-scenario-5-worker-1 Creating 
+ Container matrix-scenario-5-backend-1 Creating 
+ Container matrix-scenario-5-worker-1 Created 
+ Container matrix-scenario-5-backend-1 Created 
+ Container matrix-scenario-5-postgres-1 Starting 
+ Container matrix-scenario-5-redis-1 Starting 
+ Container matrix-scenario-5-storage-1 Starting 
+ Container matrix-scenario-5-postgres-1 Started 
+ Container matrix-scenario-5-postgres-1 Waiting 
+ Container matrix-scenario-5-redis-1 Started 
+ Container matrix-scenario-5-storage-1 Started 
+ Container matrix-scenario-5-storage-1 Waiting 
+ Container matrix-scenario-5-postgres-1 Healthy 
+ Container matrix-scenario-5-migrate-1 Starting 
+ Container matrix-scenario-5-migrate-1 Started 
+ Container matrix-scenario-5-storage-1 Healthy 
+ Container matrix-scenario-5-storage-init-1 Starting 
+ Container matrix-scenario-5-storage-init-1 Started 
+ Container matrix-scenario-5-storage-init-1 Waiting 
+ Container matrix-scenario-5-redis-1 Waiting 
+ Container matrix-scenario-5-redis-1 Waiting 
+ Container matrix-scenario-5-migrate-1 Waiting 
+ Container matrix-scenario-5-migrate-1 Waiting 
+ Container matrix-scenario-5-storage-init-1 Waiting 
+ Container matrix-scenario-5-redis-1 Healthy 
+ Container matrix-scenario-5-redis-1 Healthy 
+ Container matrix-scenario-5-storage-init-1 Exited 
+ Container matrix-scenario-5-storage-init-1 Exited 
+ Container matrix-scenario-5-migrate-1 Exited 
+ Container matrix-scenario-5-backend-1 Starting 
+ Container matrix-scenario-5-migrate-1 Exited 
+ Container matrix-scenario-5-worker-1 Starting 
+ Container matrix-scenario-5-backend-1 Started 
+ Container matrix-scenario-5-worker-1 Started 
+
+2026-10-01T11:07:08.362899+00:00 ps -a -q worker
+c0103e8a1e253be08b3cc4af261088435da4d6760007c88511e2db146a2e9057
+
+2026-10-01T11:07:08.550557+00:00 ps -a -q backend
+e72ed406b9a8c692f9d33a024756b44cb44763fa805151e31907ac33d9f03783
+
+2026-10-01T11:07:08.752703+00:00 ps -a -q redis
+382089757b0aef958ad07bf45746873c1987d98afb6d70f70d586077fef13145
+
+2026-10-01T11:07:08.946936+00:00 ps -a -q storage-init
+f8234b612ece753feaa592e5b52b22049fed614672baa69ce0b3da1fd49cd88d
+
+2026-10-01T11:07:09.359999+00:00 exec -T backend python -c import pathlib,hashlib,json; print(json.dumps({str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in pathlib.Path('app').rglob('*.py')}))
+{"app/rate_limit.py": "959ebabf7baa6d66e826c5602a37eded27f834cccbaf0eaedfcb3bf87a4b02cd", "app/story_service.py": "9f376c2d701ce52ba62851deeb6ca3087e8fcfdf279069c9a472038d6d9decff", "app/story_audit.py": "43477a2b1a8a13d621db7cd3a4985138c9274b6d69ad4f5d58d0620df12f9afa", "app/health.py": "a0f9d81bbcdc598e204c2b2f04a61b1f1ea315af909dfb05d1cd1528564052d9", "app/jobs.py": "99cd008f5067c35ca8719dea2a66162b734d13f9b4c73b85fc207ead5fa518d7", "app/db.py": "88797de3460950455517124071777d27bf263714def1bb51002af398610ff495", "app/projects.py": "57a803479051e01cad474e1d51aa5a6a8cb0e86ea353a9db2465a8ade20272bc", "app/analysis_providers.py": "a7cf82584aa7500c8bac657a4ae9c4395dbe827e85dabd0378bfd832309fafef", "app/story_resolution.py": "0a0428238186f33578793496d7a31d60c16b28027354e88aaf273d7706984a18", "app/story_context.py": "54a34a57ba2af7052022f7216db59965feef6cd722d2f6d0e3942aa1ec813836", "app/auth.py": "4fc85db3900e62688a8b259b7b092070ec3de7994b46ba008583263ecbf0c7ab", "app/errors.py": "942ac1f2c03a934633d844d77f3773e56dbca7cf547f17539c60fd9d5c14dc88", "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "app/models.py": "eeae37960d688f6e25542a21ff048c61350e298c0214f8d84d048fd55a940f2f", "app/ingestion.py": "06c7770eada6746f9c81221f0668b9297a7fbcc4ebff1ee5c394cb0db50e1607", "app/logging_config.py": "2d6ada5e1754015810c77cec26469aff314df473dd40cdf1929b90267c38c860", "app/story_providers.py": "7b715a670e46cc92866aad577cb60fcf15d725d339af5675426b2d4f31a7c694", "app/story.py": "211bf8bde8ed5a5960164d55cd6cec301954f4071918dafe5f7d107e550dba7e", "app/config.py": "590ee293b3dfcf71f7f99d03a1a0a929b42f96656f4a30ec67d1ff4556f11a1f", "app/security.py": "8c2cd86dfac59da0407c9009f00128a20d332f6bb97144ac31e55619ba3215e0", "app/story_review.py": "ec6e2d3fe7cd8faa1559e2996078f1d329704ecead8ab2d979a53c56534017bb", "app/ingestion_service.py": "311eed67b0b59bd364f4b7df4aa40ac6b8e80af3f4d0ad9f73e5a6189429e730", "app/extraction.py": "c7a41ba92d087d759fb3d74ca999fbaedf269644eb9346614be701c4a6006ede", "app/main.py": "b437beadb9569bff9e59c4427b9836ec527d98b132e5ed30c5b39e724eb80351", "app/worker.py": "86ac88bf4119b014fea75e570b3715e899a1c08cc7bb2f4c74b93c8d3c6432de", "app/storage.py": "2811618099ddf4dffd0bf27a4f1bade425688a49dcf8ac3093218ef7ce214db0", "app/story_schemas.py": "fd7c9d4a0718f9e436cf93dfac0becf7f4fa08a774fa3f9de5a849ee42e5fb0a", "app/analysis.py": "ce139d84c557481469db34e3bf01cdb5bef2aae89553403006932774362a5239", "app/analysis_service.py": "9376a265f9f94337d965536a1f0aa079dc89613536d3ea530a94c0d389b3c18d", "app/story_validation.py": "fe47d7c3e673fc9cb66ffdb71e3e1ac201c227286b02d14666233ead91a2517d"}
+
+2026-10-01T11:07:09.671778+00:00 exec -T worker python -c import pathlib,hashlib,json; print(json.dumps({str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in pathlib.Path('app').rglob('*.py')}))
+{"app/rate_limit.py": "959ebabf7baa6d66e826c5602a37eded27f834cccbaf0eaedfcb3bf87a4b02cd", "app/story_service.py": "9f376c2d701ce52ba62851deeb6ca3087e8fcfdf279069c9a472038d6d9decff", "app/story_audit.py": "43477a2b1a8a13d621db7cd3a4985138c9274b6d69ad4f5d58d0620df12f9afa", "app/health.py": "a0f9d81bbcdc598e204c2b2f04a61b1f1ea315af909dfb05d1cd1528564052d9", "app/jobs.py": "99cd008f5067c35ca8719dea2a66162b734d13f9b4c73b85fc207ead5fa518d7", "app/db.py": "88797de3460950455517124071777d27bf263714def1bb51002af398610ff495", "app/projects.py": "57a803479051e01cad474e1d51aa5a6a8cb0e86ea353a9db2465a8ade20272bc", "app/analysis_providers.py": "a7cf82584aa7500c8bac657a4ae9c4395dbe827e85dabd0378bfd832309fafef", "app/story_resolution.py": "0a0428238186f33578793496d7a31d60c16b28027354e88aaf273d7706984a18", "app/story_context.py": "54a34a57ba2af7052022f7216db59965feef6cd722d2f6d0e3942aa1ec813836", "app/auth.py": "4fc85db3900e62688a8b259b7b092070ec3de7994b46ba008583263ecbf0c7ab", "app/errors.py": "942ac1f2c03a934633d844d77f3773e56dbca7cf547f17539c60fd9d5c14dc88", "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "app/models.py": "eeae37960d688f6e25542a21ff048c61350e298c0214f8d84d048fd55a940f2f", "app/ingestion.py": "06c7770eada6746f9c81221f0668b9297a7fbcc4ebff1ee5c394cb0db50e1607", "app/logging_config.py": "2d6ada5e1754015810c77cec26469aff314df473dd40cdf1929b90267c38c860", "app/story_providers.py": "7b715a670e46cc92866aad577cb60fcf15d725d339af5675426b2d4f31a7c694", "app/story.py": "211bf8bde8ed5a5960164d55cd6cec301954f4071918dafe5f7d107e550dba7e", "app/config.py": "590ee293b3dfcf71f7f99d03a1a0a929b42f96656f4a30ec67d1ff4556f11a1f", "app/security.py": "8c2cd86dfac59da0407c9009f00128a20d332f6bb97144ac31e55619ba3215e0", "app/story_review.py": "ec6e2d3fe7cd8faa1559e2996078f1d329704ecead8ab2d979a53c56534017bb", "app/ingestion_service.py": "311eed67b0b59bd364f4b7df4aa40ac6b8e80af3f4d0ad9f73e5a6189429e730", "app/extraction.py": "c7a41ba92d087d759fb3d74ca999fbaedf269644eb9346614be701c4a6006ede", "app/main.py": "b437beadb9569bff9e59c4427b9836ec527d98b132e5ed30c5b39e724eb80351", "app/worker.py": "86ac88bf4119b014fea75e570b3715e899a1c08cc7bb2f4c74b93c8d3c6432de", "app/storage.py": "2811618099ddf4dffd0bf27a4f1bade425688a49dcf8ac3093218ef7ce214db0", "app/story_schemas.py": "fd7c9d4a0718f9e436cf93dfac0becf7f4fa08a774fa3f9de5a849ee42e5fb0a", "app/analysis.py": "ce139d84c557481469db34e3bf01cdb5bef2aae89553403006932774362a5239", "app/analysis_service.py": "9376a265f9f94337d965536a1f0aa079dc89613536d3ea530a94c0d389b3c18d", "app/story_validation.py": "fe47d7c3e673fc9cb66ffdb71e3e1ac201c227286b02d14666233ead91a2517d"}
+
+2026-10-01T11:07:10.352388+00:00 exec -T worker python -c import json; from app.worker import celery_app as c; print(json.dumps(dict(acks_late=c.conf.task_acks_late,prefetch=c.conf.worker_prefetch_multiplier,queue=c.conf.task_default_queue)))
+{"acks_late": false, "prefetch": 1, "queue": "system"}
+
+2026-10-01T11:07:23.144844+00:00 ps -a -q worker
+c0103e8a1e253be08b3cc4af261088435da4d6760007c88511e2db146a2e9057
+
+2026-10-01T11:07:23.348300+00:00 ps -a -q backend
+e72ed406b9a8c692f9d33a024756b44cb44763fa805151e31907ac33d9f03783
+
+2026-10-01T11:07:23.548704+00:00 ps -a -q redis
+382089757b0aef958ad07bf45746873c1987d98afb6d70f70d586077fef13145
+
+2026-10-01T11:07:23.752640+00:00 ps -a -q storage-init
+f8234b612ece753feaa592e5b52b22049fed614672baa69ce0b3da1fd49cd88d
+
+2026-10-01T11:07:24.196254+00:00 ps -a -q worker
+c0103e8a1e253be08b3cc4af261088435da4d6760007c88511e2db146a2e9057
+
+2026-10-01T11:07:24.384633+00:00 ps -a -q backend
+e72ed406b9a8c692f9d33a024756b44cb44763fa805151e31907ac33d9f03783
+
+2026-10-01T11:07:24.585929+00:00 ps -a -q redis
+382089757b0aef958ad07bf45746873c1987d98afb6d70f70d586077fef13145
+
+2026-10-01T11:07:24.788439+00:00 ps -a -q storage-init
+f8234b612ece753feaa592e5b52b22049fed614672baa69ce0b3da1fd49cd88d
+
+2026-10-01T11:17:26.757653+00:00 ps -a -q worker
+c0103e8a1e253be08b3cc4af261088435da4d6760007c88511e2db146a2e9057
+
+2026-10-01T11:17:26.913915+00:00 ps -a -q backend
+e72ed406b9a8c692f9d33a024756b44cb44763fa805151e31907ac33d9f03783
+
+2026-10-01T11:17:27.072869+00:00 ps -a -q redis
+382089757b0aef958ad07bf45746873c1987d98afb6d70f70d586077fef13145
+
+2026-10-01T11:17:27.232620+00:00 ps -a -q storage-init
+f8234b612ece753feaa592e5b52b22049fed614672baa69ce0b3da1fd49cd88d
+
+2026-10-01T11:17:28.157904+00:00 ps -a -q worker
+c0103e8a1e253be08b3cc4af261088435da4d6760007c88511e2db146a2e9057
+
+2026-10-01T11:17:28.318058+00:00 ps -a -q backend
+e72ed406b9a8c692f9d33a024756b44cb44763fa805151e31907ac33d9f03783
+
+2026-10-01T11:17:28.492234+00:00 ps -a -q redis
+382089757b0aef958ad07bf45746873c1987d98afb6d70f70d586077fef13145
+
+2026-10-01T11:17:28.657829+00:00 ps -a -q storage-init
+f8234b612ece753feaa592e5b52b22049fed614672baa69ce0b3da1fd49cd88d
+
+2026-10-01T11:17:29.040539+00:00 ps -a -q worker
+c0103e8a1e253be08b3cc4af261088435da4d6760007c88511e2db146a2e9057
+
+2026-10-01T11:17:29.240385+00:00 ps -a -q backend
+e72ed406b9a8c692f9d33a024756b44cb44763fa805151e31907ac33d9f03783
+
+2026-10-01T11:17:29.412796+00:00 ps -a -q redis
+382089757b0aef958ad07bf45746873c1987d98afb6d70f70d586077fef13145
+
+2026-10-01T11:17:29.585517+00:00 ps -a -q storage-init
+f8234b612ece753feaa592e5b52b22049fed614672baa69ce0b3da1fd49cd88d
+
+2026-10-01T11:17:29.910300+00:00 ps -a -q worker
+c0103e8a1e253be08b3cc4af261088435da4d6760007c88511e2db146a2e9057
+
+2026-10-01T11:17:30.093990+00:00 ps -a -q backend
+e72ed406b9a8c692f9d33a024756b44cb44763fa805151e31907ac33d9f03783
+
+2026-10-01T11:17:30.268547+00:00 ps -a -q redis
+382089757b0aef958ad07bf45746873c1987d98afb6d70f70d586077fef13145
+
+2026-10-01T11:17:30.433564+00:00 ps -a -q storage-init
+f8234b612ece753feaa592e5b52b22049fed614672baa69ce0b3da1fd49cd88d
+
+2026-10-01T11:17:59.620700+00:00 logs --no-color --timestamps worker backend redis
+redis-1    | 2026-10-01T11:07:04.095365946Z 1:C 01 Oct 2026 11:07:04.095 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1    | 2026-10-01T11:07:04.095398562Z 1:C 01 Oct 2026 11:07:04.095 * Redis version=7.4.5, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1    | 2026-10-01T11:07:04.095400929Z 1:C 01 Oct 2026 11:07:04.095 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1    | 2026-10-01T11:07:04.095703081Z 1:M 01 Oct 2026 11:07:04.095 * monotonic clock: POSIX clock_gettime
+backend-1  | 2026-10-01T11:07:09.819071239Z INFO:     Started server process [1]
+backend-1  | 2026-10-01T11:07:09.819107835Z INFO:     Waiting for application startup.
+redis-1    | 2026-10-01T11:07:04.096612578Z 1:M 01 Oct 2026 11:07:04.096 * Running mode=standalone, port=6379.
+backend-1  | 2026-10-01T11:07:09.822413203Z INFO:     Application startup complete.
+redis-1    | 2026-10-01T11:07:04.096955995Z 1:M 01 Oct 2026 11:07:04.096 * Server initialized
+backend-1  | 2026-10-01T11:07:09.822600327Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+redis-1    | 2026-10-01T11:07:04.096980430Z 1:M 01 Oct 2026 11:07:04.096 * Ready to accept connections tcp
+backend-1  | 2026-10-01T11:07:12.088374698Z {"timestamp": "2026-10-01T11:07:12.088157+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "a3d962a9-b6da-4708-9cd8-8edff8cfb907", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 27}
+backend-1  | 2026-10-01T11:07:12.088453828Z INFO:     172.19.0.7:56544 - "GET /health/live HTTP/1.1" 200 OK
+backend-1  | 2026-10-01T11:07:21.294662150Z INFO:     172.19.0.7:57502 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+backend-1  | 2026-10-01T11:07:21.294686544Z {"timestamp": "2026-10-01T11:07:21.294303+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "35852138-9851-4af3-9491-40d0a4a74604", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 119}
+backend-1  | 2026-10-01T11:07:21.308373895Z {"timestamp": "2026-10-01T11:07:21.308187+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "cc0a0b55-0fd1-4b78-9980-946442290e20", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 12}
+backend-1  | 2026-10-01T11:07:21.308415340Z INFO:     172.19.0.7:57502 - "POST /api/v1/projects HTTP/1.1" 201 Created
+backend-1  | 2026-10-01T11:07:21.321300966Z {"timestamp": "2026-10-01T11:07:21.321102+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "de16be7c-dce2-4326-8b25-92198a45feae", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 11}
+backend-1  | 2026-10-01T11:07:21.321365553Z INFO:     172.19.0.7:57502 - "POST /api/v1/projects/b3acd51c-c952-4982-a347-ea5a13c7e034/chapters HTTP/1.1" 201 Created
+backend-1  | 2026-10-01T11:07:21.716351308Z {"timestamp": "2026-10-01T11:07:21.716142+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "8a7102b1-906e-407a-bc78-2315b6220589", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 285}
+backend-1  | 2026-10-01T11:07:21.716485116Z INFO:     172.19.0.7:57502 - "POST /api/v1/chapters/765c583e-3fbe-4c90-930d-5a1b635539e9/upload HTTP/1.1" 200 OK
+backend-1  | 2026-10-01T11:17:27.340070992Z INFO:     Shutting down
+backend-1  | 2026-10-01T11:17:27.440978719Z INFO:     Waiting for application shutdown.
+backend-1  | 2026-10-01T11:17:27.442254511Z INFO:     Application shutdown complete.
+backend-1  | 2026-10-01T11:17:27.442690410Z INFO:     Finished server process [1]
+backend-1  | 2026-10-01T11:17:29.456174241Z INFO:     Started server process [1]
+backend-1  | 2026-10-01T11:17:29.456201139Z INFO:     Waiting for application startup.
+backend-1  | 2026-10-01T11:17:29.459557599Z INFO:     Application startup complete.
+backend-1  | 2026-10-01T11:17:29.459750738Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+backend-1  | 2026-10-01T11:17:30.677604957Z {"timestamp": "2026-10-01T11:17:30.677299+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "14298005-6c3c-4d05-bb24-7aee6c2e3aeb", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 25}
+backend-1  | 2026-10-01T11:17:30.677714296Z INFO:     172.19.0.7:41402 - "GET /health/live HTTP/1.1" 200 OK
+backend-1  | 2026-10-01T11:17:50.399751078Z {"timestamp": "2026-10-01T11:17:50.399594+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "d06837e9-230c-4a85-8525-86b4c138d9bd", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 293}
+backend-1  | 2026-10-01T11:17:50.399809333Z INFO:     172.19.0.7:49390 - "POST /api/v1/chapters/765c583e-3fbe-4c90-930d-5a1b635539e9/processing-retry HTTP/1.1" 200 OK
+worker-1   | 2026-10-01T11:07:09.014734094Z  
+worker-1   | 2026-10-01T11:07:09.014772711Z  -------------- celery@c0103e8a1e25 v5.6.3 (recovery)
+worker-1   | 2026-10-01T11:07:09.014776507Z --- ***** ----- 
+worker-1   | 2026-10-01T11:07:09.014778873Z -- ******* ---- Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.36 2026-10-01 11:07:09
+worker-1   | 2026-10-01T11:07:09.014780618Z - *** --- * --- 
+worker-1   | 2026-10-01T11:07:09.014782179Z - ** ---------- [config]
+worker-1   | 2026-10-01T11:07:09.014783897Z - ** ---------- .> app:         recap:0x7e2b4fd925a0
+worker-1   | 2026-10-01T11:07:09.014785925Z - ** ---------- .> transport:   redis://redis:6379/0
+worker-1   | 2026-10-01T11:07:09.014787597Z - ** ---------- .> results:     disabled://
+worker-1   | 2026-10-01T11:07:09.014789493Z - *** --- * --- .> concurrency: 2 (prefork)
+worker-1   | 2026-10-01T11:07:09.014791338Z -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+worker-1   | 2026-10-01T11:07:09.014793045Z --- ***** ----- 
+worker-1   | 2026-10-01T11:07:09.014794460Z  -------------- [queues]
+worker-1   | 2026-10-01T11:07:09.014796036Z                 .> system           exchange=system(direct) key=system
+worker-1   | 2026-10-01T11:07:09.014797851Z                 
+worker-1   | 2026-10-01T11:07:09.014799319Z 
+worker-1   | 2026-10-01T11:07:09.014801853Z [tasks]
+worker-1   | 2026-10-01T11:07:09.014803098Z   . ingestion.process
+worker-1   | 2026-10-01T11:07:09.014804401Z   . system.heartbeat
+worker-1   | 2026-10-01T11:07:09.014805743Z 
+worker-1   | 2026-10-01T11:07:09.119513434Z {"timestamp": "2026-10-01T11:07:09.118152+00:00", "level": "INFO", "logger": "celery.worker.consumer.connection", "event": "Connected to redis://redis:6379/0", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:07:09.121475143Z {"timestamp": "2026-10-01T11:07:09.121217+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: searching for neighbors", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:07:10.140005473Z {"timestamp": "2026-10-01T11:07:10.139833+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: all alone", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:07:10.149934902Z {"timestamp": "2026-10-01T11:07:10.149777+00:00", "level": "INFO", "logger": "celery.apps.worker", "event": "celery@c0103e8a1e25 ready.", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:07:21.713924946Z {"timestamp": "2026-10-01T11:07:21.713690+00:00", "level": "INFO", "logger": "celery.worker.strategy", "event": "Task ingestion.process[8bff61d8-c2bf-4d57-9cbc-79d7c7569afa] received", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:17:30.524874310Z  
+worker-1   | 2026-10-01T11:17:30.524899860Z  -------------- celery@c0103e8a1e25 v5.6.3 (recovery)
+worker-1   | 2026-10-01T11:17:30.524901629Z --- ***** ----- 
+worker-1   | 2026-10-01T11:17:30.524902659Z -- ******* ---- Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.36 2026-10-01 11:17:30
+worker-1   | 2026-10-01T11:17:30.524903638Z - *** --- * --- 
+worker-1   | 2026-10-01T11:17:30.524904387Z - ** ---------- [config]
+worker-1   | 2026-10-01T11:17:30.524905168Z - ** ---------- .> app:         recap:0x7e6b92f8ca10
+worker-1   | 2026-10-01T11:17:30.524906592Z - ** ---------- .> transport:   redis://redis:6379/0
+worker-1   | 2026-10-01T11:17:30.524907402Z - ** ---------- .> results:     disabled://
+worker-1   | 2026-10-01T11:17:30.524908215Z - *** --- * --- .> concurrency: 2 (prefork)
+worker-1   | 2026-10-01T11:17:30.524909019Z -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+worker-1   | 2026-10-01T11:17:30.524909866Z --- ***** ----- 
+worker-1   | 2026-10-01T11:17:30.524910599Z  -------------- [queues]
+worker-1   | 2026-10-01T11:17:30.524911385Z                 .> system           exchange=system(direct) key=system
+worker-1   | 2026-10-01T11:17:30.524912221Z                 
+worker-1   | 2026-10-01T11:17:30.524912966Z 
+worker-1   | 2026-10-01T11:17:30.524913703Z [tasks]
+worker-1   | 2026-10-01T11:17:30.524914465Z   . ingestion.process
+worker-1   | 2026-10-01T11:17:30.524915259Z   . system.heartbeat
+worker-1   | 2026-10-01T11:17:30.524916213Z 
+worker-1   | 2026-10-01T11:17:30.591290065Z {"timestamp": "2026-10-01T11:17:30.591067+00:00", "level": "INFO", "logger": "celery.worker.consumer.connection", "event": "Connected to redis://redis:6379/0", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:17:30.592866042Z {"timestamp": "2026-10-01T11:17:30.592730+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: searching for neighbors", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:17:31.599968484Z {"timestamp": "2026-10-01T11:17:31.599796+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: all alone", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:17:31.610285800Z {"timestamp": "2026-10-01T11:17:31.610130+00:00", "level": "INFO", "logger": "celery.apps.worker", "event": "celery@c0103e8a1e25 ready.", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:17:50.400153560Z {"timestamp": "2026-10-01T11:17:50.399985+00:00", "level": "INFO", "logger": "celery.worker.strategy", "event": "Task ingestion.process[ac73db77-82e1-4cd3-960c-d0cbd31ff375] received", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1   | 2026-10-01T11:17:58.454713035Z {"timestamp": "2026-10-01T11:17:58.454373+00:00", "level": "INFO", "logger": "celery.app.trace", "event": "Task ingestion.process[ac73db77-82e1-4cd3-960c-d0cbd31ff375] succeeded in 8.054366677999496s: None", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+
+2026-10-01T11:17:59.776075+00:00 logs --no-color --timestamps worker backend redis
+redis-1   | 2026-10-01T11:07:04.095365946Z 1:C 01 Oct 2026 11:07:04.095 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+worker-1  | 2026-10-01T11:07:09.014734094Z  
+redis-1   | 2026-10-01T11:07:04.095398562Z 1:C 01 Oct 2026 11:07:04.095 * Redis version=7.4.5, bits=64, commit=00000000, modified=0, pid=1, just started
+worker-1  | 2026-10-01T11:07:09.014772711Z  -------------- celery@c0103e8a1e25 v5.6.3 (recovery)
+redis-1   | 2026-10-01T11:07:04.095400929Z 1:C 01 Oct 2026 11:07:04.095 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+worker-1  | 2026-10-01T11:07:09.014776507Z --- ***** ----- 
+worker-1  | 2026-10-01T11:07:09.014778873Z -- ******* ---- Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.36 2026-10-01 11:07:09
+redis-1   | 2026-10-01T11:07:04.095703081Z 1:M 01 Oct 2026 11:07:04.095 * monotonic clock: POSIX clock_gettime
+worker-1  | 2026-10-01T11:07:09.014780618Z - *** --- * --- 
+redis-1   | 2026-10-01T11:07:04.096612578Z 1:M 01 Oct 2026 11:07:04.096 * Running mode=standalone, port=6379.
+redis-1   | 2026-10-01T11:07:04.096955995Z 1:M 01 Oct 2026 11:07:04.096 * Server initialized
+worker-1  | 2026-10-01T11:07:09.014782179Z - ** ---------- [config]
+worker-1  | 2026-10-01T11:07:09.014783897Z - ** ---------- .> app:         recap:0x7e2b4fd925a0
+worker-1  | 2026-10-01T11:07:09.014785925Z - ** ---------- .> transport:   redis://redis:6379/0
+redis-1   | 2026-10-01T11:07:04.096980430Z 1:M 01 Oct 2026 11:07:04.096 * Ready to accept connections tcp
+worker-1  | 2026-10-01T11:07:09.014787597Z - ** ---------- .> results:     disabled://
+worker-1  | 2026-10-01T11:07:09.014789493Z - *** --- * --- .> concurrency: 2 (prefork)
+worker-1  | 2026-10-01T11:07:09.014791338Z -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+worker-1  | 2026-10-01T11:07:09.014793045Z --- ***** ----- 
+worker-1  | 2026-10-01T11:07:09.014794460Z  -------------- [queues]
+worker-1  | 2026-10-01T11:07:09.014796036Z                 .> system           exchange=system(direct) key=system
+worker-1  | 2026-10-01T11:07:09.014797851Z                 
+worker-1  | 2026-10-01T11:07:09.014799319Z 
+worker-1  | 2026-10-01T11:07:09.014801853Z [tasks]
+worker-1  | 2026-10-01T11:07:09.014803098Z   . ingestion.process
+worker-1  | 2026-10-01T11:07:09.014804401Z   . system.heartbeat
+worker-1  | 2026-10-01T11:07:09.014805743Z 
+worker-1  | 2026-10-01T11:07:09.119513434Z {"timestamp": "2026-10-01T11:07:09.118152+00:00", "level": "INFO", "logger": "celery.worker.consumer.connection", "event": "Connected to redis://redis:6379/0", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:07:09.121475143Z {"timestamp": "2026-10-01T11:07:09.121217+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: searching for neighbors", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:07:10.140005473Z {"timestamp": "2026-10-01T11:07:10.139833+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: all alone", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:07:10.149934902Z {"timestamp": "2026-10-01T11:07:10.149777+00:00", "level": "INFO", "logger": "celery.apps.worker", "event": "celery@c0103e8a1e25 ready.", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:07:21.713924946Z {"timestamp": "2026-10-01T11:07:21.713690+00:00", "level": "INFO", "logger": "celery.worker.strategy", "event": "Task ingestion.process[8bff61d8-c2bf-4d57-9cbc-79d7c7569afa] received", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:17:30.524874310Z  
+worker-1  | 2026-10-01T11:17:30.524899860Z  -------------- celery@c0103e8a1e25 v5.6.3 (recovery)
+worker-1  | 2026-10-01T11:17:30.524901629Z --- ***** ----- 
+worker-1  | 2026-10-01T11:17:30.524902659Z -- ******* ---- Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.36 2026-10-01 11:17:30
+worker-1  | 2026-10-01T11:17:30.524903638Z - *** --- * --- 
+worker-1  | 2026-10-01T11:17:30.524904387Z - ** ---------- [config]
+worker-1  | 2026-10-01T11:17:30.524905168Z - ** ---------- .> app:         recap:0x7e6b92f8ca10
+worker-1  | 2026-10-01T11:17:30.524906592Z - ** ---------- .> transport:   redis://redis:6379/0
+worker-1  | 2026-10-01T11:17:30.524907402Z - ** ---------- .> results:     disabled://
+worker-1  | 2026-10-01T11:17:30.524908215Z - *** --- * --- .> concurrency: 2 (prefork)
+worker-1  | 2026-10-01T11:17:30.524909019Z -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+worker-1  | 2026-10-01T11:17:30.524909866Z --- ***** ----- 
+worker-1  | 2026-10-01T11:17:30.524910599Z  -------------- [queues]
+worker-1  | 2026-10-01T11:17:30.524911385Z                 .> system           exchange=system(direct) key=system
+worker-1  | 2026-10-01T11:17:30.524912221Z                 
+worker-1  | 2026-10-01T11:17:30.524912966Z 
+worker-1  | 2026-10-01T11:17:30.524913703Z [tasks]
+worker-1  | 2026-10-01T11:17:30.524914465Z   . ingestion.process
+worker-1  | 2026-10-01T11:17:30.524915259Z   . system.heartbeat
+worker-1  | 2026-10-01T11:17:30.524916213Z 
+worker-1  | 2026-10-01T11:17:30.591290065Z {"timestamp": "2026-10-01T11:17:30.591067+00:00", "level": "INFO", "logger": "celery.worker.consumer.connection", "event": "Connected to redis://redis:6379/0", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:17:30.592866042Z {"timestamp": "2026-10-01T11:17:30.592730+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: searching for neighbors", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:17:31.599968484Z {"timestamp": "2026-10-01T11:17:31.599796+00:00", "level": "INFO", "logger": "celery.worker.consumer.mingle", "event": "mingle: all alone", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:17:31.610285800Z {"timestamp": "2026-10-01T11:17:31.610130+00:00", "level": "INFO", "logger": "celery.apps.worker", "event": "celery@c0103e8a1e25 ready.", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:17:50.400153560Z {"timestamp": "2026-10-01T11:17:50.399985+00:00", "level": "INFO", "logger": "celery.worker.strategy", "event": "Task ingestion.process[ac73db77-82e1-4cd3-960c-d0cbd31ff375] received", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+worker-1  | 2026-10-01T11:17:58.454713035Z {"timestamp": "2026-10-01T11:17:58.454373+00:00", "level": "INFO", "logger": "celery.app.trace", "event": "Task ingestion.process[ac73db77-82e1-4cd3-960c-d0cbd31ff375] succeeded in 8.054366677999496s: None", "request_id": null, "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": null, "error": null, "duration_ms": null}
+backend-1  | 2026-10-01T11:07:09.819071239Z INFO:     Started server process [1]
+backend-1  | 2026-10-01T11:07:09.819107835Z INFO:     Waiting for application startup.
+backend-1  | 2026-10-01T11:07:09.822413203Z INFO:     Application startup complete.
+backend-1  | 2026-10-01T11:07:09.822600327Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+backend-1  | 2026-10-01T11:07:12.088374698Z {"timestamp": "2026-10-01T11:07:12.088157+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "a3d962a9-b6da-4708-9cd8-8edff8cfb907", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 27}
+backend-1  | 2026-10-01T11:07:12.088453828Z INFO:     172.19.0.7:56544 - "GET /health/live HTTP/1.1" 200 OK
+backend-1  | 2026-10-01T11:07:21.294662150Z INFO:     172.19.0.7:57502 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+backend-1  | 2026-10-01T11:07:21.294686544Z {"timestamp": "2026-10-01T11:07:21.294303+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "35852138-9851-4af3-9491-40d0a4a74604", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 119}
+backend-1  | 2026-10-01T11:07:21.308373895Z {"timestamp": "2026-10-01T11:07:21.308187+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "cc0a0b55-0fd1-4b78-9980-946442290e20", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 12}
+backend-1  | 2026-10-01T11:07:21.308415340Z INFO:     172.19.0.7:57502 - "POST /api/v1/projects HTTP/1.1" 201 Created
+backend-1  | 2026-10-01T11:07:21.321300966Z {"timestamp": "2026-10-01T11:07:21.321102+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "de16be7c-dce2-4326-8b25-92198a45feae", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 201, "error": null, "duration_ms": 11}
+backend-1  | 2026-10-01T11:07:21.321365553Z INFO:     172.19.0.7:57502 - "POST /api/v1/projects/b3acd51c-c952-4982-a347-ea5a13c7e034/chapters HTTP/1.1" 201 Created
+backend-1  | 2026-10-01T11:07:21.716351308Z {"timestamp": "2026-10-01T11:07:21.716142+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "8a7102b1-906e-407a-bc78-2315b6220589", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 285}
+backend-1  | 2026-10-01T11:07:21.716485116Z INFO:     172.19.0.7:57502 - "POST /api/v1/chapters/765c583e-3fbe-4c90-930d-5a1b635539e9/upload HTTP/1.1" 200 OK
+backend-1  | 2026-10-01T11:17:27.340070992Z INFO:     Shutting down
+backend-1  | 2026-10-01T11:17:27.440978719Z INFO:     Waiting for application shutdown.
+backend-1  | 2026-10-01T11:17:27.442254511Z INFO:     Application shutdown complete.
+backend-1  | 2026-10-01T11:17:27.442690410Z INFO:     Finished server process [1]
+backend-1  | 2026-10-01T11:17:29.456174241Z INFO:     Started server process [1]
+backend-1  | 2026-10-01T11:17:29.456201139Z INFO:     Waiting for application startup.
+backend-1  | 2026-10-01T11:17:29.459557599Z INFO:     Application startup complete.
+backend-1  | 2026-10-01T11:17:29.459750738Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+backend-1  | 2026-10-01T11:17:30.677604957Z {"timestamp": "2026-10-01T11:17:30.677299+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "14298005-6c3c-4d05-bb24-7aee6c2e3aeb", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 25}
+backend-1  | 2026-10-01T11:17:30.677714296Z INFO:     172.19.0.7:41402 - "GET /health/live HTTP/1.1" 200 OK
+backend-1  | 2026-10-01T11:17:50.399751078Z {"timestamp": "2026-10-01T11:17:50.399594+00:00", "level": "INFO", "logger": "app.main", "event": "request_completed", "request_id": "d06837e9-230c-4a85-8525-86b4c138d9bd", "job_id": null, "user_id": null, "project_id": null, "stage": null, "status": 200, "error": null, "duration_ms": 293}
+backend-1  | 2026-10-01T11:17:50.399809333Z INFO:     172.19.0.7:49390 - "POST /api/v1/chapters/765c583e-3fbe-4c90-930d-5a1b635539e9/processing-retry HTTP/1.1" 200 OK
+
+2026-10-01T11:18:03.488978+00:00 down --volumes --remove-orphans
+ Container matrix-scenario-5-probe Stopping 
+ Container matrix-scenario-5-probe Stopped 
+ Container matrix-scenario-5-probe Removing 
+ Container matrix-scenario-5-probe Removed 
+ Container matrix-scenario-5-worker-1 Stopping 
+ Container matrix-scenario-5-backend-1 Stopping 
+ Container matrix-scenario-5-backend-1 Stopped 
+ Container matrix-scenario-5-backend-1 Removing 
+ Container matrix-scenario-5-backend-1 Removed 
+ Container matrix-scenario-5-worker-1 Stopped 
+ Container matrix-scenario-5-worker-1 Removing 
+ Container matrix-scenario-5-worker-1 Removed 
+ Container matrix-scenario-5-migrate-1 Stopping 
+ Container matrix-scenario-5-redis-1 Stopping 
+ Container matrix-scenario-5-storage-init-1 Stopping 
+ Container matrix-scenario-5-migrate-1 Stopped 
+ Container matrix-scenario-5-migrate-1 Removing 
+ Container matrix-scenario-5-storage-init-1 Stopped 
+ Container matrix-scenario-5-storage-init-1 Removing 
+ Container matrix-scenario-5-storage-init-1 Removed 
+ Container matrix-scenario-5-storage-1 Stopping 
+ Container matrix-scenario-5-migrate-1 Removed 
+ Container matrix-scenario-5-postgres-1 Stopping 
+ Container matrix-scenario-5-postgres-1 Stopped 
+ Container matrix-scenario-5-postgres-1 Removing 
+ Container matrix-scenario-5-postgres-1 Removed 
+ Container matrix-scenario-5-storage-1 Stopped 
+ Container matrix-scenario-5-storage-1 Removing 
+ Container matrix-scenario-5-storage-1 Removed 
+ Container matrix-scenario-5-redis-1 Stopped 
+ Container matrix-scenario-5-redis-1 Removing 
+ Container matrix-scenario-5-redis-1 Removed 
+ Container matrix-scenario-5-probe Stopping 
+ Container matrix-scenario-5-probe Error Error while Stopping
+ Container matrix-scenario-5-probe Removed 
+ Network matrix-scenario-5_default Removing 
+ Network matrix-scenario-5_default Removed 

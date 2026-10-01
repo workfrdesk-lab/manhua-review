@@ -1,0 +1,24 @@
+{
+    "timestamp_utc":  "20261001T0816530957577Z",
+    "scenario":  "prior-harness-409-review",
+    "sanitized_state":  {
+                            "runtime_response_body":  "not recorded",
+                            "runtime_failure_snapshot":  "not recorded",
+                            "reproduction":  "not performed",
+                            "infrastructure_created":  false
+                        },
+    "result":  "INCONCLUSIVE_STOP",
+    "classification":  "UNCLASSIFIED",
+    "root_cause":  "Not established",
+    "findings":  [
+                     "Unexpired active lease returns existing attempt, not Fenced",
+                     "Completed attempt raises Fenced",
+                     "Endpoint also rejects missing processing job or current attempt",
+                     "Completion race is plausible but unproven"
+                 ],
+    "harness_ready":  false,
+    "retained_edits":  [
+
+                       ],
+    "gate":  "OPEN"
+}

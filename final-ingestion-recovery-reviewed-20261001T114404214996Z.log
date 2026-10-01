@@ -1,0 +1,14 @@
+INGESTION RECOVERY = PASS
+Independent evidence review
+Scenario 1: PASS; generation 2; 1 source + 100 pages + 100 thumbnails; DB/hash/inventory consistent
+Scenario 2: PASS; generation 1; 1 source + 100 pages + 100 thumbnails; DB/hash/inventory consistent
+Scenario 3: PASS; generation 1; 1 source + 100 pages + 100 thumbnails; DB/hash/inventory consistent
+Scenario 4: PASS; generation 2; 1 source + 100 pages + 100 thumbnails; DB/hash/inventory consistent
+Scenario 5: PASS; generation 2; 1 source + 100 pages + 100 thumbnails; DB/hash/inventory consistent
+Scenario 6: PASS; generation 2; 1 source + 100 pages + 100 thumbnails; DB/hash/inventory consistent
+Scenario 7: PASS; generation 1; 1 source + 100 pages + 100 thumbnails; DB/hash/inventory consistent
+Focused: 24 passed. Full backend: 511 passed, 11 warnings. Ruff/typecheck/build: PASS.
+Initial OPEN: harness baseline accidentally included active launcher stdout; only that file excluded. Original evidence preserved.
+Production source and prior protected evidence unchanged. No production defect proven.
+No affected chapter access; no Phase 4B; no credential rotation.
+Original report: D:\projects\manhua review\final-restart-matrix-20261001T104405189045Z\acceptance.json
