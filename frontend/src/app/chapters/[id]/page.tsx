@@ -13,9 +13,9 @@ type Character = { id: string; name: string; display_name: string; description?:
 type Scene = { id: string; scene_index: number; title: string; summary: string; start_page: number; end_page: number; importance: number };
 type Event = { id: string; event_index: number; description: string; event_type: string; importance: number };
 type Summary = { logline?: string; summary?: string; main_characters?: string[]; major_events?: string[]; conflicts?: string[]; ending_state?: string };
-type ScriptEvidence = { page_number?: number; panel_id?: string; ocr_result_id?: string; scene_ref: string; event_ref: string; quote?: string; reason: string };
-type ScriptSegment = { id: string; sequence: number; narration_text: string; dialogue_text?: string; speaker_ref?: string; scene_ref: string; event_refs: string[]; confidence: number; evidence?: ScriptEvidence[] };
-type Script = { id: string; status: string; title: string; data: { hook?: string; intro?: string; outro?: string }; segments: ScriptSegment[]; evidence: ScriptEvidence[] };
+type ScriptEvidence = { page_id?: string; page_number?: number; panel_id?: string; ocr_result_id?: string; scene_ref: string; event_ref: string; quote?: string; reason: string };
+type ScriptSegment = { id: string; sequence: number; narration_text: string; estimated_duration: number; dialogue_text?: string; speaker_ref?: string; scene_ref: string; event_refs: string[]; confidence: number; evidence?: ScriptEvidence[] };
+type Script = { id: string; story_version_id: string; status: string; title: string; data: { hook?: string; intro?: string; outro?: string }; segments: ScriptSegment[]; evidence: ScriptEvidence[] };
 type ScriptJob = { id: string; status: string; script_version_id?: string; error?: string };
 
 function Thumbnail({ page }: { page: Page }) {
@@ -54,6 +54,10 @@ export default function ChapterPage() {
   const [scriptJob, setScriptJob] = useState<ScriptJob | null>(null);
   const [scriptError, setScriptError] = useState<string | null>(null);
   const [scriptBusy, setScriptBusy] = useState(false);
+  const [scriptVersions, setScriptVersions] = useState<Script[]>([]);
+  const [selectedScript, setSelectedScript] = useState("");
+  const [segmentDraft, setSegmentDraft] = useState<ScriptSegment | null>(null);
+  const [metadataDraft, setMetadataDraft] = useState<{ title: string; hook: string; intro: string; outro: string } | null>(null);
   async function reorder(from: string, to: string) {
     const ordered = pages.filter(page => page.id !== from);
     const moving = pages.find(page => page.id === from);
@@ -142,16 +146,13 @@ export default function ChapterPage() {
   useEffect(() => { refreshStory(); }, [id]);
   async function refreshScript() {
     try {
-      if (scriptJob && ["queued", "running"].includes(scriptJob.status)) {
-        setScriptJob(await api<ScriptJob>(`script-jobs/${scriptJob.id}/status`));
-      }
-      const scripts = await api<Script[]>(`chapters/${id}/scripts`);
-      const latest = scripts[0];
-      if (!latest) return;
-      const detail = await api<Script>(`scripts/${latest.id}`);
-      setScript(detail);
-      const status = await api<{ job?: ScriptJob }>(`scripts/${latest.id}/status`);
-      setScriptJob(status.job ?? null);
+      const [scripts, jobs] = await Promise.all([
+        api<Script[]>(`chapters/${id}/scripts`), api<ScriptJob[]>(`chapters/${id}/script-jobs`),
+      ]);
+      setScriptVersions(scripts);
+      setScriptJob(jobs[0] ?? null);
+      const chosen = scripts.find(value => value.id === selectedScript) ?? scripts[0];
+      if (chosen) setScript(await api<Script>(`scripts/${chosen.id}`));
     } catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل تحميل النص"); }
   }
   async function generateScript() {
@@ -161,22 +162,39 @@ export default function ChapterPage() {
       if (!versions[0]) throw new Error("حلّل القصة أولاً");
       const response = await api<{ job: ScriptJob }>(`chapters/${id}/scripts`, { method: "POST", body: JSON.stringify({ story_version_id: versions[0].id }) });
       setScriptJob(response.job);
-      if (response.job.script_version_id) setScript(await api<Script>(`scripts/${response.job.script_version_id}`));
+      setSelectedScript(""); setSegmentDraft(null); setMetadataDraft(null);
+      await refreshScript();
     } catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل إنشاء النص"); }
     finally { setScriptBusy(false); }
   }
   async function editSegment(segment: ScriptSegment) {
-    const narration = window.prompt("Narration", segment.narration_text);
-    if (narration === null || narration === segment.narration_text) return;
-    try { await api(`script-segments/${segment.id}`, { method: "PATCH", body: JSON.stringify({ narration_text: narration }) }); await refreshScript(); }
+    setScriptBusy(true); setScriptError(null);
+    try { await api(`script-segments/${segment.id}`, { method: "PATCH", body: JSON.stringify({ narration_text: segment.narration_text, sequence: segment.sequence, estimated_duration: segment.estimated_duration, confidence: segment.confidence, ...(segment.dialogue_text ? { dialogue_text: segment.dialogue_text } : {}) }) }); setSegmentDraft(null); await refreshScript(); }
     catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل حفظ المقطع"); }
+    finally { setScriptBusy(false); }
   }
-  async function reviewScript(status: "confirmed" | "rejected") {
+  async function saveMetadata() {
+    if (!script || !metadataDraft) return;
+    setScriptBusy(true); setScriptError(null);
+    try { await api(`scripts/${script.id}/metadata`, { method: "PATCH", body: JSON.stringify(metadataDraft) }); setMetadataDraft(null); await refreshScript(); }
+    catch (reason) { setScriptError(reason instanceof Error ? reason.message : "Metadata save failed"); }
+    finally { setScriptBusy(false); }
+  }
+  async function retryScript() {
+    if (!scriptJob) return;
+    setScriptBusy(true); setScriptError(null);
+    try { setScriptJob(await api<ScriptJob>(`script-jobs/${scriptJob.id}/retry`, { method: "POST" })); await refreshScript(); }
+    catch (reason) { setScriptError(reason instanceof Error ? reason.message : "Retry failed"); }
+    finally { setScriptBusy(false); }
+  }
+  async function reviewScript(status: "confirmed" | "rejected" | "needs_review") {
     if (!script) return;
+    setScriptBusy(true); setScriptError(null);
     try { await api(`scripts/${script.id}/review`, { method: "PATCH", body: JSON.stringify({ status }) }); await refreshScript(); }
     catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل تحديث المراجعة"); }
+    finally { setScriptBusy(false); }
   }
-  useEffect(() => { refreshScript(); }, [id]);
+  useEffect(() => { refreshScript(); }, [id, selectedScript]);
   useEffect(() => {
     if (!scriptJob || !["queued", "running"].includes(scriptJob.status)) return;
     const timer = window.setInterval(refreshScript, 1500); return () => window.clearInterval(timer);
@@ -247,9 +265,30 @@ export default function ChapterPage() {
     </section>
     <section className="space-y-4 rounded border border-teal-800 p-4">
       <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="text-xl font-bold">Script Review</h2><span>Generation: {scriptJob?.status ?? "not_started"} · Review: {script?.status ?? "—"}</span></div>
-      <div className="flex gap-2"><button onClick={generateScript} disabled={scriptBusy} className="rounded bg-teal-700 px-3 py-2">Generate script</button>{script?.status === "needs_review" && <><button onClick={() => reviewScript("confirmed")} className="rounded bg-emerald-700 px-3 py-2">Confirm</button><button onClick={() => reviewScript("rejected")} className="rounded bg-rose-700 px-3 py-2">Reject</button></>}{scriptJob?.status === "failed" && <button onClick={() => api(`script-jobs/${scriptJob.id}/retry`, { method: "POST" }).then(refreshScript).catch(reason => setScriptError(reason.message))} className="rounded border border-amber-500 px-3 py-2">Retry</button>}</div>
+      <div className="flex flex-wrap gap-2"><button onClick={generateScript} disabled={scriptBusy || ["queued", "running"].includes(scriptJob?.status ?? "")} className="rounded bg-teal-700 px-3 py-2">Generate script</button>{script && <>{(["confirmed", "rejected", "needs_review"] as const).map(state => <button key={state} disabled={scriptBusy || script.status === state} onClick={() => reviewScript(state)} className="rounded border border-slate-600 px-3 py-2">{state === "confirmed" ? "Confirm" : state === "rejected" ? "Reject" : "Reopen"}</button>)}</>}{scriptJob?.status === "failed" && <button disabled={scriptBusy} onClick={retryScript} className="rounded border border-amber-500 px-3 py-2">Retry</button>}<button disabled={scriptBusy} onClick={refreshScript}>Refresh status</button></div>
+      <label className="block">Script version <select className="bg-slate-900 p-2" value={selectedScript || scriptVersions[0]?.id || ""} disabled={scriptBusy} onChange={event => { setSelectedScript(event.target.value); setSegmentDraft(null); setMetadataDraft(null); }}>{scriptVersions.map(value => <option key={value.id} value={value.id}>{value.title} — {value.id} ({value.status})</option>)}</select></label>
+      {scriptJob?.error && <p role="alert" className="text-rose-300">{scriptJob.error}</p>}
       {scriptError && <p className="text-rose-300">{scriptError}</p>}
-      {script && <><h3 className="text-lg font-bold">{script.title}</h3><p>{script.data.hook}</p><p>{script.data.intro}</p><ol className="space-y-3 list-decimal pr-6">{script.segments.map(segment => <li key={segment.id} className="rounded border border-slate-700 p-3"><div className="flex justify-between"><button onClick={() => editSegment(segment)} className="text-cyan-300">Edit</button><span>Confidence {segment.confidence.toFixed(2)}</span></div><p>{segment.narration_text}</p>{segment.dialogue_text && <p>Dialogue: {segment.dialogue_text} {segment.speaker_ref ? `(${segment.speaker_ref})` : ""}</p>}<p className="text-sm">Scene: {segment.scene_ref} · Events: {segment.event_refs.join(", ")}</p><div className="mt-2 text-xs text-slate-300">{(segment.evidence ?? []).map((evidence, index) => <p key={index}>Page {evidence.page_number ?? "—"} · Panel {evidence.panel_id ?? "—"} · OCR {evidence.ocr_result_id ?? "—"} · {evidence.reason}</p>)}</div></li>)}</ol></>}
+      {script && <>
+        <p className="break-all text-sm">ScriptVersion: {script.id} · Source StoryVersion: {script.story_version_id}</p>
+        <h3 className="text-lg font-bold">{script.title}</h3>
+        {metadataDraft ? <form className="space-y-2" onSubmit={event => { event.preventDefault(); saveMetadata(); }}>
+          {(["title", "hook", "intro", "outro"] as const).map(field => <label key={field} className="block">{field}<textarea required={field === "title"} maxLength={field === "title" ? 300 : 5000} className="block w-full rounded bg-slate-900 p-2" value={metadataDraft[field]} onChange={event => setMetadataDraft({ ...metadataDraft, [field]: event.target.value })} /></label>)}
+          <p className="text-sm">Hook, intro and outro must be empty or match a grounded segment narration. Edit the segment first to change its wording.</p>
+          <button disabled={scriptBusy} className="mr-3 text-teal-300">Save metadata</button><button type="button" disabled={scriptBusy} onClick={() => setMetadataDraft(null)}>Cancel</button>
+        </form> : <><p>Hook: {script.data.hook || "—"}</p><p>Intro: {script.data.intro || "—"}</p><p>Outro: {script.data.outro || "—"}</p><button disabled={scriptBusy} onClick={() => setMetadataDraft({ title: script.title, hook: script.data.hook ?? "", intro: script.data.intro ?? "", outro: script.data.outro ?? "" })} className="text-cyan-300">Edit metadata</button></>}
+        <ol className="space-y-3 list-decimal pr-6">{script.segments.map(segment => <li key={segment.id} className="rounded border border-slate-700 p-3">
+          <div className="flex justify-between"><button disabled={scriptBusy} onClick={() => setSegmentDraft({ ...segment })} className="text-cyan-300">Edit segment</button><span>Confidence {segment.confidence.toFixed(2)} · Duration {segment.estimated_duration}s</span></div>
+          {segmentDraft?.id === segment.id ? <form className="space-y-2" onSubmit={event => { event.preventDefault(); editSegment(segmentDraft); }}>
+            <label className="block">Narration<textarea required maxLength={5000} className="block w-full bg-slate-900 p-2" value={segmentDraft.narration_text} onChange={event => setSegmentDraft({ ...segmentDraft, narration_text: event.target.value })} /></label>
+            {segmentDraft.dialogue_text && <label className="block">Source dialogue<textarea required maxLength={1000} className="block w-full bg-slate-900 p-2" value={segmentDraft.dialogue_text} onChange={event => setSegmentDraft({ ...segmentDraft, dialogue_text: event.target.value })} /></label>}
+            {(["sequence", "estimated_duration", "confidence"] as const).map(field => <label key={field} className="block">{field} <input required type="number" step={field === "sequence" ? 1 : 0.01} min={field === "confidence" ? 0 : field === "sequence" ? 1 : 0.01} max={field === "confidence" ? 1 : field === "sequence" ? script.segments.length : 3600} className="bg-slate-900 p-2" value={segmentDraft[field]} onChange={event => setSegmentDraft({ ...segmentDraft, [field]: Number(event.target.value) })} /></label>)}
+            <button disabled={scriptBusy} className="mr-3 text-teal-300">Save segment</button><button type="button" disabled={scriptBusy} onClick={() => setSegmentDraft(null)}>Cancel</button>
+          </form> : <><p>{segment.narration_text}</p>{segment.dialogue_text && <p>Dialogue: {segment.dialogue_text} {segment.speaker_ref ? `(${segment.speaker_ref})` : ""}</p>}</>}
+          <p className="text-sm">Scene: {segment.scene_ref} · Events: {segment.event_refs.join(", ")}</p>
+          <div className="mt-2 text-xs text-slate-300">{(segment.evidence ?? []).map((evidence, index) => { const page = pages.find(value => value.id === evidence.page_id || value.page_number === evidence.page_number); return <div key={index}><button disabled={!page} className="text-cyan-300 underline" onClick={() => { if (page) openAnalysis(page); }}>Page {evidence.page_number ?? page?.page_number ?? "—"}</button> · Panel {evidence.panel_id ?? "—"} · OCR {evidence.ocr_result_id ?? "—"} · {evidence.reason}{evidence.quote && <blockquote>{evidence.quote}</blockquote>}</div>; })}</div>
+        </li>)}</ol>
+      </>}
     </section>
   </main>;
 }

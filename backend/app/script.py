@@ -1,6 +1,7 @@
 """Authenticated, chapter-owned script generation and review endpoints."""
 
 import json
+from copy import deepcopy
 from hashlib import sha256
 from uuid import UUID
 
@@ -30,7 +31,6 @@ from app.projects import owned_chapter, protect_write
 from app.script_providers import configured_script_provider, profile_fingerprint
 from app.script_schemas import GenerateScriptInput, ScriptProfile, ScriptStructuredOutput
 from app.script_validation import validate_script
-from app.story import lock_story
 from app.story_providers import ProviderNotConfigured
 from app.story_schemas import StoryStructuredOutput
 
@@ -54,6 +54,14 @@ class SegmentPatch(BaseModel):
     segment_type: str | None = Field(
         default=None, pattern="^(narration|dialogue|transition|intro|outro)$"
     )
+
+
+class MetadataPatch(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    title: str = Field(default="", min_length=1, max_length=300)
+    hook: str = Field(default="", max_length=5000)
+    intro: str = Field(default="", max_length=5000)
+    outro: str = Field(default="", max_length=5000)
 
 
 def output(record):
@@ -156,11 +164,12 @@ async def create_script(
     except IntegrityError:
         await db.rollback()
         active = await db.scalar(
-            select(ScriptGenerationJob).where(
+            select(ScriptGenerationJob)
+            .where(
                 ScriptGenerationJob.story_version_id == story_id,
                 ScriptGenerationJob.profile_fingerprint == profile_hash,
-                ScriptGenerationJob.status.in_(["queued", "running", "completed"]),
             )
+            .order_by(ScriptGenerationJob.attempt.desc())
         )
         if active:
             return {"job": output(active), "script": None}
@@ -255,7 +264,30 @@ async def job_status(
     if not job:
         raise HTTPException(404, "Script job not found")
     await owned_chapter(db, job.chapter_id, user)
+    chapter_id = job.chapter_id
+    await db.rollback()
+    from app.script_service import recover_script_jobs
+
+    await run_in_threadpool(recover_script_jobs, chapter_id=chapter_id)
+    await db.refresh(job)
     return output(job)
+
+
+@router.get("/chapters/{chapter_id}/script-jobs")
+async def list_script_jobs(
+    chapter_id: UUID, db: AsyncSession = Depends(get_db), user: User = Depends(require_user)
+):
+    await owned_chapter(db, chapter_id, user)
+    await db.rollback()
+    from app.script_service import recover_script_jobs
+
+    await run_in_threadpool(recover_script_jobs, chapter_id=chapter_id)
+    rows = await db.scalars(
+        select(ScriptGenerationJob)
+        .where(ScriptGenerationJob.chapter_id == chapter_id)
+        .order_by(ScriptGenerationJob.created_at.desc(), ScriptGenerationJob.attempt.desc())
+    )
+    return [output(row) for row in rows]
 
 
 @router.post("/script-jobs/{job_id}/retry", status_code=202)
@@ -391,7 +423,13 @@ async def edit_segment(
             entity_type="script_segment",
             entity_id=segment.id,
             version_id=script.story_version_id,
-            data={"fields": sorted(values), "before": before, "after": edited},
+            data={
+                "fields": sorted(values),
+                "before": before,
+                "after": edited,
+                "script_version_id": str(script.id),
+                "story_version_id": str(script.story_version_id),
+            },
         )
     )
     await db.commit()
@@ -407,12 +445,26 @@ async def review_script(
     user: User = Depends(require_user),
 ):
     script = await owned_script(db, script_id, user)
-    await lock_story(db, script.chapter_id)
+    await db.execute(
+        update(ScriptVersion)
+        .where(ScriptVersion.id == script.id)
+        .values(updated_at=ScriptVersion.updated_at)
+    )
     await db.refresh(script)
     before = script.status.value if hasattr(script.status, "value") else script.status
     if before == payload.status:
         return output(script)
     script.status = payload.status
+    data = deepcopy(script.data)
+    data["status"] = payload.status
+    for segment in data["segments"]:
+        segment["status"] = payload.status
+    script.data = data
+    await db.execute(
+        update(ScriptSegment)
+        .where(ScriptSegment.script_version_id == script.id)
+        .values(status=payload.status)
+    )
     db.add(
         StoryAudit(
             chapter_id=script.chapter_id,
@@ -421,7 +473,71 @@ async def review_script(
             entity_type="script_version",
             entity_id=script.id,
             version_id=script.story_version_id,
-            data={"before": before, "after": payload.status},
+            data={
+                "before": before,
+                "after": payload.status,
+                "script_version_id": str(script.id),
+                "story_version_id": str(script.story_version_id),
+            },
+        )
+    )
+    await db.commit()
+    await db.refresh(script)
+    return output(script)
+
+
+@router.patch("/scripts/{script_id}/metadata")
+async def edit_metadata(
+    script_id: UUID,
+    payload: MetadataPatch,
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(require_user),
+):
+    script = await owned_script(db, script_id, user)
+    await db.execute(
+        update(ScriptVersion)
+        .where(ScriptVersion.id == script.id)
+        .values(updated_at=ScriptVersion.updated_at)
+    )
+    await db.refresh(script)
+    values = payload.model_dump(exclude_unset=True)
+    if not values:
+        raise HTTPException(422, "At least one metadata field is required")
+    before = {field: script.data[field] for field in values}
+    data = deepcopy(script.data)
+    data.update(values)
+    story = await db.get(StoryVersion, script.story_version_id)
+    pages, panels, ocr = await source_records(db, script.chapter_id)
+    try:
+        result = ScriptStructuredOutput.model_validate(data)
+        validate_script(
+            result,
+            StoryStructuredOutput.model_validate(story.data),
+            pages,
+            panels,
+            ocr,
+            ScriptProfile.model_validate(script.profile),
+            generated=False,
+        )
+    except ValueError:
+        raise HTTPException(422, "Edit failed script grounding validation") from None
+    script.data = result.model_dump(mode="json")
+    script.title = result.title
+    script.updated_at = func.now()
+    db.add(
+        StoryAudit(
+            chapter_id=script.chapter_id,
+            actor_id=user.id,
+            action="script_metadata_edited",
+            entity_type="script_version",
+            entity_id=script.id,
+            version_id=script.story_version_id,
+            data={
+                "before": before,
+                "after": values,
+                "script_version_id": str(script.id),
+                "story_version_id": str(script.story_version_id),
+            },
         )
     )
     await db.commit()

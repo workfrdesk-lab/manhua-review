@@ -1,6 +1,7 @@
 """Script processing on the shared queue. Publication and completion are atomic."""
 
 import json
+from datetime import UTC, datetime, timedelta
 from hashlib import sha256
 from uuid import UUID
 
@@ -35,7 +36,13 @@ def audit(db, job, action):
             entity_type="script_generation_job",
             entity_id=job.id,
             version_id=job.story_version_id,
-            data={"attempt": job.attempt, "fingerprint": job.profile_fingerprint},
+            data={
+                "attempt": job.attempt,
+                "fingerprint": job.profile_fingerprint,
+                "job_id": str(job.id),
+                "story_version_id": str(job.story_version_id),
+                "script_version_id": str(job.script_version_id) if job.script_version_id else None,
+            },
         )
     )
 
@@ -69,6 +76,47 @@ def cancel_script(job_id):
         engine.dispose()
 
 
+def recover_script_jobs(*, now=None, chapter_id=None):
+    """Expire abandoned attempts; explicit retry preserves their history.
+
+    The conditional update serializes with the publication fence. A provider taking
+    longer than fifteen minutes also expires and cannot subsequently publish.
+    """
+    cutoff = (now or datetime.now(UTC)) - timedelta(minutes=15)
+    engine = job_engine()
+    recovered = []
+    try:
+        with Session(engine) as db:
+            query = select(ScriptGenerationJob.id).where(
+                ScriptGenerationJob.status == "running",
+                ScriptGenerationJob.started_at < cutoff,
+            )
+            if chapter_id is not None:
+                query = query.where(ScriptGenerationJob.chapter_id == chapter_id)
+            candidates = db.scalars(query).all()
+            for identity in candidates:
+                changed = db.execute(
+                    update(ScriptGenerationJob)
+                    .where(
+                        ScriptGenerationJob.id == identity,
+                        ScriptGenerationJob.status == "running",
+                        ScriptGenerationJob.started_at < cutoff,
+                    )
+                    .values(
+                        status="failed",
+                        error="Script generation interrupted or timed out; retry available",
+                        finished_at=func.now(),
+                    )
+                )
+                if changed.rowcount:
+                    audit(db, db.get(ScriptGenerationJob, identity), "script_generation_failed")
+                    recovered.append(str(identity))
+            db.commit()
+    finally:
+        engine.dispose()
+    return recovered
+
+
 def process_script(job_id):
     engine = job_engine()
     identity = UUID(job_id)
@@ -79,9 +127,11 @@ def process_script(job_id):
                 .where(ScriptGenerationJob.id == identity, ScriptGenerationJob.status == "queued")
                 .values(status="running", started_at=func.now())
             )
-            db.commit()
             if not claimed.rowcount:
+                db.rollback()
                 return
+            audit(db, db.get(ScriptGenerationJob, identity), "script_generation_started")
+            db.commit()
             try:
                 job = db.get(ScriptGenerationJob, identity)
                 provider = configured_script_provider()
@@ -94,6 +144,21 @@ def process_script(job_id):
                     story, profile
                 )  # Enforce the same bounded context for every provider.
                 raw = provider.generate_script(story, profile)
+                # End the read transaction before competing with recovery. The
+                # write lock below is held through publication and completion.
+                db.rollback()
+                fenced = db.execute(
+                    update(ScriptGenerationJob)
+                    .where(
+                        ScriptGenerationJob.id == identity,
+                        ScriptGenerationJob.status == "running",
+                    )
+                    .values(status="running")
+                )
+                if not fenced.rowcount:
+                    db.rollback()
+                    return
+                job = db.get(ScriptGenerationJob, identity)
                 result = ScriptStructuredOutput.model_validate(
                     raw.model_dump() if isinstance(raw, ScriptStructuredOutput) else raw
                 )
@@ -151,6 +216,17 @@ def process_script(job_id):
                 db.commit()
             except Exception:
                 db.rollback()
+                changed = db.execute(
+                    update(ScriptGenerationJob)
+                    .where(
+                        ScriptGenerationJob.id == identity,
+                        ScriptGenerationJob.status == "running",
+                    )
+                    .values(status="failed")
+                )
+                if not changed.rowcount:
+                    db.rollback()
+                    return
                 job = db.get(ScriptGenerationJob, identity)
                 job.status = "failed"
                 job.error = "Script generation failed; provider or source validation unavailable"
