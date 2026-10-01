@@ -23,6 +23,8 @@ from app.models import (
     StoryVersion,
 )
 from app.script_providers import DeterministicScriptProvider
+from app.script_schemas import ScriptProfile
+from app.story_providers import GeminiProvider, OpenAIProvider
 
 
 @pytest.fixture
@@ -95,6 +97,44 @@ def counts(h):
             db.scalar(select(func.count()).select_from(model))
             for model in (ScriptVersion, ScriptSegment, ScriptEvidence)
         ]
+
+
+@pytest.mark.parametrize("adapter", [OpenAIProvider, GeminiProvider])
+@pytest.mark.parametrize("mode", ["valid", "malformed", "exception"])
+def test_mocked_script_adapter_and_worker(harness, monkeypatch, adapter, mode):
+    h = harness
+    provider = adapter(model="fixture-model", api_key="fixture-key")
+    expected = DeterministicScriptProvider().generate_script(h.story, ScriptProfile())
+    calls = []
+
+    def request(url, headers, payload):
+        calls.append((url, payload))
+        if mode == "exception":
+            raise RuntimeError("private-provider-token")
+        text = expected.model_dump_json() if mode == "valid" else "private-provider-token"
+        if adapter is OpenAIProvider:
+            assert headers["Authorization"] == "Bearer fixture-key"
+            assert payload["response_format"] == {"type": "json_object"}
+            return {"choices": [{"message": {"content": text}}]}
+        assert headers["x-goog-api-key"] == "fixture-key"
+        assert payload["generationConfig"]["responseMimeType"] == "application/json"
+        return {"candidates": [{"content": {"parts": [{"text": text}]}}]}
+
+    monkeypatch.setattr("app.story_providers._json_request", request)
+    if mode == "valid":
+        assert provider.generate_script(h.story, ScriptProfile()) == expected
+    else:
+        with pytest.raises(ValueError if mode == "malformed" else RuntimeError):
+            provider.generate_script(h.story, ScriptProfile())
+    monkeypatch.setattr("app.script.configured_script_provider", lambda: provider)
+    monkeypatch.setattr(script_service, "configured_script_provider", lambda: provider)
+    job = enqueue(h)
+    script_service.process_script(job["id"])
+    result = status(h, job)
+    assert len(calls) == 2
+    assert result["status"] == ("completed" if mode == "valid" else "failed")
+    assert counts(h) == ([1, 1, 1] if mode == "valid" else [0, 0, 0])
+    assert "private-provider-token" not in str(result)
 
 
 @pytest.mark.parametrize(
@@ -261,13 +301,77 @@ def test_concurrent_generation_and_retry(harness, monkeypatch):
         )
 
 
+def test_generate_after_failed_attempt_creates_next_attempt(harness, monkeypatch):
+    h = harness
+    first = enqueue(h)
+
+    class Failed(DeterministicScriptProvider):
+        def generate_script(self, story, profile):
+            raise ValueError("first attempt failed")
+
+    monkeypatch.setattr(script_service, "configured_script_provider", Failed)
+    script_service.process_script(first["id"])
+    assert status(h, first)["status"] == "failed"
+
+    monkeypatch.setattr(script_service, "configured_script_provider", DeterministicScriptProvider)
+    second = enqueue(h)
+    assert second["id"] != first["id"]
+    assert second["attempt"] == 2
+    assert second["status"] == "queued"
+
+    with Session(h.engine) as db:
+        history = db.scalars(
+            select(ScriptGenerationJob).order_by(ScriptGenerationJob.attempt)
+        ).all()
+        assert [(job.attempt, job.status) for job in history] == [(1, "failed"), (2, "queued")]
+    script_service.process_script(second["id"])
+    completed = status(h, second)
+    assert completed["status"] == "completed"
+    assert enqueue(h)["id"] == second["id"]
+    script_service.process_script(second["id"])
+    assert status(h, second) == completed
+    assert counts(h) == [1, 1, 1]
+
+
+def test_concurrent_generate_after_failure_has_one_next_attempt(harness, monkeypatch):
+    h = harness
+    first = enqueue(h)
+
+    class Failed(DeterministicScriptProvider):
+        def generate_script(self, story, profile):
+            raise ValueError("first attempt failed")
+
+    monkeypatch.setattr(script_service, "configured_script_provider", Failed)
+    script_service.process_script(first["id"])
+    monkeypatch.setattr(script_service, "configured_script_provider", DeterministicScriptProvider)
+
+    barrier = Barrier(4)
+
+    def generate(_):
+        barrier.wait(timeout=10)
+        return enqueue(h)
+
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        generated = list(pool.map(generate, range(4)))
+
+    assert len({job["id"] for job in generated}) == 1
+    assert {job["attempt"] for job in generated} == {2}
+    with Session(h.engine) as db:
+        history = db.scalars(
+            select(ScriptGenerationJob).order_by(ScriptGenerationJob.attempt)
+        ).all()
+        assert len(history) == 2
+        assert history[0].status == "failed"
+        assert history[1].attempt == 2
+
+
 def test_metadata_and_review_synchronization(harness):
     h = harness
     job = enqueue(h)
     script_service.process_script(job["id"])
     detail = f"/api/v1/scripts/{status(h, job)['script_version_id']}"
     original = h.client.get(detail).json()
-    for state in ("confirmed", "rejected", "needs_review", "confirmed"):
+    for state in ("confirmed", "needs_review", "rejected", "needs_review", "confirmed"):
         assert (
             h.client.patch(
                 detail + "/review", json={"status": state}, headers=h.headers
@@ -298,6 +402,17 @@ def test_metadata_and_review_synchronization(harness):
         assert audit.actor_id and str(audit.version_id) == h.version_id
         assert audit.data["after"] == patch
         assert audit.data["before"]["title"] == original["title"]
+        reviews = db.scalars(select(StoryAudit).where(StoryAudit.action == "review")).all()
+        assert {(a.data["before"], a.data["after"]) for a in reviews} == {
+            ("needs_review", "confirmed"),
+            ("confirmed", "needs_review"),
+            ("needs_review", "rejected"),
+            ("rejected", "needs_review"),
+        }
+        for row in reviews:
+            assert str(row.chapter_id) == h.chapter["id"]
+            assert str(row.version_id) == h.version_id
+            assert row.data["script_version_id"] == original["id"]
 
 
 def test_phase7a_acceptance_27_steps(harness, monkeypatch):
@@ -334,7 +449,7 @@ def test_phase7a_acceptance_27_steps(harness, monkeypatch):
     )  # 14
     with Session(h.engine) as db:
         actions = set(db.scalars(select(StoryAudit.action)).all())
-        assert {"segment_edited", "script_metadata_edited"} <= actions  # 15
+        assert {"script_segment_edited", "script_metadata_edited"} <= actions  # 15
     assert (
         h.client.patch(
             detail + "/review", json={"status": "confirmed"}, headers=h.headers
@@ -388,8 +503,54 @@ def test_phase7a_acceptance_27_steps(harness, monkeypatch):
     register(h.client, "acceptance-outsider@example.com")
     assert h.client.get(detail).status_code == 404  # 26
     assert h.client.get(f"/api/v1/script-jobs/{retry['id']}/status").status_code == 404
-    # 27: authenticated owner reload was checked through independent GETs above.
+    outsider_headers = write_headers(h.client)
+    assert (
+        h.client.patch(
+            segment_route, json={"confidence": 0.5}, headers=outsider_headers
+        ).status_code
+        == 404
+    )
+    assert (
+        h.client.patch(
+            detail + "/review", json={"status": "rejected"}, headers=outsider_headers
+        ).status_code
+        == 404
+    )
+    h.client.post("/api/v1/auth/logout", headers=outsider_headers)
+    assert (
+        h.client.post(
+            "/api/v1/auth/login",
+            json={"email": "final-script@example.com", "password": "correct horse battery staple"},
+        ).status_code
+        == 200
+    )
+    assert h.client.get(detail).json() == confirmed
+    assert status(h, retry) == final
     assert final["script_version_id"] and final["error"] is None
+    with Session(h.engine) as db:
+        rows = db.scalars(select(StoryAudit)).all()
+        assert {
+            "script_generation_requested",
+            "script_generation_started",
+            "script_generation_completed",
+            "script_generation_failed",
+            "script_generation_retry_requested",
+            "script_segment_edited",
+            "script_metadata_edited",
+        } <= {row.action for row in rows}
+        for row in rows:
+            assert str(row.chapter_id) == h.chapter["id"]
+            assert row.actor_id and row.version_id
+            if row.entity_type == "script_generation_job":
+                attempt = db.get(ScriptGenerationJob, row.entity_id)
+                assert row.data["job_id"] == str(attempt.id)
+                assert row.data["attempt"] == attempt.attempt
+                assert row.data["story_version_id"] == str(attempt.story_version_id)
+                if row.action == "script_generation_completed":
+                    assert row.data["script_version_id"] == str(attempt.script_version_id)
+            else:
+                assert row.data["script_version_id"] == script["id"]
+                assert row.data["story_version_id"] == str(row.version_id)
 
 
 @pytest.mark.parametrize("identity", ["owner", "outsider", "anonymous", "missing"])
@@ -454,5 +615,3 @@ def test_wrong_story_chapter_is_rejected(harness):
             ).status_code
             == 404
         )
-
-

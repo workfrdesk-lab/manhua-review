@@ -198,7 +198,7 @@ export default function ChapterPage() {
   useEffect(() => {
     if (!scriptJob || !["queued", "running"].includes(scriptJob.status)) return;
     const timer = window.setInterval(refreshScript, 1500); return () => window.clearInterval(timer);
-  }, [scriptJob?.status, scriptJob?.id, id]);
+  }, [scriptJob?.status, scriptJob?.id, id, selectedScript]);
   useEffect(() => {
     if (!storyStatus || !["pending", "analyzing"].includes(storyStatus.status)) return;
     const timer = window.setInterval(refreshStory, 1500); return () => window.clearInterval(timer);

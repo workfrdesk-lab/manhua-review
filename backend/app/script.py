@@ -142,7 +142,8 @@ async def create_script(
         )
         .order_by(ScriptGenerationJob.attempt.desc())
     )
-    if previous:
+    # A competing request may have committed between the two reads.
+    if previous and previous.status in {"queued", "running", "completed"}:
         return {"job": output(previous), "script": None}
     job = ScriptGenerationJob(
         chapter_id=chapter_id,
@@ -168,6 +169,7 @@ async def create_script(
             .where(
                 ScriptGenerationJob.story_version_id == story_id,
                 ScriptGenerationJob.profile_fingerprint == profile_hash,
+                ScriptGenerationJob.status.in_(["queued", "running", "completed"]),
             )
             .order_by(ScriptGenerationJob.attempt.desc())
         )
@@ -326,7 +328,7 @@ async def retry_script(
         await db.flush()
         from app.script_service import audit
 
-        await db.run_sync(lambda session: audit(session, job, "script_retry_requested"))
+        await db.run_sync(lambda session: audit(session, job, "script_generation_retry_requested"))
         await db.commit()
     except IntegrityError:
         await db.rollback()
@@ -419,7 +421,7 @@ async def edit_segment(
         StoryAudit(
             chapter_id=script.chapter_id,
             actor_id=user.id,
-            action="segment_edited",
+            action="script_segment_edited",
             entity_type="script_segment",
             entity_id=segment.id,
             version_id=script.story_version_id,
