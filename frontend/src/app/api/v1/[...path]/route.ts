@@ -14,7 +14,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     return error(400, "BAD_REQUEST", "Invalid API path");
   }
   const headers = new Headers();
-  for (const name of ["cookie", "origin", "content-type", "x-csrf-token"]) {
+  for (const name of ["cookie", "origin", "content-type", "x-csrf-token", "if-match"]) {
     const value = request.headers.get(name);
     if (value) headers.set(name, value);
   }
@@ -53,7 +53,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     const data: unknown = await response.json();
     const result = NextResponse.json(data, { status: ok ? response.status : response.status });
     for (const cookie of response.headers.getSetCookie()) result.headers.append("Set-Cookie", cookie);
-    for (const name of ["x-request-id", "retry-after"]) {
+    for (const name of ["x-request-id", "retry-after", "etag"]) {
       const value = response.headers.get(name);
       if (value) result.headers.set(name, value);
     }

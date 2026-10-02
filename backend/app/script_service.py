@@ -184,6 +184,8 @@ def process_script(job_id):
                     ).hexdigest(),
                     title=result.title,
                     data=data,
+                    revision=1,
+                    approved_revision=None,
                 )
                 db.add(record)
                 db.flush()

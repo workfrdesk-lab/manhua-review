@@ -369,6 +369,11 @@ class ScriptVersion(Base):
             ondelete="CASCADE",
             name="fk_script_version_story_snapshot",
         ),
+        CheckConstraint(
+            "approved_revision IS NULL OR (approved_revision = revision AND status = 'confirmed')",
+            name="ck_script_approved_revision",
+        ),
+        CheckConstraint("revision > 0", name="ck_script_revision_positive"),
     )
     id: Mapped[UUID] = mapped_column(UUIDType, primary_key=True, default=uuid4)
     chapter_id: Mapped[UUID] = mapped_column(
@@ -393,6 +398,8 @@ class ScriptVersion(Base):
         server_default=ReviewState.NEEDS_REVIEW.value,
         nullable=False,
     )
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1, server_default="1")
+    approved_revision: Mapped[int | None] = mapped_column(Integer, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()

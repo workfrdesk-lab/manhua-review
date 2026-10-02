@@ -121,12 +121,14 @@ def test_script_api_create_review_and_ownership(client, database, monkeypatch):
     detail = f"/api/v1/scripts/{script['id']}"
     assert len(client.get(detail).json()["segments"]) == 1
     segment = script["segments"][0]
+    headers["If-Match"] = client.get(detail).headers["etag"]
     edited = client.patch(
         f"/api/v1/script-segments/{segment['id']}",
         json={"narration_text": "The traveler arrives at the scene."},
         headers=headers,
     )
     assert edited.status_code == 200, edited.text
+    headers["If-Match"] = edited.headers["etag"]
     assert client.get(detail).json()["data"]["hook"] == "The traveler arrives at the scene."
     assert (
         client.patch(detail + "/review", json={"status": "confirmed"}, headers=headers).status_code

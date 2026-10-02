@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { api, ApiError } from "@/lib/api";
+import { api, apiWithResponse, ApiError } from "@/lib/api";
 
 type Page = { id: string; page_number: number; status: string; thumbnail_url: string; width: number; height: number };
 type Chapter = { name: string; status: string };
@@ -15,7 +15,7 @@ type Event = { id: string; event_index: number; description: string; event_type:
 type Summary = { logline?: string; summary?: string; main_characters?: string[]; major_events?: string[]; conflicts?: string[]; ending_state?: string };
 type ScriptEvidence = { page_id?: string; page_number?: number; panel_id?: string; ocr_result_id?: string; scene_ref: string; event_ref: string; quote?: string; reason: string };
 type ScriptSegment = { id: string; sequence: number; narration_text: string; estimated_duration: number; dialogue_text?: string; speaker_ref?: string; scene_ref: string; event_refs: string[]; confidence: number; evidence?: ScriptEvidence[] };
-type Script = { id: string; story_version_id: string; status: string; title: string; data: { hook?: string; intro?: string; outro?: string }; segments: ScriptSegment[]; evidence: ScriptEvidence[] };
+type Script = { id: string; story_version_id: string; status: string; revision: number; approved_revision?: number; dependency: { eligible: boolean; reasons: string[]; language: string }; profile: { language: string }; title: string; data: { hook?: string; intro?: string; outro?: string }; segments: ScriptSegment[]; evidence: ScriptEvidence[] };
 type ScriptJob = { id: string; status: string; script_version_id?: string; error?: string };
 
 function Thumbnail({ page }: { page: Page }) {
@@ -56,8 +56,18 @@ export default function ChapterPage() {
   const [scriptBusy, setScriptBusy] = useState(false);
   const [scriptVersions, setScriptVersions] = useState<Script[]>([]);
   const [selectedScript, setSelectedScript] = useState("");
+  const [scriptEtag, setScriptEtag] = useState("");
+  const [scriptConflict, setScriptConflict] = useState(false);
+  const [language, setLanguage] = useState("en");
+  const [storyVersions, setStoryVersions] = useState<{ id: string }[]>([]);
+  const [sourceVersion, setSourceVersion] = useState("");
   const [segmentDraft, setSegmentDraft] = useState<ScriptSegment | null>(null);
   const [metadataDraft, setMetadataDraft] = useState<{ title: string; hook: string; intro: string; outro: string } | null>(null);
+  const hasDraft = !!(segmentDraft || metadataDraft);
+  function scriptFailure(reason: unknown) {
+    if (reason instanceof ApiError && reason.status === 412) setScriptConflict(true);
+    setScriptError(reason instanceof Error ? reason.message : "Script request failed");
+  }
   async function reorder(from: string, to: string) {
     const ordered = pages.filter(page => page.id !== from);
     const moving = pages.find(page => page.id === from);
@@ -144,61 +154,70 @@ export default function ChapterPage() {
     finally { setBusy(false); }
   }
   useEffect(() => { refreshStory(); }, [id]);
-  async function refreshScript() {
+  async function refreshScript(discardDraft = false) {
+    if (hasDraft && !discardDraft) return;
     try {
-      const [scripts, jobs] = await Promise.all([
+      const [scripts, jobs, sources] = await Promise.all([
         api<Script[]>(`chapters/${id}/scripts`), api<ScriptJob[]>(`chapters/${id}/script-jobs`),
+        api<{ id: string }[]>(`chapters/${id}/story/versions`),
       ]);
+      setStoryVersions(sources);
       setScriptVersions(scripts);
-      setScriptJob(jobs[0] ?? null);
+      setScriptJob(jobs.find(value => value.id === scriptJob?.id) ?? jobs[0] ?? null);
       const chosen = scripts.find(value => value.id === selectedScript) ?? scripts[0];
-      if (chosen) setScript(await api<Script>(`scripts/${chosen.id}`));
+      if (chosen) {
+        const result = await apiWithResponse<Script>(`scripts/${chosen.id}`);
+        setScript(result.value); setScriptEtag(result.response.headers.get("ETag") ?? "");
+        setSelectedScript(chosen.id);
+      }
+      setScriptConflict(false);
     } catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل تحميل النص"); }
   }
   async function generateScript() {
+    if (hasDraft) return;
     setScriptBusy(true); setScriptError(null);
     try {
-      const versions = await api<{ id: string }[]>(`chapters/${id}/story/versions`);
-      if (!versions[0]) throw new Error("حلّل القصة أولاً");
-      const response = await api<{ job: ScriptJob }>(`chapters/${id}/scripts`, { method: "POST", body: JSON.stringify({ story_version_id: versions[0].id }) });
+      const source = sourceVersion || storyVersions[0]?.id;
+      if (!source) throw new Error("حلّل القصة أولاً");
+      const response = await api<{ job: ScriptJob }>(`chapters/${id}/scripts`, { method: "POST", body: JSON.stringify({ story_version_id: source, profile: { language } }) });
       setScriptJob(response.job);
-      setSelectedScript(""); setSegmentDraft(null); setMetadataDraft(null);
-      await refreshScript();
+      if (response.job.script_version_id) setSelectedScript(response.job.script_version_id);
     } catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل إنشاء النص"); }
     finally { setScriptBusy(false); }
   }
   async function editSegment(segment: ScriptSegment) {
+    if (scriptConflict || !scriptEtag) return;
     setScriptBusy(true); setScriptError(null);
-    try { await api(`script-segments/${segment.id}`, { method: "PATCH", body: JSON.stringify({ narration_text: segment.narration_text, sequence: segment.sequence, estimated_duration: segment.estimated_duration, confidence: segment.confidence, ...(segment.dialogue_text ? { dialogue_text: segment.dialogue_text } : {}) }) }); setSegmentDraft(null); await refreshScript(); }
-    catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل حفظ المقطع"); }
+    try { await api(`script-segments/${segment.id}`, { method: "PATCH", headers: { "If-Match": scriptEtag }, body: JSON.stringify({ narration_text: segment.narration_text, sequence: segment.sequence, estimated_duration: segment.estimated_duration, confidence: segment.confidence, dialogue_text: segment.dialogue_text || null, speaker_ref: segment.speaker_ref || null }) }); setSegmentDraft(null); await refreshScript(true); }
+    catch (reason) { scriptFailure(reason); }
     finally { setScriptBusy(false); }
   }
   async function saveMetadata() {
-    if (!script || !metadataDraft) return;
+    if (!script || !metadataDraft || scriptConflict || !scriptEtag) return;
     setScriptBusy(true); setScriptError(null);
-    try { await api(`scripts/${script.id}/metadata`, { method: "PATCH", body: JSON.stringify(metadataDraft) }); setMetadataDraft(null); await refreshScript(); }
-    catch (reason) { setScriptError(reason instanceof Error ? reason.message : "Metadata save failed"); }
+    try { await api(`scripts/${script.id}/metadata`, { method: "PATCH", headers: { "If-Match": scriptEtag }, body: JSON.stringify(metadataDraft) }); setMetadataDraft(null); await refreshScript(true); }
+    catch (reason) { scriptFailure(reason); }
     finally { setScriptBusy(false); }
   }
   async function retryScript() {
     if (!scriptJob) return;
     setScriptBusy(true); setScriptError(null);
-    try { setScriptJob(await api<ScriptJob>(`script-jobs/${scriptJob.id}/retry`, { method: "POST" })); await refreshScript(); }
+    try { setScriptJob(await api<ScriptJob>(`script-jobs/${scriptJob.id}/retry`, { method: "POST" })); }
     catch (reason) { setScriptError(reason instanceof Error ? reason.message : "Retry failed"); }
     finally { setScriptBusy(false); }
   }
   async function reviewScript(status: "confirmed" | "rejected" | "needs_review") {
-    if (!script) return;
+    if (!script || hasDraft || scriptConflict) return;
     setScriptBusy(true); setScriptError(null);
-    try { await api(`scripts/${script.id}/review`, { method: "PATCH", body: JSON.stringify({ status }) }); await refreshScript(); }
-    catch (reason) { setScriptError(reason instanceof Error ? reason.message : "فشل تحديث المراجعة"); }
+    try { await api(`scripts/${script.id}/review`, { method: "PATCH", headers: { "If-Match": scriptEtag }, body: JSON.stringify({ status }) }); await refreshScript(); }
+    catch (reason) { scriptFailure(reason); }
     finally { setScriptBusy(false); }
   }
   useEffect(() => { refreshScript(); }, [id, selectedScript]);
   useEffect(() => {
     if (!scriptJob || !["queued", "running"].includes(scriptJob.status)) return;
     const timer = window.setInterval(refreshScript, 1500); return () => window.clearInterval(timer);
-  }, [scriptJob?.status, scriptJob?.id, id, selectedScript]);
+  }, [scriptJob?.status, scriptJob?.id, id, selectedScript, hasDraft]);
   useEffect(() => {
     if (!storyStatus || !["pending", "analyzing"].includes(storyStatus.status)) return;
     const timer = window.setInterval(refreshStory, 1500); return () => window.clearInterval(timer);
@@ -265,12 +284,17 @@ export default function ChapterPage() {
     </section>
     <section className="space-y-4 rounded border border-teal-800 p-4">
       <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="text-xl font-bold">Script Review</h2><span>Generation: {scriptJob?.status ?? "not_started"} · Review: {script?.status ?? "—"}</span></div>
-      <div className="flex flex-wrap gap-2"><button onClick={generateScript} disabled={scriptBusy || ["queued", "running"].includes(scriptJob?.status ?? "")} className="rounded bg-teal-700 px-3 py-2">Generate script</button>{script && <>{(["confirmed", "rejected", "needs_review"] as const).map(state => <button key={state} disabled={scriptBusy || script.status === state} onClick={() => reviewScript(state)} className="rounded border border-slate-600 px-3 py-2">{state === "confirmed" ? "Confirm" : state === "rejected" ? "Reject" : "Reopen"}</button>)}</>}{scriptJob?.status === "failed" && <button disabled={scriptBusy} onClick={retryScript} className="rounded border border-amber-500 px-3 py-2">Retry</button>}<button disabled={scriptBusy} onClick={refreshScript}>Refresh status</button></div>
-      <label className="block">Script version <select className="bg-slate-900 p-2" value={selectedScript || scriptVersions[0]?.id || ""} disabled={scriptBusy} onChange={event => { setSelectedScript(event.target.value); setSegmentDraft(null); setMetadataDraft(null); }}>{scriptVersions.map(value => <option key={value.id} value={value.id}>{value.title} — {value.id} ({value.status})</option>)}</select></label>
+      <div className="flex flex-wrap gap-2"><button onClick={generateScript} disabled={scriptBusy || ["queued", "running"].includes(scriptJob?.status ?? "")} className="rounded bg-teal-700 px-3 py-2">Generate script</button>{script && <>{(["confirmed", "rejected", "needs_review"] as const).map(state => <button key={state} disabled={scriptBusy || hasDraft || scriptConflict || (script.status === state && !(state === "confirmed" && script.approved_revision == null))} onClick={() => reviewScript(state)} className="rounded border border-slate-600 px-3 py-2">{state === "confirmed" ? script.status === "confirmed" && script.approved_revision == null ? "Reconfirm" : "Confirm" : state === "rejected" ? "Reject" : "Reopen"}</button>)}</>}{scriptJob?.status === "failed" && <button disabled={scriptBusy} onClick={retryScript} className="rounded border border-amber-500 px-3 py-2">Retry</button>}<button disabled={scriptBusy || hasDraft} onClick={() => refreshScript(true)}>Refresh status</button></div>
+      {scriptConflict && <div role="alert" className="rounded border border-rose-500 p-2">This script changed elsewhere. Your draft is preserved; review it, then discard the draft and reload before saving.<button disabled={scriptBusy} onClick={() => { setSegmentDraft(null); setMetadataDraft(null); refreshScript(true); }} className="block underline">Discard draft and reload</button></div>}
+      {script?.status === "confirmed" && <p>Saving a material edit clears approval and invalidates the prior dependency token. Explicit reapproval is required.</p>}
+      <div className="grid gap-2 md:grid-cols-2"><label className="block">Source StoryVersion <select className="bg-slate-900 p-2" value={sourceVersion || storyVersions[0]?.id || ""} disabled={scriptBusy} onChange={event => setSourceVersion(event.target.value)}>{storyVersions.map(value => <option key={value.id} value={value.id}>{value.id}</option>)}</select></label><label className="block">Script language <select className="bg-slate-900 p-2" value={language} disabled={scriptBusy} onChange={event => setLanguage(event.target.value)}><option value="en">English</option><option value="ar">العربية</option></select></label></div>
+      <label className="block">Script version <select className="bg-slate-900 p-2" value={selectedScript || scriptVersions[0]?.id || ""} disabled={scriptBusy || hasDraft} onChange={event => { setSelectedScript(event.target.value); setSegmentDraft(null); setMetadataDraft(null); }}>{scriptVersions.map(value => <option key={value.id} value={value.id}>{value.title} — {value.id} ({value.status})</option>)}</select></label>
       {scriptJob?.error && <p role="alert" className="text-rose-300">{scriptJob.error}</p>}
-      {scriptError && <p className="text-rose-300">{scriptError}</p>}
-      {script && <>
-        <p className="break-all text-sm">ScriptVersion: {script.id} · Source StoryVersion: {script.story_version_id}</p>
+      {script && script.approved_revision == null && script.status === "confirmed" && <p className="rounded border border-amber-500 p-2">Existing approval — explicit reconfirmation required for revision-bound use.</p>}
+      {scriptError && <p role="alert" className="text-rose-300">{scriptError}</p>}
+      {script && <div dir={script.profile.language === "ar" ? "rtl" : "ltr"} lang={script.profile.language}>
+        <p className="break-all text-sm">ScriptVersion: {script.id} · Source StoryVersion: {script.story_version_id} · Revision {script.revision} · {script.profile.language}</p>
+        <p>Dependency: {script.dependency.eligible ? "eligible" : script.dependency.reasons.join(", ")}</p>
         <h3 className="text-lg font-bold">{script.title}</h3>
         {metadataDraft ? <form className="space-y-2" onSubmit={event => { event.preventDefault(); saveMetadata(); }}>
           {(["title", "hook", "intro", "outro"] as const).map(field => <label key={field} className="block">{field}<textarea required={field === "title"} maxLength={field === "title" ? 300 : 5000} className="block w-full rounded bg-slate-900 p-2" value={metadataDraft[field]} onChange={event => setMetadataDraft({ ...metadataDraft, [field]: event.target.value })} /></label>)}
@@ -288,7 +312,7 @@ export default function ChapterPage() {
           <p className="text-sm">Scene: {segment.scene_ref} · Events: {segment.event_refs.join(", ")}</p>
           <div className="mt-2 text-xs text-slate-300">{(segment.evidence ?? []).map((evidence, index) => { const page = pages.find(value => value.id === evidence.page_id || value.page_number === evidence.page_number); return <div key={index}><button disabled={!page} className="text-cyan-300 underline" onClick={() => { if (page) openAnalysis(page); }}>Page {evidence.page_number ?? page?.page_number ?? "—"}</button> · Panel {evidence.panel_id ?? "—"} · OCR {evidence.ocr_result_id ?? "—"} · {evidence.reason}{evidence.quote && <blockquote>{evidence.quote}</blockquote>}</div>; })}</div>
         </li>)}</ol>
-      </>}
+      </div>}
     </section>
   </main>;
 }

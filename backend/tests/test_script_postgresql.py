@@ -46,13 +46,18 @@ def test_populated_script_migration_roundtrip(harness, database):
         assert page_ids
     command.upgrade(config, "0013_script_domain")
     command.upgrade(config, "0014_script_jobs")
+    command.upgrade(config, "0015_script_evidence_scope")
+    command.upgrade(config, "0016_script_revision_approval")
     job = enqueue(h)
     script_service.process_script(job["id"])
     assert status(h, job)["status"] == "completed"
     with Session(engine) as db:
         evidence_ids = db.scalars(select(ScriptEvidence.id)).all()
         assert evidence_ids
-    command.upgrade(config, "0015_script_evidence_scope")
+        script = db.scalar(select(ScriptVersion))
+        assert script.revision == 1
+        assert script.approved_revision is None
+    command.downgrade(config, "0015_script_evidence_scope")
     command.downgrade(config, "0014_script_jobs")
     command.upgrade(config, "0015_script_evidence_scope")
     with Session(engine) as db:

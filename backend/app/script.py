@@ -1,11 +1,12 @@
 """Authenticated, chapter-owned script generation and review endpoints."""
 
 import json
+import re
 from copy import deepcopy
 from hashlib import sha256
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, Response
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError
@@ -32,6 +33,7 @@ from app.script_providers import configured_script_provider, profile_fingerprint
 from app.script_schemas import GenerateScriptInput, ScriptProfile, ScriptStructuredOutput
 from app.script_validation import validate_script
 from app.story_providers import ProviderNotConfigured
+from app.story_review import ReviewState
 from app.story_schemas import StoryStructuredOutput
 
 router = APIRouter(prefix="/api/v1", dependencies=[Depends(protect_write)])
@@ -66,6 +68,123 @@ class MetadataPatch(BaseModel):
 
 def output(record):
     return {column.name: getattr(record, column.name) for column in record.__table__.columns}
+
+
+def script_etag(script):
+    return f'"script:{script.id}:{script.revision}"'
+
+
+def check_if_match(value, script):
+    if value is None:
+        raise HTTPException(428, "If-Match is required")
+    if not re.fullmatch(
+        r'"script:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[1-9][0-9]*"',
+        value,
+    ):
+        raise HTTPException(400, "If-Match must be one strong script ETag")
+    if value != script_etag(script):
+        raise HTTPException(412, "Script revision is stale")
+
+
+def dependency(script, source_valid=True):
+    status = script.status.value if hasattr(script.status, "value") else script.status
+    reasons = []
+    if status == "needs_review":
+        reasons.append("review_required")
+    elif status == "rejected":
+        reasons.append("rejected")
+    if status == "confirmed" and script.approved_revision != script.revision:
+        reasons.append("approval_unbound")
+    if script.profile.get("language", "en") not in {"ar", "en"}:
+        reasons.append("unsupported_language")
+    if not source_valid:
+        reasons.append("source_invalid")
+    reasons.sort()
+    return {
+        "story_version_id": str(script.story_version_id),
+        "script_version_id": str(script.id),
+        "revision": script.revision,
+        "language": script.profile.get("language", "en"),
+        "profile_fingerprint": script.profile_fingerprint,
+        "eligible": not reasons,
+        "reasons": reasons,
+    }
+
+
+async def validated_candidate(db, script, data):
+    story = await db.get(StoryVersion, script.story_version_id)
+    if story is None:
+        raise ValueError("Missing snapshot")
+    pages, panels, ocr = await source_records(db, script.chapter_id)
+    result = ScriptStructuredOutput.model_validate(data)
+    validate_script(
+        result,
+        StoryStructuredOutput.model_validate(story.data),
+        pages,
+        panels,
+        ocr,
+        ScriptProfile.model_validate(script.profile),
+        generated=False,
+    )
+    return result
+
+
+async def current_dependency(db, script):
+    try:
+        await validated_candidate(db, script, script.data)
+    except ValueError:
+        return dependency(script, source_valid=False)
+    return dependency(script)
+
+
+async def script_output(db, script):
+    return {**output(script), "dependency": await current_dependency(db, script)}
+
+
+def script_response(value, script, response):
+    response.headers["ETag"] = script_etag(script)
+    response.headers["Cache-Control"] = "no-store"
+    return value
+
+
+async def locked_script(db, script_id, user, if_match):
+    script = await owned_script(db, script_id, user)
+    # A no-change UPDATE serializes writers on both PostgreSQL and SQLite.
+    await db.execute(
+        update(ScriptVersion)
+        .where(ScriptVersion.id == script_id)
+        .values(updated_at=ScriptVersion.updated_at)
+    )
+    await db.refresh(script)
+    check_if_match(if_match, script)
+    return script
+
+
+async def mutation_before(db, script):
+    return {
+        "revision_before": script.revision,
+        "approved_revision_before": script.approved_revision,
+        "review_before": script.status,
+        "dependency_before": await current_dependency(db, script),
+        "content_before": deepcopy(script.data),
+    }
+
+
+async def mutation_after(db, script, before, reason):
+    after = await current_dependency(db, script)
+    result = {
+        **{key: value for key, value in before.items() if key != "content_before"},
+        "revision_after": script.revision,
+        "approved_revision_after": script.approved_revision,
+        "review_after": script.status,
+        "dependency_after": after,
+        "invalidation_reason": reason,
+    }
+    if script.approved_revision == script.revision:
+        result["approval_token"] = {
+            key: value for key, value in after.items() if key not in {"eligible", "reasons"}
+        }
+    return result
 
 
 async def owned_script(db, script_id: UUID, user: User):
@@ -107,6 +226,8 @@ async def create_script(
     )
     if not story:
         raise HTTPException(404, "StoryVersion not found")
+    if payload.profile.language not in {"ar", "en"}:
+        raise HTTPException(422, "Only ar and en are supported for new generation")
     story_id = story.id
     try:
         provider = configured_script_provider()
@@ -132,7 +253,7 @@ async def create_script(
             "job": output(active),
             "script": None
             if not active.script_version_id
-            else output(await db.get(ScriptVersion, active.script_version_id)),
+            else await script_output(db, await db.get(ScriptVersion, active.script_version_id)),
         }
     previous = await db.scalar(
         select(ScriptGenerationJob)
@@ -200,11 +321,14 @@ async def dispatch(db, job):
 
 @router.get("/chapters/{chapter_id}/scripts")
 async def list_scripts(
-    chapter_id: UUID, db: AsyncSession = Depends(get_db), user: User = Depends(require_user)
+    chapter_id: UUID,
+    response: Response,
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(require_user),
 ):
     await owned_chapter(db, chapter_id, user)
-    return [
-        output(row)
+    rows = [
+        await script_output(db, row)
         for row in (
             await db.scalars(
                 select(ScriptVersion)
@@ -213,14 +337,19 @@ async def list_scripts(
             )
         ).all()
     ]
+    response.headers["Cache-Control"] = "no-store"
+    return rows
 
 
 @router.get("/scripts/{script_id}")
 async def get_script(
-    script_id: UUID, db: AsyncSession = Depends(get_db), user: User = Depends(require_user)
+    script_id: UUID,
+    response: Response,
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(require_user),
 ):
     script = await owned_script(db, script_id, user)
-    value = output(script)
+    value = await script_output(db, script)
     value["segments"] = [
         output(row)
         for row in (
@@ -242,12 +371,15 @@ async def get_script(
     for segment in value["segments"]:
         segment["evidence"] = [ev for ev in value["evidence"] if ev["segment_id"] == segment["id"]]
         segment["speaker_ref"] = script.data["segments"][segment["sequence"] - 1].get("speaker_ref")
-    return value
+    return script_response(value, script, response)
 
 
 @router.get("/scripts/{script_id}/status")
 async def script_status(
-    script_id: UUID, db: AsyncSession = Depends(get_db), user: User = Depends(require_user)
+    script_id: UUID,
+    response: Response,
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(require_user),
 ):
     script = await owned_script(db, script_id, user)
     job = await db.scalar(
@@ -255,7 +387,11 @@ async def script_status(
         .where(ScriptGenerationJob.script_version_id == script.id)
         .order_by(ScriptGenerationJob.attempt.desc())
     )
-    return {"script": output(script), "job": output(job) if job else None}
+    return script_response(
+        {"script": await script_output(db, script), "job": output(job) if job else None},
+        script,
+        response,
+    )
 
 
 @router.get("/script-jobs/{job_id}/status")
@@ -351,21 +487,22 @@ async def retry_script(
 async def edit_segment(
     segment_id: UUID,
     payload: SegmentPatch,
+    response: Response,
+    if_match: str | None = Header(default=None),
     db: AsyncSession = Depends(get_db),
     user: User = Depends(require_user),
 ):
     segment = await db.get(ScriptSegment, segment_id)
     if not segment:
         raise HTTPException(404, "Script segment not found")
-    script = await owned_script(db, segment.script_version_id, user)
-    await db.execute(
-        update(ScriptVersion)
-        .where(ScriptVersion.id == script.id)
-        .values(updated_at=ScriptVersion.updated_at)
-    )
-    await db.refresh(script)
+    script = await locked_script(db, segment.script_version_id, user, if_match)
     await db.refresh(segment)
     values = payload.model_dump(exclude_unset=True)
+    if not values or any(
+        value is None and key not in {"dialogue_text", "speaker_ref"}
+        for key, value in values.items()
+    ):
+        raise HTTPException(422, "Nonempty edit with non-null required fields expected")
     import copy
 
     data = copy.deepcopy(script.data)
@@ -397,6 +534,12 @@ async def edit_segment(
         )
     except ValueError:
         raise HTTPException(422, "Edit failed script grounding validation") from None
+    if result.model_dump(mode="json") == script.data:
+        return script_response(output(segment), script, response)
+    audit_state = await mutation_before(db, script)
+    result.status = ReviewState.NEEDS_REVIEW
+    for item in result.segments:
+        item.status = ReviewState.NEEDS_REVIEW
     rows = (
         await db.scalars(
             select(ScriptSegment)
@@ -414,7 +557,9 @@ async def edit_segment(
             mode="json", exclude={"temp_id", "evidence", "source_dialogue", "speaker_ref"}
         ).items():
             setattr(row, key, value)
-    # Canonical Story edits preserve explicit human review state.
+    script.revision += 1
+    script.approved_revision = None
+    script.status = "needs_review"
     script.data = result.model_dump(mode="json")
     script.updated_at = func.now()
     db.add(
@@ -426,6 +571,10 @@ async def edit_segment(
             entity_id=segment.id,
             version_id=script.story_version_id,
             data={
+                **await mutation_after(db, script, audit_state, "script_edited"),
+                "affected_segment_ids": [str(row.id) for row in rows],
+                "content_before": audit_state["content_before"],
+                "content_after": script.data,
                 "fields": sorted(values),
                 "before": before,
                 "after": edited,
@@ -436,26 +585,31 @@ async def edit_segment(
     )
     await db.commit()
     await db.refresh(segment)
-    return output(segment)
+    return script_response(output(segment), script, response)
 
 
 @router.patch("/scripts/{script_id}/review")
 async def review_script(
     script_id: UUID,
     payload: ScriptStatusPatch,
+    response: Response,
+    if_match: str | None = Header(default=None),
     db: AsyncSession = Depends(get_db),
     user: User = Depends(require_user),
 ):
-    script = await owned_script(db, script_id, user)
-    await db.execute(
-        update(ScriptVersion)
-        .where(ScriptVersion.id == script.id)
-        .values(updated_at=ScriptVersion.updated_at)
-    )
-    await db.refresh(script)
+    script = await locked_script(db, script_id, user, if_match)
     before = script.status.value if hasattr(script.status, "value") else script.status
-    if before == payload.status:
-        return output(script)
+    if payload.status == "confirmed":
+        try:
+            await validated_candidate(db, script, script.data)
+        except ValueError:
+            raise HTTPException(422, "Confirmation failed script grounding validation") from None
+    adopted = before == "confirmed" and script.approved_revision is None
+    if before == payload.status and not (adopted and payload.status == "confirmed"):
+        return script_response(await script_output(db, script), script, response)
+    audit_state = await mutation_before(db, script)
+    script.revision += 1
+    script.approved_revision = script.revision if payload.status == "confirmed" else None
     script.status = payload.status
     data = deepcopy(script.data)
     data["status"] = payload.status
@@ -476,6 +630,8 @@ async def review_script(
             entity_id=script.id,
             version_id=script.story_version_id,
             data={
+                **await mutation_after(db, script, audit_state, "review_changed"),
+                "approval_adopted": adopted and payload.status == "confirmed",
                 "before": before,
                 "after": payload.status,
                 "script_version_id": str(script.id),
@@ -485,23 +641,19 @@ async def review_script(
     )
     await db.commit()
     await db.refresh(script)
-    return output(script)
+    return script_response(await script_output(db, script), script, response)
 
 
 @router.patch("/scripts/{script_id}/metadata")
 async def edit_metadata(
     script_id: UUID,
     payload: MetadataPatch,
+    response: Response,
+    if_match: str | None = Header(default=None),
     db: AsyncSession = Depends(get_db),
     user: User = Depends(require_user),
 ):
-    script = await owned_script(db, script_id, user)
-    await db.execute(
-        update(ScriptVersion)
-        .where(ScriptVersion.id == script.id)
-        .values(updated_at=ScriptVersion.updated_at)
-    )
-    await db.refresh(script)
+    script = await locked_script(db, script_id, user, if_match)
     values = payload.model_dump(exclude_unset=True)
     if not values:
         raise HTTPException(422, "At least one metadata field is required")
@@ -523,9 +675,23 @@ async def edit_metadata(
         )
     except ValueError:
         raise HTTPException(422, "Edit failed script grounding validation") from None
+    if result.model_dump(mode="json") == script.data:
+        return script_response(await script_output(db, script), script, response)
+    audit_state = await mutation_before(db, script)
+    result.status = ReviewState.NEEDS_REVIEW
+    for item in result.segments:
+        item.status = ReviewState.NEEDS_REVIEW
+    script.revision += 1
+    script.approved_revision = None
+    script.status = "needs_review"
     script.data = result.model_dump(mode="json")
     script.title = result.title
     script.updated_at = func.now()
+    await db.execute(
+        update(ScriptSegment)
+        .where(ScriptSegment.script_version_id == script.id)
+        .values(status="needs_review")
+    )
     db.add(
         StoryAudit(
             chapter_id=script.chapter_id,
@@ -535,6 +701,8 @@ async def edit_metadata(
             entity_id=script.id,
             version_id=script.story_version_id,
             data={
+                **await mutation_after(db, script, audit_state, "metadata_edited"),
+                "fields": sorted(values),
                 "before": before,
                 "after": values,
                 "script_version_id": str(script.id),
@@ -544,4 +712,4 @@ async def edit_metadata(
     )
     await db.commit()
     await db.refresh(script)
-    return output(script)
+    return script_response(await script_output(db, script), script, response)

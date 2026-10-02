@@ -372,6 +372,7 @@ def test_metadata_and_review_synchronization(harness):
     detail = f"/api/v1/scripts/{status(h, job)['script_version_id']}"
     original = h.client.get(detail).json()
     for state in ("confirmed", "needs_review", "rejected", "needs_review", "confirmed"):
+        h.headers["If-Match"] = h.client.get(detail).headers["etag"]
         assert (
             h.client.patch(
                 detail + "/review", json={"status": state}, headers=h.headers
@@ -388,14 +389,24 @@ def test_metadata_and_review_synchronization(harness):
         "intro": "",
         "outro": original["segments"][0]["narration_text"],
     }
+    h.headers["If-Match"] = h.client.get(detail).headers["etag"]
     assert h.client.patch(detail + "/metadata", json=patch, headers=h.headers).status_code == 200
     edited = h.client.get(detail).json()
-    assert edited["status"] == "confirmed"
+    # Phase 7B intentionally revokes approval after material edits.
+    assert edited["status"] == "needs_review"
+    assert edited["approved_revision"] is None
     assert edited["evidence"] == original["evidence"]
     for field, value in patch.items():
         assert edited["data"][field] == value
     for bad in ({"hook": "ungrounded new claim"}, {"title": None}, {"data": {}}, {}):
-        assert h.client.patch(detail + "/metadata", json=bad, headers=h.headers).status_code == 422
+        assert (
+            h.client.patch(
+                detail + "/metadata",
+                json=bad,
+                headers={**h.headers, "If-Match": h.client.get(detail).headers["etag"]},
+            ).status_code
+            == 422
+        )
     assert h.client.get(detail).json() == edited
     with Session(h.engine) as db:
         audit = db.scalar(select(StoryAudit).where(StoryAudit.action == "script_metadata_edited"))
@@ -437,13 +448,17 @@ def test_phase7a_acceptance_27_steps(harness, monkeypatch):
     )  # 12: immutable evidence cannot be substituted.
     assert (
         h.client.patch(
-            segment_route, json={"narration_text": "The traveler arrives."}, headers=h.headers
+            segment_route,
+            json={"narration_text": "The traveler arrives."},
+            headers={**h.headers, "If-Match": h.client.get(detail).headers["etag"]},
         ).status_code
         == 200
     )  # 13
     assert (
         h.client.patch(
-            detail + "/metadata", json={"title": "Reviewed arrival"}, headers=h.headers
+            detail + "/metadata",
+            json={"title": "Reviewed arrival"},
+            headers={**h.headers, "If-Match": h.client.get(detail).headers["etag"]},
         ).status_code
         == 200
     )  # 14
@@ -452,7 +467,9 @@ def test_phase7a_acceptance_27_steps(harness, monkeypatch):
         assert {"script_segment_edited", "script_metadata_edited"} <= actions  # 15
     assert (
         h.client.patch(
-            detail + "/review", json={"status": "confirmed"}, headers=h.headers
+            detail + "/review",
+            json={"status": "confirmed"},
+            headers={**h.headers, "If-Match": h.client.get(detail).headers["etag"]},
         ).status_code
         == 200
     )  # 16
@@ -590,7 +607,12 @@ def test_endpoint_authorization_matrix(harness, identity):
         ("PATCH", f"/api/v1/script-segments/{segment_id}", {"confidence": 0.5}),
     ]
     for method, route, payload in requests:
-        response = h.client.request(method, route, json=payload, headers=h.headers)
+        request_headers = {**h.headers}
+        if method == "PATCH" and identity == "owner":
+            request_headers["If-Match"] = h.client.get(f"/api/v1/scripts/{script_id}").headers[
+                "etag"
+            ]
+        response = h.client.request(method, route, json=payload, headers=request_headers)
         if identity == "owner":
             assert response.status_code == (
                 409 if route.endswith("/retry") else 201 if method == "POST" else 200

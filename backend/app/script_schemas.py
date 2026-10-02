@@ -11,6 +11,8 @@ from app.story_schemas import EvidenceRef
 
 class ScriptProfile(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
+    # Stored legacy profiles may contain languages outside the 7B generation set.
+    # New requests are restricted at the API boundary instead of breaking reads.
     language: str = Field(default="en", min_length=2, max_length=30)
     target_style: str = Field(default="chronological_recap", min_length=1, max_length=80)
     target_duration_seconds: int = Field(default=180, ge=15, le=3600)
