@@ -328,7 +328,7 @@ async def retry_script(
         await db.flush()
         from app.script_service import audit
 
-        await db.run_sync(lambda session: audit(session, job, "script_generation_retry_requested"))
+        await db.run_sync(lambda session: audit(session, job, "script_generation_retry"))
         await db.commit()
     except IntegrityError:
         await db.rollback()

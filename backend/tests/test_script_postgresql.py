@@ -18,7 +18,16 @@ from test_script_finalization import enqueue, status
 from test_script_finalization import harness as script_harness
 
 from app import script_service
-from app.models import Base, OCRResult, Page, Panel, ScriptEvidence, ScriptSegment, ScriptVersion
+from app.models import (
+    Base,
+    OCRResult,
+    Page,
+    Panel,
+    ScriptEvidence,
+    ScriptSegment,
+    ScriptVersion,
+    VisualAnalysis,
+)
 
 pytestmark = pytest.mark.skipif(
     not os.environ.get("TEST_DATABASE_URL", "").startswith("postgresql"),
@@ -101,6 +110,7 @@ def sources(harness):
             panels.append(panel)
         ocr = OCRResult(panel_id=panels[0].id, text="source")
         db.add(ocr)
+        db.add(VisualAnalysis(panel_id=panels[0].id))
         db.flush()
         evidence.panel_id, evidence.ocr_result_id = panels[0].id, ocr.id
         db.commit()
@@ -147,17 +157,30 @@ def test_invalid_source_and_script_composites(sources, case):
 
 
 @pytest.mark.parametrize("model", [Page, Panel, OCRResult])
-def test_source_deletion_orm_sql_parity(sources, model, record_property):
+@pytest.mark.parametrize("references", ["page", "panel", "ocr"])
+def test_source_deletion_orm_sql_parity(sources, model, references, record_property):
     h, evidence_id, page_id, panel_id, _, ocr_id = sources
     identity = {Page: page_id, Panel: panel_id, OCRResult: ocr_id}[model]
+    with Session(h.engine) as db:
+        evidence = db.get(ScriptEvidence, evidence_id)
+        if references != "ocr":
+            evidence.ocr_result_id = None
+        if references == "page":
+            evidence.panel_id = None
+        db.commit()
     outcomes = []
     for mode in ("sql", "orm", "orm_loaded"):
         with Session(h.engine) as db:
             try:
                 if mode != "sql":
                     source = db.get(model, identity)
-                    if mode == "orm_loaded" and model is Panel:
-                        list(source.ocr_results)
+                    if mode == "orm_loaded":
+                        panels = list(source.panels) if model is Page else []
+                        if model is Panel:
+                            panels = [source]
+                        for panel in panels:
+                            list(panel.ocr_results)
+                            assert panel.visual_analysis is not None or panel.id != panel_id
                     db.delete(source)
                 else:
                     db.execute(delete(model).where(model.id == identity))
@@ -165,7 +188,16 @@ def test_source_deletion_orm_sql_parity(sources, model, record_property):
                 db.expire_all()
                 evidence = db.get(ScriptEvidence, evidence_id)
                 outcomes.append(
-                    ("deleted", evidence.page_id, evidence.panel_id, evidence.ocr_result_id)
+                    (
+                        "deleted",
+                        evidence.page_id,
+                        evidence.panel_id,
+                        evidence.ocr_result_id,
+                        db.get(Panel, panel_id) is not None,
+                        db.get(OCRResult, ocr_id) is not None,
+                        db.scalar(select(VisualAnalysis).where(VisualAnalysis.panel_id == panel_id))
+                        is not None,
+                    )
                 )
             except IntegrityError:
                 outcomes.append(("rejected",))
@@ -174,6 +206,8 @@ def test_source_deletion_orm_sql_parity(sources, model, record_property):
             assert db.get(model, identity) is not None
     record_property(model.__tablename__ + "_delete", str(outcomes))
     assert outcomes[0] == outcomes[1] == outcomes[2]
+    rejected = model is Page or (model is Panel and references == "ocr")
+    assert outcomes[0][0] == ("rejected" if rejected else "deleted")
 
 
 def test_script_orm_foreign_keys_match_migrations(harness):

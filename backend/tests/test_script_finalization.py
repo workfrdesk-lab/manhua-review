@@ -534,7 +534,7 @@ def test_phase7a_acceptance_27_steps(harness, monkeypatch):
             "script_generation_started",
             "script_generation_completed",
             "script_generation_failed",
-            "script_generation_retry_requested",
+            "script_generation_retry",
             "script_segment_edited",
             "script_metadata_edited",
         } <= {row.action for row in rows}

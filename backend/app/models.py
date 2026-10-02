@@ -154,7 +154,7 @@ class Page(Base):
     chapter: Mapped[Chapter] = relationship(back_populates="pages")
     attempt: Mapped["IngestionAttempt"] = relationship(back_populates="pages")
     panels: Mapped[list["Panel"]] = relationship(
-        back_populates="page", cascade="all, delete-orphan", order_by="Panel.reading_order"
+        back_populates="page", passive_deletes="all", order_by="Panel.reading_order"
     )
 
 
@@ -201,9 +201,11 @@ class Panel(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
     page: Mapped[Page] = relationship(back_populates="panels")
-    ocr_results: Mapped[list["OCRResult"]] = relationship(cascade="all, delete-orphan")
+    # Let database cascades/checks govern deletion even for loaded children.
+    # Deleting OCR first can otherwise bypass ScriptEvidence source protection.
+    ocr_results: Mapped[list["OCRResult"]] = relationship(passive_deletes="all")
     visual_analysis: Mapped["VisualAnalysis | None"] = relationship(
-        cascade="all, delete-orphan", uselist=False
+        passive_deletes="all", uselist=False
     )
 
 
