@@ -16,6 +16,7 @@ from app.ingestion import router as ingestion_router
 from app.logging_config import configure_logging
 from app.projects import router as projects_router
 from app.script import router as script_router
+from app.script_handoff import router as script_handoff_router
 from app.story import router as story_router
 
 logger = logging.getLogger(__name__)
@@ -42,6 +43,7 @@ app.include_router(ingestion_router)
 app.include_router(analysis_router)
 app.include_router(story_router)
 app.include_router(script_router)
+app.include_router(script_handoff_router)
 install_error_handlers(app)
 
 

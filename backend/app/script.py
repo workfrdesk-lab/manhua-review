@@ -111,7 +111,7 @@ def dependency(script, source_valid=True):
     }
 
 
-async def validated_candidate(db, script, data):
+async def validated_candidate(db, script, data, *, include_sources=False):
     story = await db.get(StoryVersion, script.story_version_id)
     if story is None:
         raise ValueError("Missing snapshot")
@@ -126,7 +126,7 @@ async def validated_candidate(db, script, data):
         ScriptProfile.model_validate(script.profile),
         generated=False,
     )
-    return result
+    return (result, pages) if include_sources else result
 
 
 async def current_dependency(db, script):
