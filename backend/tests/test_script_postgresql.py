@@ -151,11 +151,14 @@ def test_source_deletion_orm_sql_parity(sources, model, record_property):
     h, evidence_id, page_id, panel_id, _, ocr_id = sources
     identity = {Page: page_id, Panel: panel_id, OCRResult: ocr_id}[model]
     outcomes = []
-    for orm in (False, True):
+    for mode in ("sql", "orm", "orm_loaded"):
         with Session(h.engine) as db:
             try:
-                if orm:
-                    db.delete(db.get(model, identity))
+                if mode != "sql":
+                    source = db.get(model, identity)
+                    if mode == "orm_loaded" and model is Panel:
+                        list(source.ocr_results)
+                    db.delete(source)
                 else:
                     db.execute(delete(model).where(model.id == identity))
                 db.flush()
@@ -170,7 +173,7 @@ def test_source_deletion_orm_sql_parity(sources, model, record_property):
                 db.rollback()
             assert db.get(model, identity) is not None
     record_property(model.__tablename__ + "_delete", str(outcomes))
-    assert outcomes[0] == outcomes[1]
+    assert outcomes[0] == outcomes[1] == outcomes[2]
 
 
 def test_script_orm_foreign_keys_match_migrations(harness):
