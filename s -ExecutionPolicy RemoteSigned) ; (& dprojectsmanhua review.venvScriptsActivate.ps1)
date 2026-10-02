@@ -1,0 +1,144 @@
+[1mdiff --git a/backend/app/models.py b/backend/app/models.py[m
+[1mindex 1affb9b..dd181f2 100644[m
+[1m--- a/backend/app/models.py[m
+[1m+++ b/backend/app/models.py[m
+[36m@@ -154,7 +154,7 @@[m [mclass Page(Base):[m
+     chapter: Mapped[Chapter] = relationship(back_populates="pages")[m
+     attempt: Mapped["IngestionAttempt"] = relationship(back_populates="pages")[m
+     panels: Mapped[list["Panel"]] = relationship([m
+[31m-        back_populates="page", cascade="all, delete-orphan", order_by="Panel.reading_order"[m
+[32m+[m[32m        back_populates="page", passive_deletes="all", order_by="Panel.reading_order"[m
+     )[m
+ [m
+ [m
+[36m@@ -201,9 +201,11 @@[m [mclass Panel(Base):[m
+         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()[m
+     )[m
+     page: Mapped[Page] = relationship(back_populates="panels")[m
+[31m-    ocr_results: Mapped[list["OCRResult"]] = relationship(cascade="all, delete-orphan")[m
+[32m+[m[32m    # Let database cascades/checks govern deletion even for loaded children.[m
+[32m+[m[32m    # Deleting OCR first can otherwise bypass ScriptEvidence source protection.[m
+[32m+[m[32m    ocr_results: Mapped[list["OCRResult"]] = relationship(passive_deletes="all")[m
+     visual_analysis: Mapped["VisualAnalysis | None"] = relationship([m
+[31m-        cascade="all, delete-orphan", uselist=False[m
+[32m+[m[32m        passive_deletes="all", uselist=False[m
+     )[m
+ [m
+ [m
+[1mdiff --git a/backend/app/script.py b/backend/app/script.py[m
+[1mindex 567e53a..3315310 100644[m
+[1m--- a/backend/app/script.py[m
+[1m+++ b/backend/app/script.py[m
+[36m@@ -328,7 +328,7 @@[m [masync def retry_script([m
+         await db.flush()[m
+         from app.script_service import audit[m
+ [m
+[31m-        await db.run_sync(lambda session: audit(session, job, "script_generation_retry_requested"))[m
+[32m+[m[32m        await db.run_sync(lambda session: audit(session, job, "script_generation_retry"))[m
+         await db.commit()[m
+     except IntegrityError:[m
+         await db.rollback()[m
+[1mdiff --git a/backend/tests/test_script_finalization.py b/backend/tests/test_script_finalization.py[m
+[1mindex 32e05b1..269747a 100644[m
+[1m--- a/backend/tests/test_script_finalization.py[m
+[1m+++ b/backend/tests/test_script_finalization.py[m
+[36m@@ -534,7 +534,7 @@[m [mdef test_phase7a_acceptance_27_steps(harness, monkeypatch):[m
+             "script_generation_started",[m
+             "script_generation_completed",[m
+             "script_generation_failed",[m
+[31m-            "script_generation_retry_requested",[m
+[32m+[m[32m            "script_generation_retry",[m
+             "script_segment_edited",[m
+             "script_metadata_edited",[m
+         } <= {row.action for row in rows}[m
+[1mdiff --git a/backend/tests/test_script_postgresql.py b/backend/tests/test_script_postgresql.py[m
+[1mindex c53d8d6..27f9669 100644[m
+[1m--- a/backend/tests/test_script_postgresql.py[m
+[1m+++ b/backend/tests/test_script_postgresql.py[m
+[36m@@ -18,7 +18,16 @@[m [mfrom test_script_finalization import enqueue, status[m
+ from test_script_finalization import harness as script_harness[m
+ [m
+ from app import script_service[m
+[31m-from app.models import Base, OCRResult, Page, Panel, ScriptEvidence, ScriptSegment, ScriptVersion[m
+[32m+[m[32mfrom app.models import ([m
+[32m+[m[32m    Base,[m
+[32m+[m[32m    OCRResult,[m
+[32m+[m[32m    Page,[m
+[32m+[m[32m    Panel,[m
+[32m+[m[32m    ScriptEvidence,[m
+[32m+[m[32m    ScriptSegment,[m
+[32m+[m[32m    ScriptVersion,[m
+[32m+[m[32m    VisualAnalysis,[m
+[32m+[m[32m)[m
+ [m
+ pytestmark = pytest.mark.skipif([m
+     not os.environ.get("TEST_DATABASE_URL", "").startswith("postgresql"),[m
+[36m@@ -101,6 +110,7 @@[m [mdef sources(harness):[m
+             panels.append(panel)[m
+         ocr = OCRResult(panel_id=panels[0].id, text="source")[m
+         db.add(ocr)[m
+[32m+[m[32m        db.add(VisualAnalysis(panel_id=panels[0].id))[m
+         db.flush()[m
+         evidence.panel_id, evidence.ocr_result_id = panels[0].id, ocr.id[m
+         db.commit()[m
+[36m@@ -147,17 +157,30 @@[m [mdef test_invalid_source_and_script_composites(sources, case):[m
+ [m
+ [m
+ @pytest.mark.parametrize("model", [Page, Panel, OCRResult])[m
+[31m-def test_source_deletion_orm_sql_parity(sources, model, record_property):[m
+[32m+[m[32m@pytest.mark.parametrize("references", ["page", "panel", "ocr"])[m
+[32m+[m[32mdef test_source_deletion_orm_sql_parity(sources, model, references, record_property):[m
+     h, evidence_id, page_id, panel_id, _, ocr_id = sources[m
+     identity = {Page: page_id, Panel: panel_id, OCRResult: ocr_id}[model][m
+[32m+[m[32m    with Session(h.engine) as db:[m
+[32m+[m[32m        evidence = db.get(ScriptEvidence, evidence_id)[m
+[32m+[m[32m        if references != "ocr":[m
+[32m+[m[32m            evidence.ocr_result_id = None[m
+[32m+[m[32m        if references == "page":[m
+[32m+[m[32m            evidence.panel_id = None[m
+[32m+[m[32m        db.commit()[m
+     outcomes = [][m
+     for mode in ("sql", "orm", "orm_loaded"):[m
+         with Session(h.engine) as db:[m
+             try:[m
+                 if mode != "sql":[m
+                     source = db.get(model, identity)[m
+[31m-                    if mode == "orm_loaded" and model is Panel:[m
+[31m-                        list(source.ocr_results)[m
+[32m+[m[32m                    if mode == "orm_loaded":[m
+[32m+[m[32m                        panels = list(source.panels) if model is Page else [][m
+[32m+[m[32m                        if model is Panel:[m
+[32m+[m[32m                            panels = [source][m
+[32m+[m[32m                        for panel in panels:[m
+[32m+[m[32m                            list(panel.ocr_results)[m
+[32m+[m[32m                            assert panel.visual_analysis is not None or panel.id != panel_id[m
+                     db.delete(source)[m
+                 else:[m
+                     db.execute(delete(model).where(model.id == identity))[m
+[36m@@ -165,7 +188,16 @@[m [mdef test_source_deletion_orm_sql_parity(sources, model, record_property):[m
+                 db.expire_all()[m
+                 evidence = db.get(ScriptEvidence, evidence_id)[m
+                 outcomes.append([m
+[31m-                    ("deleted", evidence.page_id, evidence.panel_id, evidence.ocr_result_id)[m
+[32m+[m[32m                    ([m
+[32m+[m[32m                        "deleted",[m
+[32m+[m[32m                        evidence.page_id,[m
+[32m+[m[32m                        evidence.panel_id,[m
+[32m+[m[32m                        evidence.ocr_result_id,[m
+[32m+[m[32m                        db.get(Panel, panel_id) is not None,[m
+[32m+[m[32m                        db.get(OCRResult, ocr_id) is not None,[m
+[32m+[m[32m                        db.scalar(select(VisualAnalysis).where(VisualAnalysis.panel_id == panel_id))[m
+[32m+[m[32m                        is not None,[m
+[32m+[m[32m                    )[m
+                 )[m
+             except IntegrityError:[m
+                 outcomes.append(("rejected",))[m
+[36m@@ -174,6 +206,8 @@[m [mdef test_source_deletion_orm_sql_parity(sources, model, record_property):[m
+             assert db.get(model, identity) is not None[m
+     record_property(model.__tablename__ + "_delete", str(outcomes))[m
+     assert outcomes[0] == outcomes[1] == outcomes[2][m
+[32m+[m[32m    rejected = model is Page or (model is Panel and references == "ocr")[m
+[32m+[m[32m    assert outcomes[0][0] == ("rejected" if rejected else "deleted")[m
+ [m
+ [m
+ def test_script_orm_foreign_keys_match_migrations(harness):[m
